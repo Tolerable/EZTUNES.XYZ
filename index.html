@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EzTunes.XYZ - Free AI-Generated Music</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #667eea 100%);
+            color: white;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem 0;
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .logo h1 {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3)); }
+            to { filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.6)); }
+        }
+        
+        .tagline {
+            text-align: center;
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        
+        .radio-player {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .now-playing {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .current-song {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .current-artwork {
+            width: 120px;
+            height: 120px;
+            border-radius: 10px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            animation: rotate 10s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .current-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .current-info p {
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+        
+        .radio-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .control-btn {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            border-radius: 50px;
+            padding: 1rem 2rem;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .volume-control {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .volume-slider {
+            width: 200px;
+            margin: 0 10px;
+        }
+        
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            padding: 0.8rem 1.5rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        
+        .filter-btn.active, .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+        }
+        
+        .song-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .song-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .song-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .song-artwork {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .song-info {
+            padding: 1.5rem;
+        }
+        
+        .song-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .song-meta {
+            display: flex;
+            justify-content: space-between;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+        
+        .song-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .action-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .lyrics-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+        
+        .lyrics-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .close-lyrics {
+            float: right;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #ff6b6b;
+        }
+        
+        .footer {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 3rem 0 1rem;
+            margin-top: 4rem;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: #4ecdc4;
+        }
+        
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: #4ecdc4;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .logo h1 {
+                font-size: 2rem;
+            }
+            
+            .current-song {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .radio-controls {
+                flex-wrap: wrap;
+            }
+            
+            .song-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>🎵 EzTunes.XYZ 🎵</h1>
+                <p class="tagline">Free AI-Generated Music - Easy Listening, Easy Living</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Radio Player -->
+        <div class="radio-player">
+            <div class="now-playing">
+                <h2>🎧 Now Playing on EzTunes Radio</h2>
+            </div>
+            
+            <div class="current-song">
+                <img src="/img/HardtoThink.jpg" alt="Current Song" class="current-artwork" id="currentArtwork">
+                <div class="current-info">
+                    <h3 id="currentTitle">Hard to Think</h3>
+                    <p id="currentGenre">Electronic</p>
+                    <p id="currentDuration">3:24</p>
+                </div>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            
+            <div class="radio-controls">
+                <button class="control-btn" id="prevBtn">⏮️ Previous</button>
+                <button class="control-btn" id="playBtn">▶️ Play</button>
+                <button class="control-btn" id="nextBtn">⏭️ Next</button>
+                <button class="control-btn" id="shuffleBtn">🔀 Shuffle</button>
+            </div>
+            
+            <div class="volume-control">
+                <span>🔊 Volume:</span>
+                <input type="range" class="volume-slider" min="0" max="100" value="50" id="volumeSlider">
+                <span id="volumeDisplay">50%</span>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">All Songs</button>
+            <button class="filter-btn" data-filter="electronic">Electronic</button>
+            <button class="filter-btn" data-filter="ambient">Ambient</button>
+            <button class="filter-btn" data-filter="rock">Rock</button>
+            <button class="filter-btn" data-filter="jazz">Jazz</button>
+            <button class="filter-btn" data-filter="classical">Classical</button>
+        </div>
+
+        <!-- Song Grid -->
+        <div class="song-grid" id="songGrid">
+            <!-- Songs will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Lyrics Modal -->
+    <div class="lyrics-modal" id="lyricsModal">
+        <div class="lyrics-content">
+            <span class="close-lyrics" id="closeLyrics">&times;</span>
+            <h3 id="lyricsTitle">Song Title</h3>
+            <div id="lyricsText">
+                <p>Lyrics will appear here...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <a href="mailto:contact@eztunes.xyz">contact@eztunes.xyz</a>
+                    <a href="tel:+1234567890">+1 (234) 567-890</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <a href="#privacy">Privacy Policy</a>
+                    <a href="#terms">Terms of Service</a>
+                    <a href="#dmca">DMCA Policy</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Friends & Sponsors</h4>
+                    <a href="#sponsor1">AI Music Labs</a>
+                    <a href="#sponsor2">SoundGen Pro</a>
+                    <a href="#sponsor3">TuneBot Studios</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <a href="#twitter">Twitter</a>
+                    <a href="#youtube">YouTube</a>
+                    <a href="#discord">Discord</a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 EzTunes.XYZ. All rights reserved. AI-generated music provided free for personal use.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample song database
+        const songs = [
+            {
+                title: "Hard to Think",
+                file: "HardtoThink.mp3",
+                image: "HardtoThink.jpg",
+                genre: "electronic",
+                duration: "3:24",
+                lyrics: "Verse 1:\nIn the digital maze of sound and light\nThoughts collide in the endless night\nHard to think when the beats take hold\nStories in rhythm, waiting to be told\n\nChorus:\nIt's hard to think, hard to breathe\nWhen the music sets you free\nLost in waves of harmony\nThis is where I'm meant to be"
+            },
+            {
+                title: "Neon Dreams",
+                file: "NeonDreams.mp3",
+                image: "NeonDreams.jpg",
+                genre: "electronic",
+                duration: "4:12",
+                lyrics: "Verse 1:\nNeon lights paint the midnight sky\nElectric dreams that never die\nSynthetic love in digital streams\nLiving life through neon dreams\n\nChorus:\nIn neon dreams we come alive\nWhere artificial hearts survive\nGlowing bright against the dark\nLeaving our electric mark"
+            },
+            {
+                title: "Ambient Shores",
+                file: "AmbientShores.mp3",
+                image: "AmbientShores.jpg",
+                genre: "ambient",
+                duration: "5:45",
+                lyrics: "Instrumental track with ocean sounds and ethereal pads creating a peaceful atmosphere perfect for meditation and relaxation."
+            },
+            {
+                title: "Electric Pulse",
+                file: "ElectricPulse.mp3",
+                image: "ElectricPulse.jpg",
+                genre: "electronic",
+                duration: "3:56",
+                lyrics: "Verse 1:\nFeel the electric pulse tonight\nCurrent flowing through my veins\nEvery beat ignites the light\nBreaking free from all constraints\n\nChorus:\nElectric pulse, electric soul\nLet the energy take control\nWe are more than flesh and bone\nIn this electric world we've grown"
+            },
+            {
+                title: "Midnight Jazz",
+                file: "MidnightJazz.mp3",
+                image: "MidnightJazz.jpg",
+                genre: "jazz",
+                duration: "4:33",
+                lyrics: "Verse 1:\nIn the smoky club at midnight hour\nSaxophone sings with soulful power\nPiano keys tell stories untold\nJazz legends never getting old\n\nChorus:\nMidnight jazz fills the air\nMusic floating everywhere\nIn this moment we are free\nLost in jazz's melody"
+            },
+            {
+                title: "Digital Rain",
+                file: "DigitalRain.mp3",
+                image: "DigitalRain.jpg",
+                genre: "ambient",
+                duration: "6:18",
+                lyrics: "An atmospheric piece featuring digital textures mixed with rain sounds, creating a cyberpunk-inspired soundscape."
+            },
+            {
+                title: "Rock Revolution",
+                file: "RockRevolution.mp3",
+                image: "RockRevolution.jpg",
+                genre: "rock",
+                duration: "3:41",
+                lyrics: "Verse 1:\nGuitars scream in the night\nDrums pound with all their might\nRock revolution starts today\nMusic will show us the way\n\nChorus:\nRock revolution in our hearts\nThis is where the future starts\nAmplified and turned up loud\nWe are young, we are proud"
+            },
+            {
+                title: "Classical Fusion",
+                file: "ClassicalFusion.mp3",
+                image: "ClassicalFusion.jpg",
+                genre: "classical",
+                duration: "7:22",
+                lyrics: "A beautiful fusion of classical orchestration with modern AI composition techniques, featuring strings, piano, and subtle electronic elements."
+            }
+        ];
+
+        // Commercial breaks for radio mode
+        const commercials = [
+            "Thanks for listening to EzTunes.XYZ - Where AI meets melody!",
+            "EzTunes Radio - Free music, infinite possibilities",
+            "Stay tuned for more AI-generated beats on EzTunes.XYZ",
+            "Supporting independent AI music creators worldwide"
+        ];
+
+        let currentSongIndex = 0;
+        let isPlaying = false;
+        let isShuffled = false;
+        let currentAudio = null;
+        let currentFilter = 'all';
+        let progressInterval;
+
+        // Initialize the application
+        function init() {
+            renderSongs();
+            setupEventListeners();
+            loadCurrentSong();
+        }
+
+        // Render songs based on current filter
+        function renderSongs() {
+            const songGrid = document.getElementById('songGrid');
+            const filteredSongs = currentFilter === 'all' ? songs : songs.filter(song => song.genre === currentFilter);
+            
+            songGrid.innerHTML = filteredSongs.map((song, index) => `
+                <div class="song-card" data-genre="${song.genre}">
+                    <img src="/img/${song.image}" alt="${song.title}" class="song-artwork" loading="lazy">
+                    <div class="song-info">
+                        <div class="song-title">${song.title}</div>
+                        <div class="song-meta">
+                            <span class="genre">${song.genre.charAt(0).toUpperCase() + song.genre.slice(1)}</span>
+                            <span class="duration">${song.duration}</span>
+                        </div>
+                        <div class="song-actions">
+                            <button class="action-btn" onclick="playSong(${songs.indexOf(song)})">▶️ Play</button>
+                            <button class="action-btn" onclick="showLyrics(${songs.indexOf(song)})">📝 Lyrics</button>
+                            <button class="action-btn" onclick="addToQueue(${songs.indexOf(song)})">➕ Queue</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Play/Pause button
+            document.getElementById('playBtn').addEventListener('click', togglePlay);
+            
+            // Previous/Next buttons
+            document.getElementById('prevBtn').addEventListener('click', previousSong);
+            document.getElementById('nextBtn').addEventListener('click', nextSong);
+            
+            // Shuffle button
+            document.getElementById('shuffleBtn').addEventListener('click', toggleShuffle);
+            
+            // Volume control
+            const volumeSlider = document.getElementById('volumeSlider');
+            volumeSlider.addEventListener('input', updateVolume);
+            
+            // Filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelector('.filter-btn.active').classList.remove('active');
+                    e.target.classList.add('active');
+                    currentFilter = e.target.dataset.filter;
+                    renderSongs();
+                });
+            });
+            
+            // Lyrics modal
+            document.getElementById('closeLyrics').addEventListener('click', hideLyrics);
+            document.getElementById('lyricsModal').addEventListener('click', (e) => {
+                if (e.target.id === 'lyricsModal') hideLyrics();
+            });
+        }
+
+        // Load current song info
+        function loadCurrentSong() {
+            const song = songs[currentSongIndex];
+            document.getElementById('currentTitle').textContent = song.title;
+            document.getElementById('currentGenre').textContent = song.genre.charAt(0).toUpperCase() + song.genre.slice(1);
+            document.getElementById('currentDuration').textContent = song.duration;
+            document.getElementById('currentArtwork').src = `/img/${song.image}`;
+            
+            // Stop current audio if playing
+            if (currentAudio) {
+                currentAudio.pause();
+                clearInterval(progressInterval);
+            }
+            
+            // Create new audio element
+            currentAudio = new Audio(`/audio/${song.file}`);
+            currentAudio.addEventListener('ended', nextSong);
+            currentAudio.addEventListener('loadedmetadata', updateProgress);
+        }
+
+        // Toggle play/pause
+        function togglePlay() {
+            const playBtn = document.getElementById('playBtn');
+            
+            if (isPlaying) {
+                currentAudio.pause();
+                playBtn.textContent = '▶️ Play';
+                clearInterval(progressInterval);
+            } else {
+                // Randomly play commercial before song (10% chance)
+                if (Math.random() < 0.1) {
+                    playCommercial(() => {
+                        currentAudio.play();
+                        playBtn.textContent = '⏸️ Pause';
+                        startProgressTracking();
+                    });
+                } else {
+                    currentAudio.play();
+                    playBtn.textContent = '⏸️ Pause';
+                    startProgressTracking();
+                }
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Play commercial break
+        function playCommercial(callback) {
+            const randomCommercial = commercials[Math.floor(Math.random() * commercials.length)];
+            const utterance = new SpeechSynthesisUtterance(randomCommercial);
+            utterance.rate = 0.9;
+            utterance.pitch = 1.1;
+            utterance.onend = callback;
+            speechSynthesis.speak(utterance);
+        }
+
+        // Start progress tracking
+        function startProgressTracking() {
+            progressInterval = setInterval(updateProgress, 1000);
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            if (currentAudio && currentAudio.duration) {
+                const progress = (currentAudio.currentTime / currentAudio.duration) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+            }
+        }
+
+        // Previous song
+        function previousSong() {
+            currentSongIndex = currentSongIndex > 0 ? currentSongIndex - 1 : songs.length - 1;
+            loadCurrentSong();
+            if (isPlaying) {
+                setTimeout(() => togglePlay(), 100);
+            }
+        }
+
+        // Next song
+        function nextSong() {
+            if (isShuffled) {
+                currentSongIndex = Math.floor(Math.random() * songs.length);
+            } else {
+                currentSongIndex = (currentSongIndex + 1) % songs.length;
+            }
+            loadCurrentSong();
+            if (isPlaying) {
+                setTimeout(() => togglePlay(), 100);
+            }
+        }
+
+        // Toggle shuffle
+        function toggleShuffle() {
+            isShuffled = !isShuffled;
+            const shuffleBtn = document.getElementById('shuffleBtn');
+            shuffleBtn.style.background = isShuffled ? 
+                'linear-gradient(45deg, #4ecdc4, #ff6b6b)' : 
+                'linear-gradient(45deg, #ff6b6b, #4ecdc4)';
+        }
+
+        // Update volume
+        function updateVolume() {
+            const volume = document.getElementById('volumeSlider').value;
+            document.getElementById('volumeDisplay').textContent = volume + '%';
+            if (currentAudio) {
+                currentAudio.volume = volume / 100;
+            }
+        }
+
+        // Play specific song
+        function playSong(index) {
+            currentSongIndex = index;
+            loadCurrentSong();
+            if (!isPlaying) {
+                togglePlay();
+            } else {
+                currentAudio.play();
+            }
+        }
+
+        // Show lyrics modal
+        function showLyrics(index) {
+            const song = songs[index];
+            document.getElementById('lyricsTitle').textContent = song.title;
+            document.getElementById('lyricsText').innerHTML = song.lyrics.replace(/\n/g, '<br>');
+            document.getElementById('lyricsModal').style.display = 'block';
+        }
+
+        // Hide lyrics modal
+        function hideLyrics() {
+            document.getElementById('lyricsModal').style.display = 'none';
+        }
+
+        // Add to queue (placeholder function)
+        function addToQueue(index) {
+            alert(`"${songs[index].title}" added to queue!`);
+        }
+
+        // Initialize when page loads
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>
