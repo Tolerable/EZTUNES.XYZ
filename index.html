@@ -317,6 +317,72 @@
             width: 0%;
             transition: width 0.3s ease;
         }
+
+		.playlist-section {
+			background: rgba(0, 0, 0, 0.4);
+			border-radius: 15px;
+			padding: 2rem;
+			margin: 2rem 0;
+			backdrop-filter: blur(10px);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+		}
+
+		.playlist-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 1rem;
+			padding-bottom: 1rem;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+		}
+
+		.playlist-item {
+			display: flex;
+			align-items: center;
+			padding: 0.8rem;
+			margin: 0.5rem 0;
+			background: rgba(255, 255, 255, 0.05);
+			border-radius: 8px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+
+		.playlist-item:hover {
+			background: rgba(255, 255, 255, 0.1);
+			transform: translateX(5px);
+		}
+
+		.playlist-item.playing {
+			background: rgba(78, 205, 196, 0.2);
+			border: 1px solid rgba(78, 205, 196, 0.5);
+		}
+
+		.playlist-number {
+			width: 30px;
+			text-align: center;
+			opacity: 0.7;
+			font-weight: bold;
+		}
+
+		.playlist-info {
+			flex: 1;
+			margin-left: 1rem;
+		}
+
+		.playlist-title {
+			font-weight: bold;
+			margin-bottom: 0.2rem;
+		}
+
+		.playlist-meta {
+			font-size: 0.9rem;
+			opacity: 0.7;
+		}
+
+		.playlist-duration {
+			opacity: 0.8;
+			font-family: 'Courier New', monospace;
+		}
         
         @media (max-width: 768px) {
             .logo h1 {
@@ -382,6 +448,19 @@
                 <span id="volumeDisplay">50%</span>
             </div>
         </div>
+
+		<!-- Playlist Section -->
+		<div class="playlist-section">
+			<div class="playlist-header">
+				<h3>🎵 Current Playlist</h3>
+				<div>
+					<span id="playlistInfo">6 songs • 25:33 total</span>
+				</div>
+			</div>
+			<div id="playlistContainer">
+				<!-- Playlist items will be populated by JavaScript -->
+			</div>
+		</div>
 
         <!-- Filters -->
         <div class="filters">
@@ -512,17 +591,22 @@
         let currentFilter = 'all';
         let progressInterval;
 		let repeatMode = 'none'; // 'none', 'all', 'one'
+		let playlistOrder = [];
 		
         // Initialize the application
-        function init() {
-            renderSongs();
-            setupEventListeners();
-            if (songs.length > 0) {
-                loadCurrentSong();
-            } else {
-                showNoSongsMessage();
-            }
-        }
+		function init() {
+			// Initialize playlist order
+			playlistOrder = songs.map((_, index) => index);
+			
+			renderSongs();
+			renderPlaylist();
+			setupEventListeners();
+			if (songs.length > 0) {
+				loadCurrentSong();
+			} else {
+				showNoSongsMessage();
+			}
+		}
 
         // Show message when no songs are available
         function showNoSongsMessage() {
@@ -562,6 +646,54 @@
                 </div>
             `).join('');
         }
+
+		function renderPlaylist() {
+			const container = document.getElementById('playlistContainer');
+			if (!container) return;
+			
+			const totalDuration = songs.reduce((total, song) => {
+				const [min, sec] = song.duration.split(':').map(Number);
+				return total + min * 60 + sec;
+			}, 0);
+			
+			const totalMin = Math.floor(totalDuration / 60);
+			const totalSec = totalDuration % 60;
+			
+			document.getElementById('playlistInfo').textContent = 
+				`${songs.length} songs • ${totalMin}:${totalSec.toString().padStart(2, '0')} total`;
+			
+			container.innerHTML = playlistOrder.map((songIndex, playlistPosition) => {
+				const song = songs[songIndex];
+				const isCurrentSong = songIndex === currentSongIndex;
+				
+				return `
+					<div class="playlist-item ${isCurrentSong ? 'playing' : ''}" 
+						 onclick="playFromPlaylist(${songIndex})" 
+						 data-song-index="${songIndex}">
+						<div class="playlist-number">
+							${isCurrentSong ? '▶️' : (playlistPosition + 1)}
+						</div>
+						<div class="playlist-info">
+							<div class="playlist-title">${song.title}</div>
+							<div class="playlist-meta">${song.genre.charAt(0).toUpperCase() + song.genre.slice(1)}</div>
+						</div>
+						<div class="playlist-duration">${song.duration}</div>
+					</div>
+				`;
+			}).join('');
+		}
+
+		function playFromPlaylist(songIndex) {
+			currentSongIndex = songIndex;
+			loadCurrentSong();
+			renderPlaylist(); // Update the playlist to show new playing song
+			
+			if (!isPlaying) {
+				togglePlay();
+			} else {
+				playAudio();
+			}
+		}
 
 		// Toggle repeat mode
 		function toggleRepeat() {
@@ -782,20 +914,14 @@
 		function previousSong() {
 			if (songs.length === 0) return;
 			
-			if (isShuffled) {
-				// For shuffle, pick a random song that's different from current
-				let newIndex;
-				do {
-					newIndex = Math.floor(Math.random() * songs.length);
-				} while (newIndex === currentSongIndex && songs.length > 1);
-				currentSongIndex = newIndex;
-			} else {
-				currentSongIndex = currentSongIndex > 0 ? currentSongIndex - 1 : songs.length - 1;
-			}
+			// Find current song in the playlist order
+			const currentPositionInPlaylist = playlistOrder.findIndex(index => index === currentSongIndex);
+			const prevPosition = currentPositionInPlaylist > 0 ? currentPositionInPlaylist - 1 : playlistOrder.length - 1;
 			
+			currentSongIndex = playlistOrder[prevPosition];
 			loadCurrentSong();
+			renderPlaylist();
 			
-			// Auto-play if we were already playing
 			if (isPlaying) {
 				setTimeout(() => {
 					playAudio();
@@ -807,21 +933,14 @@
 		function nextSong() {
 			if (songs.length === 0) return;
 			
-			if (isShuffled) {
-				// For shuffle, pick a random song that's different from current
-				let newIndex;
-				do {
-					newIndex = Math.floor(Math.random() * songs.length);
-				} while (newIndex === currentSongIndex && songs.length > 1);
-				currentSongIndex = newIndex;
-			} else {
-				// Normal playlist order
-				currentSongIndex = (currentSongIndex + 1) % songs.length;
-			}
+			// Find current song in the playlist order
+			const currentPositionInPlaylist = playlistOrder.findIndex(index => index === currentSongIndex);
+			const nextPosition = (currentPositionInPlaylist + 1) % playlistOrder.length;
 			
+			currentSongIndex = playlistOrder[nextPosition];
 			loadCurrentSong();
+			renderPlaylist();
 			
-			// Auto-play the next song if we were already playing
 			if (isPlaying) {
 				setTimeout(() => {
 					playAudio();
@@ -831,32 +950,39 @@
 
         // Toggle shuffle
 		function toggleShuffle() {
-		   isShuffled = !isShuffled;
-		   const shuffleBtn = document.getElementById('shuffleBtn');
-		   
-		   if (isShuffled) {
-			   shuffleBtn.style.background = 'linear-gradient(45deg, #4ecdc4, #ff6b6b)';
-			   shuffleBtn.textContent = '🔀 Shuffled';
-			   
-			   // When shuffle is turned on, immediately jump to a random song
-			   let newIndex;
-			   do {
-				   newIndex = Math.floor(Math.random() * songs.length);
-			   } while (newIndex === currentSongIndex && songs.length > 1);
-			   
-			   currentSongIndex = newIndex;
-			   loadCurrentSong();
-			   
-			   // If we were playing, continue playing the new shuffled song
-			   if (isPlaying) {
-				   setTimeout(() => {
-					   playAudio();
-				   }, 100);
-			   }
-		   } else {
-			   shuffleBtn.style.background = 'linear-gradient(45deg, #ff6b6b, #4ecdc4)';
-			   shuffleBtn.textContent = '🔀 Shuffle';
-		   }
+			isShuffled = !isShuffled;
+			const shuffleBtn = document.getElementById('shuffleBtn');
+			
+			if (isShuffled) {
+				shuffleBtn.style.background = 'linear-gradient(45deg, #4ecdc4, #ff6b6b)';
+				shuffleBtn.textContent = '🔀 Shuffled';
+				
+				// Shuffle the playlist order (but keep currently playing song where it is)
+				const currentPlayingIndex = playlistOrder.findIndex(index => index === currentSongIndex);
+				const otherSongs = playlistOrder.filter(index => index !== currentSongIndex);
+				
+				// Shuffle the other songs
+				for (let i = otherSongs.length - 1; i > 0; i--) {
+					const j = Math.floor(Math.random() * (i + 1));
+					[otherSongs[i], otherSongs[j]] = [otherSongs[j], otherSongs[i]];
+				}
+				
+				// Rebuild playlist with current song at current position, others shuffled
+				playlistOrder = [
+					...otherSongs.slice(0, currentPlayingIndex),
+					currentSongIndex,
+					...otherSongs.slice(currentPlayingIndex)
+				];
+				
+			} else {
+				shuffleBtn.style.background = 'linear-gradient(45deg, #ff6b6b, #4ecdc4)';
+				shuffleBtn.textContent = '🔀 Shuffle';
+				
+				// Reset to original order
+				playlistOrder = songs.map((_, index) => index);
+			}
+			
+			renderPlaylist();
 		}
 
         // Update volume
