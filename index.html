@@ -513,7 +513,7 @@
             
             songGrid.innerHTML = filteredSongs.map((song, index) => `
                 <div class="song-card" data-genre="${song.genre}">
-                    <img src="/EZTUNES.XYZ/img/${song.image}" alt="${song.title}" class="song-artwork" loading="lazy">
+                    <img src="./img/${song.image}" alt="${song.title}" class="song-artwork" loading="lazy">
                     <div class="song-info">
                         <div class="song-title">${song.title}</div>
                         <div class="song-meta">
@@ -580,7 +580,7 @@
             artworkImg.onerror = function() {
                 this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120"><rect width="120" height="120" fill="%23667eea"/><text x="60" y="60" text-anchor="middle" dy=".3em" fill="white" font-size="14">🎵</text></svg>';
             };
-            artworkImg.src = `/EZTUNES.XYZ/img/${song.image}`;
+            artworkImg.src = `./img/${song.image}`;
             
             // Stop current audio if playing
             if (currentAudio) {
@@ -589,7 +589,7 @@
             }
             
             // Create new audio element with error handling
-            currentAudio = new Audio(`/EZTUNES.XYZ/audio/${song.file}`);
+            currentAudio = new Audio(`./audio/${song.file}`);
             
             currentAudio.addEventListener('ended', nextSong);
             currentAudio.addEventListener('loadedmetadata', updateProgress);
