@@ -1115,19 +1115,26 @@
 				const response = await fetch('music-data.json');
 				musicData = await response.json();
 				
+				// Check if musicData has the expected structure
+				if (!musicData || !musicData.albums || !Array.isArray(musicData.albums)) {
+					throw new Error('Invalid music data structure');
+				}
+				
 				// Flatten all tracks from all albums into songs array
 				songs = [];
 				musicData.albums.forEach((album, albumIndex) => {
-					album.tracks.forEach((track, trackIndex) => {
-						songs.push({
-							...track,
-							albumId: album.id,
-							albumTitle: album.title,
-							albumIndex: albumIndex,
-							trackIndex: trackIndex,
-							globalIndex: songs.length
+					if (album.tracks && Array.isArray(album.tracks)) {
+						album.tracks.forEach((track, trackIndex) => {
+							songs.push({
+								...track,
+								albumId: album.id,
+								albumTitle: album.title,
+								albumIndex: albumIndex,
+								trackIndex: trackIndex,
+								globalIndex: songs.length
+							});
 						});
-					});
+					}
 				});
 				
 				console.log('Music data loaded:', musicData.albums.length, 'albums,', songs.length, 'tracks');
