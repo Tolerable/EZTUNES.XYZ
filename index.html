@@ -1112,7 +1112,7 @@
 		// Load music data from JSON
 		async function loadMusicData() {
 			try {
-				const response = await fetch('music-data.json');
+				const response = await fetch('music_data.json');
 				musicData = await response.json();
 				
 				// Check if musicData has the expected structure
