@@ -173,6 +173,265 @@
             text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
             animation: glow 2s ease-in-out infinite alternate;
         }
+
+		.albums-section {
+			margin: 3rem 0;
+		}
+
+		.albums-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+			gap: 2rem;
+			margin: 2rem 0;
+		}
+
+		.album-card {
+			background: rgba(0, 0, 0, 0.4);
+			border-radius: 15px;
+			overflow: hidden;
+			transition: all 0.3s ease;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			backdrop-filter: blur(10px);
+			cursor: pointer;
+		}
+
+		.album-card:hover {
+			transform: translateY(-5px) scale(1.02);
+			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+		}
+
+		.album-artwork {
+			width: 100%;
+			height: 280px;
+			object-fit: cover;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		}
+
+		.album-info {
+			padding: 1.5rem;
+		}
+
+		.album-title {
+			font-size: 1.4rem;
+			font-weight: bold;
+			margin-bottom: 0.5rem;
+			background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+			background-clip: text;
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+		}
+
+		.album-meta {
+			display: flex;
+			justify-content: space-between;
+			opacity: 0.8;
+			margin-bottom: 0.5rem;
+		}
+
+		.album-description {
+			font-size: 0.9rem;
+			opacity: 0.7;
+			line-height: 1.4;
+			margin-bottom: 1rem;
+		}
+
+		.album-stats {
+			display: flex;
+			justify-content: space-between;
+			font-size: 0.9rem;
+			opacity: 0.8;
+		}
+
+		.album-detail {
+			background: rgba(0, 0, 0, 0.4);
+			border-radius: 15px;
+			padding: 2rem;
+			margin: 2rem 0;
+			backdrop-filter: blur(10px);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			display: none;
+		}
+
+		.album-detail.active {
+			display: block;
+			animation: fadeIn 0.3s ease;
+		}
+
+		@keyframes fadeIn {
+			from { opacity: 0; transform: translateY(20px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+
+		.album-header {
+			display: flex;
+			gap: 2rem;
+			margin-bottom: 2rem;
+			align-items: flex-start;
+		}
+
+		.album-header-art {
+			width: 200px;
+			height: 200px;
+			border-radius: 10px;
+			object-fit: cover;
+			border: 2px solid rgba(255, 255, 255, 0.2);
+		}
+
+		.album-header-info h2 {
+			font-size: 2rem;
+			margin-bottom: 0.5rem;
+			background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+			background-clip: text;
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+		}
+
+		.album-actions {
+			display: flex;
+			gap: 1rem;
+			margin-top: 1rem;
+		}
+
+		.album-btn {
+			background: linear-gradient(45deg, #667eea, #764ba2);
+			border: none;
+			border-radius: 25px;
+			padding: 0.8rem 1.5rem;
+			color: white;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			font-weight: bold;
+		}
+
+		.album-btn:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+		}
+
+		.album-btn.primary {
+			background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+		}
+
+		.track-list {
+			margin-top: 2rem;
+		}
+
+		.track-item {
+			display: flex;
+			align-items: center;
+			padding: 0.8rem;
+			margin: 0.3rem 0;
+			background: rgba(255, 255, 255, 0.05);
+			border-radius: 8px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+
+		.track-item:hover {
+			background: rgba(255, 255, 255, 0.1);
+			transform: translateX(5px);
+		}
+
+		.track-item.playing {
+			background: rgba(78, 205, 196, 0.2);
+			border: 1px solid rgba(78, 205, 196, 0.5);
+		}
+
+		.track-number {
+			width: 30px;
+			text-align: center;
+			opacity: 0.7;
+			font-weight: bold;
+		}
+
+		.track-thumbnail {
+			width: 35px;
+			height: 35px;
+			border-radius: 4px;
+			margin: 0 1rem;
+			object-fit: cover;
+		}
+
+		.track-info {
+			flex: 1;
+		}
+
+		.track-title-text {
+			font-weight: bold;
+			margin-bottom: 0.2rem;
+		}
+
+		.track-genre {
+			font-size: 0.8rem;
+			opacity: 0.7;
+		}
+
+		.track-duration {
+			opacity: 0.8;
+			font-family: 'Courier New', monospace;
+			margin-right: 1rem;
+		}
+
+		.track-actions {
+			display: flex;
+			gap: 0.5rem;
+			opacity: 0;
+			transition: opacity 0.3s ease;
+		}
+
+		.track-item:hover .track-actions {
+			opacity: 1;
+		}
+
+		.track-btn {
+			background: rgba(255, 255, 255, 0.1);
+			border: none;
+			border-radius: 15px;
+			padding: 0.3rem 0.6rem;
+			color: white;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			font-size: 0.8rem;
+		}
+
+		.track-btn:hover {
+			background: rgba(255, 255, 255, 0.2);
+		}
+
+		.back-btn {
+			background: rgba(255, 255, 255, 0.1);
+			border: 1px solid rgba(255, 255, 255, 0.3);
+			border-radius: 20px;
+			padding: 0.5rem 1rem;
+			color: white;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			margin-bottom: 1rem;
+			display: inline-flex;
+			align-items: center;
+			gap: 0.5rem;
+		}
+
+		.back-btn:hover {
+			background: rgba(255, 255, 255, 0.2);
+		}
+
+		@media (max-width: 768px) {
+			.album-header {
+				flex-direction: column;
+				text-align: center;
+			}
+			
+			.album-header-art {
+				width: 150px;
+				height: 150px;
+				margin: 0 auto;
+			}
+			
+			.albums-grid {
+				grid-template-columns: 1fr;
+			}
+		}
         
         @keyframes glow {
             from { filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3)); }
@@ -733,6 +992,25 @@
             </div>
         </div>
 
+		<!-- Albums Section -->
+		<div class="albums-section">
+			<h2>🎵 Albums</h2>
+			<div class="albums-grid" id="albumsGrid">
+				<!-- Albums will be populated by JavaScript -->
+			</div>
+			
+			<!-- Album Detail View -->
+			<div class="album-detail" id="albumDetail">
+				<button class="back-btn" onclick="hideAlbumDetail()">← Back to Albums</button>
+				<div class="album-header" id="albumHeader">
+					<!-- Album header will be populated -->
+				</div>
+				<div class="track-list" id="albumTracks">
+					<!-- Tracks will be populated -->
+				</div>
+			</div>
+		</div>
+
         <!-- Filters -->
         <div class="filters">
             <button class="filter-btn active" data-filter="all">All Songs</button>
@@ -882,27 +1160,217 @@
         ];
 
         // Player state
-        let currentSongIndex = 0;
-        let isPlaying = false;
-        let repeatMode = 'none'; // 'none', 'all', 'one'
-        let currentAudio = null;
-        let currentFilter = 'all';
-        let progressInterval;
-        let playlistOrder = [];
-        let originalVolume = 0.7;
-        let isMuted = false;
-        let queue = []; // Additional songs queued to play next
+		let musicData = null;
+		let songs = [];
+		let currentAlbum = null;
+		let currentSongIndex = 0;
+		let isPlaying = false;
+		let repeatMode = 'none';
+		let currentAudio = null;
+		let currentFilter = 'all';
+		let progressInterval;
+		let playlistOrder = [];
+		let originalVolume = 0.7;
+		let isMuted = false;
+		let queue = [];
 
         // Initialize the application
-        function init() {
-            playlistOrder = songs.map((_, index) => index);
-            renderSongs();
-            renderPlaylist();
-            setupEventListeners();
-            if (songs.length > 0) {
-                loadCurrentSong();
-            }
-        }
+		async function init() {
+			// Load music data first
+			const loaded = await loadMusicData();
+			if (!loaded) {
+				console.error('Failed to load music data');
+				return;
+			}
+			
+			playlistOrder = songs.map((_, index) => index);
+			renderAlbums();
+			renderSongs();
+			renderPlaylist();
+			setupEventListeners();
+			
+			if (songs.length > 0) {
+				loadCurrentSong();
+			}
+		}
+
+		// Safe image loading function
+		function safeImageSrc(imagePath, fallback = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjMzMzIi8+Cjx0ZXh0IHg9IjEwMCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNjY2IiBmb250LXNpemU9IjE0Ij7wn461PC90ZXh0Pgo8L3N2Zz4=') {
+			return `https://tolerable.github.io/EZTUNES.XYZ/img/${imagePath}`;
+		}
+
+		// Safe audio loading with error handling
+		function safeAudioSrc(audioPath) {
+			return `https://tolerable.github.io/EZTUNES.XYZ/audio/${audioPath}`;
+		}
+
+		// Load music data from JSON
+		async function loadMusicData() {
+			try {
+				const response = await fetch('music-data.json');
+				musicData = await response.json();
+				
+				// Flatten all tracks from all albums into songs array
+				songs = [];
+				musicData.albums.forEach((album, albumIndex) => {
+					album.tracks.forEach((track, trackIndex) => {
+						songs.push({
+							...track,
+							albumId: album.id,
+							albumTitle: album.title,
+							albumIndex: albumIndex,
+							trackIndex: trackIndex,
+							globalIndex: songs.length
+						});
+					});
+				});
+				
+				console.log('Music data loaded:', musicData.albums.length, 'albums,', songs.length, 'tracks');
+				return true;
+			} catch (error) {
+				console.error('Error loading music data:', error);
+				// Fallback to empty data if JSON fails
+				musicData = { albums: [] };
+				songs = [];
+				return false;
+			}
+		}
+
+		// Render albums grid
+		function renderAlbums() {
+			const albumsGrid = document.getElementById('albumsGrid');
+			if (!musicData || !musicData.albums) return;
+			
+			albumsGrid.innerHTML = musicData.albums.map(album => {
+				const trackCount = album.tracks.length;
+				const totalDuration = calculateAlbumDuration(album);
+				
+				return `
+					<div class="album-card" onclick="showAlbumDetail('${album.id}')">
+						<img src="${safeImageSrc(album.albumArt)}" 
+							 alt="${album.title}" 
+							 class="album-artwork" 
+							 onerror="this.src='${safeImageSrc('default-album.jpg')}'">
+						<div class="album-info">
+							<div class="album-title">${album.title}</div>
+							<div class="album-meta">
+								<span>${album.artist}</span>
+								<span>${album.year}</span>
+							</div>
+							<div class="album-description">${album.description}</div>
+							<div class="album-stats">
+								<span>${trackCount} tracks</span>
+								<span>${totalDuration}</span>
+							</div>
+						</div>
+					</div>
+				`;
+			}).join('');
+		}
+
+		// Calculate album duration
+		function calculateAlbumDuration(album) {
+			let totalSeconds = 0;
+			album.tracks.forEach(track => {
+				const [mins, secs] = track.duration.split(':').map(Number);
+				totalSeconds += mins * 60 + secs;
+			});
+			const totalMins = Math.floor(totalSeconds / 60);
+			const remainingSecs = totalSeconds % 60;
+			return `${totalMins}:${remainingSecs.toString().padStart(2, '0')}`;
+		}
+
+		// Show album detail
+		function showAlbumDetail(albumId) {
+			const album = musicData.albums.find(a => a.id === albumId);
+			if (!album) return;
+			
+			currentAlbum = album;
+			
+			// Hide albums grid and show detail
+			document.getElementById('albumsGrid').style.display = 'none';
+			document.getElementById('albumDetail').classList.add('active');
+			
+			// Populate album header
+			const albumHeader = document.getElementById('albumHeader');
+			albumHeader.innerHTML = `
+				<img src="${safeImageSrc(album.albumArt)}" 
+					 alt="${album.title}" 
+					 class="album-header-art"
+					 onerror="this.src='${safeImageSrc('default-album.jpg')}'">
+				<div class="album-header-info">
+					<h2>${album.title}</h2>
+					<p><strong>${album.artist}</strong> • ${album.year} • ${album.genre}</p>
+					<p>${album.description}</p>
+					<div class="album-actions">
+						<button class="album-btn primary" onclick="playAlbum('${album.id}')">▶️ Play Album</button>
+						<button class="album-btn" onclick="shuffleAlbum('${album.id}')">🔀 Shuffle</button>
+						<button class="album-btn" onclick="addAlbumToQueue('${album.id}')">➕ Add to Queue</button>
+					</div>
+				</div>
+			`;
+			
+			// Populate track list
+			renderAlbumTracks(album);
+		}
+
+		// Hide album detail
+		function hideAlbumDetail() {
+			document.getElementById('albumsGrid').style.display = 'grid';
+			document.getElementById('albumDetail').classList.remove('active');
+			currentAlbum = null;
+		}
+
+		// Render album tracks
+		function renderAlbumTracks(album) {
+			const tracksContainer = document.getElementById('albumTracks');
+			
+			tracksContainer.innerHTML = `
+				<h3>Tracks</h3>
+				${album.tracks.map((track, index) => {
+					const globalIndex = songs.findIndex(s => s.albumId === album.id && s.trackIndex === index);
+					const isCurrentSong = globalIndex === currentSongIndex;
+					
+					return `
+						<div class="track-item ${isCurrentSong ? 'playing' : ''}" 
+							 onclick="playTrackFromAlbum(${globalIndex})">
+							<div class="track-number">${track.trackNumber}</div>
+							<img src="${safeImageSrc(track.image)}" 
+								 alt="${track.title}" 
+								 class="track-thumbnail"
+								 onerror="this.src='${safeImageSrc('default-track.jpg')}'">
+							<div class="track-info">
+								<div class="track-title-text">${track.title}</div>
+								<div class="track-genre">${track.genre.charAt(0).toUpperCase() + track.genre.slice(1)}</div>
+							</div>
+							<div class="track-duration">${track.duration}</div>
+							<div class="track-actions">
+								<button class="track-btn" onclick="event.stopPropagation(); addToQueue(${globalIndex})">Queue</button>
+							</div>
+						</div>
+					`;
+				}).join('')}
+			`;
+		}
+
+		// Play album
+		function playAlbum(albumId) {
+			const album = musicData.albums.find(a => a.id === albumId);
+			if (!album || !album.tracks.length) return;
+			
+			const firstTrackGlobalIndex = songs.findIndex(s => s.albumId === albumId && s.trackIndex === 0);
+			if (firstTrackGlobalIndex !== -1) {
+				playSong(firstTrackGlobalIndex);
+			}
+		}
+
+		// Play track from album
+		function playTrackFromAlbum(globalIndex) {
+			playSong(globalIndex);
+			if (currentAlbum) {
+				renderAlbumTracks(currentAlbum);
+			}
+		}
 
         // Render songs in grid
         function renderSongs() {
