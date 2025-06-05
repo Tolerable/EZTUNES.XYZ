@@ -781,6 +781,7 @@
 		   
 		   // Create new audio element with error handling
 		   currentAudio = new Audio(`https://tolerable.github.io/EZTUNES.XYZ/audio/${song.file}`);
+		   currentAudio.preload = 'auto';
 		   
 		   // Auto-advance to next song when current song ends
 		   currentAudio.addEventListener('ended', () => {
@@ -925,13 +926,15 @@
 			if (isPlaying) {
 				setTimeout(() => {
 					playAudio();
-				}, 100);
+				}, 500);
 			}
 		}
 
         // Next song
 		function nextSong() {
 			if (songs.length === 0) return;
+			
+			const wasPlaying = isPlaying;
 			
 			// Find current song in the playlist order
 			const currentPositionInPlaylist = playlistOrder.findIndex(index => index === currentSongIndex);
@@ -941,10 +944,12 @@
 			loadCurrentSong();
 			renderPlaylist();
 			
-			if (isPlaying) {
-				setTimeout(() => {
+			if (wasPlaying && currentAudio) {
+				// Wait for audio to be ready
+				currentAudio.addEventListener('canplay', function onCanPlay() {
+					currentAudio.removeEventListener('canplay', onCanPlay);
 					playAudio();
-				}, 100);
+				});
 			}
 		}
 
