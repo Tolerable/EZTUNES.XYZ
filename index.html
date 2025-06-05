@@ -355,7 +355,7 @@
             </div>
             
             <div class="current-song">
-                <img src="/img/HardtoThink.jpg" alt="Current Song" class="current-artwork" id="currentArtwork">
+                <img src="https://tolerable.github.io/EZTUNES.XYZ/img/HardToThink.jpg" alt="Current Song" class="current-artwork" id="currentArtwork">
                 <div class="current-info">
                     <h3 id="currentTitle">Hard to Think</h3>
                     <p id="currentGenre">Electronic</p>
@@ -513,7 +513,7 @@
             
             songGrid.innerHTML = filteredSongs.map((song, index) => `
                 <div class="song-card" data-genre="${song.genre}">
-                    <img src="./img/${song.image}" alt="${song.title}" class="song-artwork" loading="lazy">
+                    <img src="https://tolerable.github.io/EZTUNES.XYZ/img/${song.image}" alt="${song.title}" class="song-artwork" loading="lazy">
                     <div class="song-info">
                         <div class="song-title">${song.title}</div>
                         <div class="song-meta">
@@ -580,7 +580,7 @@
             artworkImg.onerror = function() {
                 this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120"><rect width="120" height="120" fill="%23667eea"/><text x="60" y="60" text-anchor="middle" dy=".3em" fill="white" font-size="14">🎵</text></svg>';
             };
-            artworkImg.src = `./img/${song.image}`;
+            artworkImg.src = `https://tolerable.github.io/EZTUNES.XYZ/img/${song.image}`;
             
             // Stop current audio if playing
             if (currentAudio) {
@@ -589,19 +589,34 @@
             }
             
             // Create new audio element with error handling
-            currentAudio = new Audio(`./audio/${song.file}`);
+            currentAudio = new Audio(`https://tolerable.github.io/EZTUNES.XYZ/audio/${song.file}`);
+            
+            // Create new audio element with error handling
+            currentAudio = new Audio(`https://tolerable.github.io/EZTUNES.XYZ/audio/${song.file}`);
             
             currentAudio.addEventListener('ended', nextSong);
             currentAudio.addEventListener('loadedmetadata', updateProgress);
             
-            // Handle audio loading errors
+            // More detailed error handling
             currentAudio.addEventListener('error', (e) => {
-                console.error('Audio loading error for:', song.file, e);
+                console.error('Audio loading error for:', song.file);
+                console.error('Error details:', e);
+                console.error('Audio error code:', currentAudio.error?.code);
+                console.error('Audio error message:', currentAudio.error?.message);
                 const playBtn = document.getElementById('playBtn');
                 playBtn.textContent = '❌ Error';
                 setTimeout(() => {
                     playBtn.textContent = '▶️ Play';
                 }, 2000);
+            });
+            
+            // Add load success listener
+            currentAudio.addEventListener('canplaythrough', () => {
+                console.log('Audio loaded successfully:', song.file);
+            });
+            
+            currentAudio.addEventListener('loadstart', () => {
+                console.log('Started loading audio:', song.file);
             });
             
             // Set volume to current slider value
