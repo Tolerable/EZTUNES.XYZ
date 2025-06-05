@@ -373,6 +373,7 @@
                 <button class="control-btn" id="playBtn">▶️ Play</button>
                 <button class="control-btn" id="nextBtn">⏭️ Next</button>
                 <button class="control-btn" id="shuffleBtn">🔀 Shuffle</button>
+				<button class="control-btn" id="repeatBtn">🔁 Repeat</button>
             </div>
             
             <div class="volume-control">
@@ -510,7 +511,8 @@
         let currentAudio = null;
         let currentFilter = 'all';
         let progressInterval;
-
+		let repeatMode = 'none'; // 'none', 'all', 'one'
+		
         // Initialize the application
         function init() {
             renderSongs();
@@ -561,6 +563,29 @@
             `).join('');
         }
 
+		// Toggle repeat mode
+		function toggleRepeat() {
+			const modes = ['none', 'all', 'one'];
+			const currentIndex = modes.indexOf(repeatMode);
+			repeatMode = modes[(currentIndex + 1) % modes.length];
+			
+			const repeatBtn = document.getElementById('repeatBtn');
+			switch(repeatMode) {
+				case 'none':
+					repeatBtn.textContent = '🔁 Repeat';
+					repeatBtn.style.background = 'linear-gradient(45deg, #ff6b6b, #4ecdc4)';
+					break;
+				case 'all':
+					repeatBtn.textContent = '🔁 All';
+					repeatBtn.style.background = 'linear-gradient(45deg, #4ecdc4, #ff6b6b)';
+					break;
+				case 'one':
+					repeatBtn.textContent = '🔂 One';
+					repeatBtn.style.background = 'linear-gradient(45deg, #45b7d1, #ff6b6b)';
+					break;
+			}
+		}
+
         // Setup event listeners
         function setupEventListeners() {
             // Play/Pause button
@@ -577,6 +602,9 @@
             const volumeSlider = document.getElementById('volumeSlider');
             volumeSlider.addEventListener('input', updateVolume);
             
+			// Repeat button
+			document.getElementById('repeatBtn').addEventListener('click', toggleRepeat);
+						
             // Filter buttons
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
@@ -595,65 +623,93 @@
         }
 
         // Load current song info
-        function loadCurrentSong() {
-            if (songs.length === 0) {
-                showNoSongsMessage();
-                return;
-            }
-            
-            const song = songs[currentSongIndex];
-            document.getElementById('currentTitle').textContent = song.title;
-            document.getElementById('currentGenre').textContent = song.genre.charAt(0).toUpperCase() + song.genre.slice(1);
-            document.getElementById('currentDuration').textContent = song.duration;
-            
-            // Handle image loading with fallback
-            const artworkImg = document.getElementById('currentArtwork');
-            artworkImg.onerror = function() {
-                this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120"><rect width="120" height="120" fill="%23667eea"/><text x="60" y="60" text-anchor="middle" dy=".3em" fill="white" font-size="14">🎵</text></svg>';
-            };
-            artworkImg.src = `https://tolerable.github.io/EZTUNES.XYZ/img/${song.image}`;
-            
-            // Stop current audio if playing
-            if (currentAudio) {
-                currentAudio.pause();
-                clearInterval(progressInterval);
-            }
-            
-            // Create new audio element with error handling
-            currentAudio = new Audio(`https://tolerable.github.io/EZTUNES.XYZ/audio/${song.file}`);
-            
-            // Create new audio element with error handling
-            currentAudio = new Audio(`https://tolerable.github.io/EZTUNES.XYZ/audio/${song.file}`);
-            
-            currentAudio.addEventListener('ended', nextSong);
-            currentAudio.addEventListener('loadedmetadata', updateProgress);
-            
-            // More detailed error handling
-            currentAudio.addEventListener('error', (e) => {
-                console.error('Audio loading error for:', song.file);
-                console.error('Error details:', e);
-                console.error('Audio error code:', currentAudio.error?.code);
-                console.error('Audio error message:', currentAudio.error?.message);
-                const playBtn = document.getElementById('playBtn');
-                playBtn.textContent = '❌ Error';
-                setTimeout(() => {
-                    playBtn.textContent = '▶️ Play';
-                }, 2000);
-            });
-            
-            // Add load success listener
-            currentAudio.addEventListener('canplaythrough', () => {
-                console.log('Audio loaded successfully:', song.file);
-            });
-            
-            currentAudio.addEventListener('loadstart', () => {
-                console.log('Started loading audio:', song.file);
-            });
-            
-            // Set volume to current slider value
-            const volume = document.getElementById('volumeSlider').value;
-            currentAudio.volume = volume / 100;
-        }
+		function loadCurrentSong() {
+		   if (songs.length === 0) {
+			   showNoSongsMessage();
+			   return;
+		   }
+		   
+		   const song = songs[currentSongIndex];
+		   document.getElementById('currentTitle').textContent = song.title;
+		   document.getElementById('currentGenre').textContent = song.genre.charAt(0).toUpperCase() + song.genre.slice(1);
+		   document.getElementById('currentDuration').textContent = song.duration;
+		   
+		   // Handle image loading with fallback
+		   const artworkImg = document.getElementById('currentArtwork');
+		   artworkImg.onerror = function() {
+			   this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120"><rect width="120" height="120" fill="%23667eea"/><text x="60" y="60" text-anchor="middle" dy=".3em" fill="white" font-size="14">🎵</text></svg>';
+		   };
+		   artworkImg.src = `https://tolerable.github.io/EZTUNES.XYZ/img/${song.image}`;
+		   
+		   // Stop current audio if playing
+		   if (currentAudio) {
+			   currentAudio.pause();
+			   clearInterval(progressInterval);
+		   }
+		   
+		   // Create new audio element with error handling
+		   currentAudio = new Audio(`https://tolerable.github.io/EZTUNES.XYZ/audio/${song.file}`);
+		   
+		   // Auto-advance to next song when current song ends
+		   currentAudio.addEventListener('ended', () => {
+				if (repeatMode === 'one') {
+					// Replay the same song
+					currentAudio.currentTime = 0;
+					playAudio();
+				} else {
+					// Move to next song (or stop if repeat is 'none' and we're at the end)
+					if (repeatMode === 'none' && !isShuffled && currentSongIndex === songs.length - 1) {
+						// Stop playing at the end of playlist
+						isPlaying = false;
+						document.getElementById('playBtn').textContent = '▶️ Play';
+						clearInterval(progressInterval);
+					} else {
+						nextSong();
+					}
+				}
+		   });
+		   
+		   currentAudio.addEventListener('loadedmetadata', updateProgress);
+		   
+		   // Handle play/pause state properly
+		   currentAudio.addEventListener('play', () => {
+			   isPlaying = true;
+			   document.getElementById('playBtn').textContent = '⏸️ Pause';
+			   startProgressTracking();
+		   });
+
+		   currentAudio.addEventListener('pause', () => {
+			   isPlaying = false;
+			   document.getElementById('playBtn').textContent = '▶️ Play';
+			   clearInterval(progressInterval);
+		   });
+		   
+		   // More detailed error handling
+		   currentAudio.addEventListener('error', (e) => {
+			   console.error('Audio loading error for:', song.file);
+			   console.error('Error details:', e);
+			   console.error('Audio error code:', currentAudio.error?.code);
+			   console.error('Audio error message:', currentAudio.error?.message);
+			   const playBtn = document.getElementById('playBtn');
+			   playBtn.textContent = '❌ Error';
+			   setTimeout(() => {
+				   playBtn.textContent = '▶️ Play';
+			   }, 2000);
+		   });
+		   
+		   // Add load success listener
+		   currentAudio.addEventListener('canplaythrough', () => {
+			   console.log('Audio loaded successfully:', song.file);
+		   });
+		   
+		   currentAudio.addEventListener('loadstart', () => {
+			   console.log('Started loading audio:', song.file);
+		   });
+		   
+		   // Set volume to current slider value
+		   const volume = document.getElementById('volumeSlider').value;
+		   currentAudio.volume = volume / 100;
+		}
 
         // Toggle play/pause
         function togglePlay() {
@@ -708,9 +764,11 @@
         }
 
         // Start progress tracking
-        function startProgressTracking() {
-            progressInterval = setInterval(updateProgress, 1000);
-        }
+		function startProgressTracking() {
+			// Clear any existing interval first
+			clearInterval(progressInterval);
+			progressInterval = setInterval(updateProgress, 1000);
+		}
 
         // Update progress bar
         function updateProgress() {
@@ -721,26 +779,54 @@
         }
 
         // Previous song
-        function previousSong() {
-            currentSongIndex = currentSongIndex > 0 ? currentSongIndex - 1 : songs.length - 1;
-            loadCurrentSong();
-            if (isPlaying) {
-                setTimeout(() => togglePlay(), 100);
-            }
-        }
+		function previousSong() {
+			if (songs.length === 0) return;
+			
+			if (isShuffled) {
+				// For shuffle, pick a random song that's different from current
+				let newIndex;
+				do {
+					newIndex = Math.floor(Math.random() * songs.length);
+				} while (newIndex === currentSongIndex && songs.length > 1);
+				currentSongIndex = newIndex;
+			} else {
+				currentSongIndex = currentSongIndex > 0 ? currentSongIndex - 1 : songs.length - 1;
+			}
+			
+			loadCurrentSong();
+			
+			// Auto-play if we were already playing
+			if (isPlaying) {
+				setTimeout(() => {
+					playAudio();
+				}, 100);
+			}
+		}
 
         // Next song
-        function nextSong() {
-            if (isShuffled) {
-                currentSongIndex = Math.floor(Math.random() * songs.length);
-            } else {
-                currentSongIndex = (currentSongIndex + 1) % songs.length;
-            }
-            loadCurrentSong();
-            if (isPlaying) {
-                setTimeout(() => togglePlay(), 100);
-            }
-        }
+		function nextSong() {
+			if (songs.length === 0) return;
+			
+			if (isShuffled) {
+				// For shuffle, pick a random song that's different from current
+				let newIndex;
+				do {
+					newIndex = Math.floor(Math.random() * songs.length);
+				} while (newIndex === currentSongIndex && songs.length > 1);
+				currentSongIndex = newIndex;
+			} else {
+				currentSongIndex = (currentSongIndex + 1) % songs.length;
+			}
+			
+			loadCurrentSong();
+			
+			// Auto-play the next song if we were already playing
+			if (isPlaying) {
+				setTimeout(() => {
+					playAudio();
+				}, 100);
+			}
+		}
 
         // Toggle shuffle
         function toggleShuffle() {
