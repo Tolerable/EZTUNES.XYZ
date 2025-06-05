@@ -1159,10 +1159,10 @@
 				
 				return `
 					<div class="album-card" onclick="showAlbumDetail('${album.id}')">
-						<img src="${safeImageSrc(album.albumArt, true)}" 
+						<img src="${safeImageSrc(album.albumArt, album.id)}" 
 							 alt="${album.title}" 
 							 class="album-artwork" 
-							 onerror="this.src='${safeImageSrc('default-album.jpg', true)}'">
+							 onerror="this.src='https://tolerable.github.io/EZTUNES.XYZ/img/default-album.jpg'">
 						<div class="album-info">
 							<div class="album-title">${album.title}</div>
 							<div class="album-meta">
