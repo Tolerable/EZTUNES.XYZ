@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EzTunes.XYZ - Free AI-Generated Music</title>
-	<link rel="icon" type="image/x-icon" href="https://tolerable.github.io/EZTUNES.XYZ/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="https://tolerable.github.io/EZTUNES.XYZ/favicon.ico">
     <style>
         * {
             margin: 0;
@@ -82,15 +82,27 @@
             margin-bottom: 2rem;
         }
         
-        .current-artwork {
-            width: 120px;
-            height: 120px;
-            border-radius: 10px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            animation: rotate 10s linear infinite;
+        .album-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            perspective: 1000px;
         }
         
-        @keyframes rotate {
+        .current-artwork {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+        
+        .current-artwork.spinning {
+            animation: spin 20s linear infinite;
+        }
+        
+        @keyframes spin {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
@@ -105,9 +117,58 @@
             font-size: 1.1rem;
         }
         
+        .progress-container {
+            margin: 1.5rem 0;
+            cursor: pointer;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            width: 0%;
+            transition: width 0.1s linear;
+            position: relative;
+        }
+        
+        .progress-handle {
+            position: absolute;
+            right: -8px;
+            top: -4px;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .progress-container:hover .progress-handle {
+            opacity: 1;
+        }
+        
+        .time-display {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-family: 'Courier New', monospace;
+        }
+        
         .radio-controls {
             display: flex;
             justify-content: center;
+            align-items: center;
             gap: 1rem;
             margin-bottom: 2rem;
         }
@@ -116,13 +177,16 @@
             background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
             border: none;
             border-radius: 50px;
-            padding: 1rem 2rem;
+            padding: 0.8rem 1.5rem;
             color: white;
             font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
             font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         
         .control-btn:hover {
@@ -130,14 +194,57 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
         
+        .control-btn.main-play {
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+        }
+        
+        .control-btn.active {
+            background: linear-gradient(45deg, #45b7d1, #ff6b6b);
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
+        }
+        
         .volume-control {
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
             margin-top: 1rem;
         }
         
+        .volume-icon {
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        
         .volume-slider {
-            width: 200px;
-            margin: 0 10px;
+            width: 150px;
+            height: 6px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            outline: none;
+        }
+        
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .volume-slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
         
         .filters {
@@ -164,6 +271,143 @@
             background: rgba(255, 255, 255, 0.2);
             border-color: rgba(255, 255, 255, 0.6);
             transform: translateY(-2px);
+        }
+        
+        .playlist-section {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .playlist-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .playlist-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .playlist-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .playlist-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .playlist-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .playlist-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .playlist-item.playing {
+            background: rgba(78, 205, 196, 0.2);
+            border: 1px solid rgba(78, 205, 196, 0.5);
+        }
+        
+        .playlist-item.playing::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: #4ecdc4;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        
+        .playlist-number {
+            width: 40px;
+            text-align: center;
+            opacity: 0.7;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .equalizer {
+            display: flex;
+            gap: 2px;
+            height: 20px;
+            align-items: flex-end;
+        }
+        
+        .equalizer-bar {
+            width: 3px;
+            background: #4ecdc4;
+            animation: dance 0.6s ease-in-out infinite;
+        }
+        
+        .equalizer-bar:nth-child(1) { animation-delay: 0s; }
+        .equalizer-bar:nth-child(2) { animation-delay: 0.1s; }
+        .equalizer-bar:nth-child(3) { animation-delay: 0.2s; }
+        .equalizer-bar:nth-child(4) { animation-delay: 0.3s; }
+        
+        @keyframes dance {
+            0%, 100% { height: 5px; }
+            50% { height: 20px; }
+        }
+        
+        .playlist-thumbnail {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            margin-right: 1rem;
+            object-fit: cover;
+        }
+        
+        .playlist-info {
+            flex: 1;
+        }
+        
+        .playlist-title {
+            font-weight: bold;
+            margin-bottom: 0.2rem;
+        }
+        
+        .playlist-meta {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        .playlist-duration {
+            opacity: 0.8;
+            font-family: 'Courier New', monospace;
         }
         
         .song-grid {
@@ -231,39 +475,6 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
         
-        .lyrics-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            backdrop-filter: blur(5px);
-        }
-        
-        .lyrics-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            padding: 2rem;
-            border-radius: 15px;
-            max-width: 600px;
-            max-height: 80vh;
-            overflow-y: auto;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .close-lyrics {
-            float: right;
-            font-size: 2rem;
-            cursor: pointer;
-            color: #ff6b6b;
-        }
-        
         .footer {
             background: rgba(0, 0, 0, 0.5);
             padding: 3rem 0 1rem;
@@ -302,88 +513,6 @@
             opacity: 0.7;
         }
         
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 3px;
-            margin: 1rem 0;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-		.playlist-section {
-			background: rgba(0, 0, 0, 0.4);
-			border-radius: 15px;
-			padding: 2rem;
-			margin: 2rem 0;
-			backdrop-filter: blur(10px);
-			border: 1px solid rgba(255, 255, 255, 0.1);
-		}
-
-		.playlist-header {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			margin-bottom: 1rem;
-			padding-bottom: 1rem;
-			border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-		}
-
-		.playlist-item {
-			display: flex;
-			align-items: center;
-			padding: 0.8rem;
-			margin: 0.5rem 0;
-			background: rgba(255, 255, 255, 0.05);
-			border-radius: 8px;
-			cursor: pointer;
-			transition: all 0.3s ease;
-		}
-
-		.playlist-item:hover {
-			background: rgba(255, 255, 255, 0.1);
-			transform: translateX(5px);
-		}
-
-		.playlist-item.playing {
-			background: rgba(78, 205, 196, 0.2);
-			border: 1px solid rgba(78, 205, 196, 0.5);
-		}
-
-		.playlist-number {
-			width: 30px;
-			text-align: center;
-			opacity: 0.7;
-			font-weight: bold;
-		}
-
-		.playlist-info {
-			flex: 1;
-			margin-left: 1rem;
-		}
-
-		.playlist-title {
-			font-weight: bold;
-			margin-bottom: 0.2rem;
-		}
-
-		.playlist-meta {
-			font-size: 0.9rem;
-			opacity: 0.7;
-		}
-
-		.playlist-duration {
-			opacity: 0.8;
-			font-family: 'Courier New', monospace;
-		}
-        
         @media (max-width: 768px) {
             .logo h1 {
                 font-size: 2rem;
@@ -400,6 +529,11 @@
             
             .song-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .album-container {
+                width: 150px;
+                height: 150px;
             }
         }
     </style>
@@ -422,7 +556,9 @@
             </div>
             
             <div class="current-song">
-                <img src="https://tolerable.github.io/EZTUNES.XYZ/img/HardToThink.jpg" alt="Current Song" class="current-artwork" id="currentArtwork">
+                <div class="album-container">
+                    <img src="https://tolerable.github.io/EZTUNES.XYZ/img/HardToThink.jpg" alt="Current Song" class="current-artwork" id="currentArtwork">
+                </div>
                 <div class="current-info">
                     <h3 id="currentTitle">Hard to Think</h3>
                     <p id="currentGenre">Electronic</p>
@@ -430,37 +566,46 @@
                 </div>
             </div>
             
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill">
+                        <div class="progress-handle"></div>
+                    </div>
+                </div>
+                <div class="time-display">
+                    <span id="currentTime">0:00</span>
+                    <span id="totalTime">0:00</span>
+                </div>
             </div>
             
             <div class="radio-controls">
-                <button class="control-btn" id="prevBtn">⏮️ Previous</button>
-                <button class="control-btn" id="playBtn">▶️ Play</button>
-                <button class="control-btn" id="nextBtn">⏭️ Next</button>
-                <button class="control-btn" id="shuffleBtn">🔀 Shuffle</button>
-				<button class="control-btn" id="repeatBtn">🔁 Repeat</button>
+                <button class="control-btn" id="prevBtn" title="Previous track">⏮️</button>
+                <button class="control-btn main-play" id="playBtn" title="Play/Pause">▶️ Play</button>
+                <button class="control-btn" id="nextBtn" title="Next track">⏭️</button>
+                <button class="control-btn" id="shuffleBtn" title="Shuffle playlist">🔀</button>
+                <button class="control-btn" id="repeatBtn" title="Repeat mode">🔁</button>
             </div>
             
             <div class="volume-control">
-                <span>🔊 Volume:</span>
-                <input type="range" class="volume-slider" min="0" max="100" value="50" id="volumeSlider">
-                <span id="volumeDisplay">50%</span>
+                <span class="volume-icon" id="volumeIcon" title="Mute/Unmute">🔊</span>
+                <input type="range" class="volume-slider" min="0" max="100" value="70" id="volumeSlider">
+                <span id="volumeDisplay">70%</span>
             </div>
         </div>
 
-		<!-- Playlist Section -->
-		<div class="playlist-section">
-			<div class="playlist-header">
-				<h3>🎵 Current Playlist</h3>
-				<div>
-					<span id="playlistInfo">6 songs • 25:33 total</span>
-				</div>
-			</div>
-			<div id="playlistContainer">
-				<!-- Playlist items will be populated by JavaScript -->
-			</div>
-		</div>
+        <!-- Playlist Section -->
+        <div class="playlist-section">
+            <div class="playlist-header">
+                <h3>🎵 Current Playlist</h3>
+                <div class="playlist-controls">
+                    <button class="playlist-btn" id="clearQueueBtn">Clear Queue</button>
+                    <button class="playlist-btn" id="savePlaylistBtn">Save Playlist</button>
+                </div>
+            </div>
+            <div id="playlistContainer">
+                <!-- Playlist items will be populated by JavaScript -->
+            </div>
+        </div>
 
         <!-- Filters -->
         <div class="filters">
@@ -475,17 +620,6 @@
         <!-- Song Grid -->
         <div class="song-grid" id="songGrid">
             <!-- Songs will be populated by JavaScript -->
-        </div>
-    </div>
-
-    <!-- Lyrics Modal -->
-    <div class="lyrics-modal" id="lyricsModal">
-        <div class="lyrics-content">
-            <span class="close-lyrics" id="closeLyrics">&times;</span>
-            <h3 id="lyricsTitle">Song Title</h3>
-            <div id="lyricsText">
-                <p>Lyrics will appear here...</p>
-            </div>
         </div>
     </div>
 
@@ -524,220 +658,181 @@
     </div>
 
     <script>
-		// Song database - add your actual songs here
-		const songs = [
-			{
-				title: "Complete",
-				file: "Complete.mp3",
-				image: "Complete.jpg",
-				genre: "ambient",
-				duration: "4:12",
-				lyrics: "AI-generated ambient track."
-			},
-			{
-				title: "Dance of Mirrors",
-				file: "Dance of Mirrors.mp3",
-				image: "Dance of Mirrors.jpg",
-				genre: "electronic",
-				duration: "3:45",
-				lyrics: "AI-generated electronic dance track."
-			},
-			{
-				title: "Hard To Think",
-				file: "Hard to Think.mp3",
-				image: "Hard to Think.jpg",
-				genre: "electronic",
-				duration: "3:24",
-				lyrics: "AI-generated electronic track with deep bass and atmospheric elements."
-			},
-			{
-				title: "Lost in Love",
-				file: "Lost in Love.mp3",
-				image: "Lost in Love.jpg",
-				genre: "ambient",
-				duration: "5:12",
-				lyrics: "AI-generated romantic ambient track."
-			},
-			{
-				title: "Red Alert",
-				file: "Red Alert.mp3",
-				image: "Red Alert.jpg",
-				genre: "electronic",
-				duration: "4:22",
-				lyrics: "AI-generated electronic love track."
-			},
-			{
-				title: "Waking Inside",
-				file: "Waking Inside.mp3",
-				image: "Waking Inside.jpg",
-				genre: "ambient",
-				duration: "5:18",
-				lyrics: "AI-generated introspective ambient track."
-			}
-		];
-
-        // Commercial breaks for radio mode
-        const commercials = [
-            "Thanks for listening to EzTunes.XYZ - Where AI meets melody!",
-            "EzTunes Radio - Free music, infinite possibilities",
-            "Stay tuned for more AI-generated beats on EzTunes.XYZ",
-            "Supporting independent AI music creators worldwide"
+        // Song database
+        const songs = [
+            {
+                title: "Complete",
+                file: "Complete.mp3",
+                image: "Complete.jpg",
+                genre: "ambient",
+                duration: "4:12"
+            },
+            {
+                title: "Dance of Mirrors",
+                file: "Dance of Mirrors.mp3",
+                image: "Dance of Mirrors.jpg",
+                genre: "electronic",
+                duration: "3:45"
+            },
+            {
+                title: "Hard To Think",
+                file: "Hard to Think.mp3",
+                image: "Hard to Think.jpg",
+                genre: "electronic",
+                duration: "3:24"
+            },
+            {
+                title: "Lost in Love",
+                file: "Lost in Love.mp3",
+                image: "Lost in Love.jpg",
+                genre: "ambient",
+                duration: "5:12"
+            },
+            {
+                title: "Red Alert",
+                file: "Red Alert.mp3",
+                image: "Red Alert.jpg",
+                genre: "electronic",
+                duration: "4:22"
+            },
+            {
+                title: "Waking Inside",
+                file: "Waking Inside.mp3",
+                image: "Waking Inside.jpg",
+                genre: "ambient",
+                duration: "5:18"
+            }
         ];
 
+        // Player state
         let currentSongIndex = 0;
         let isPlaying = false;
-        let isShuffled = false;
+        let repeatMode = 'none'; // 'none', 'all', 'one'
         let currentAudio = null;
         let currentFilter = 'all';
         let progressInterval;
-		let repeatMode = 'none'; // 'none', 'all', 'one'
-		let playlistOrder = [];
-		
-        // Initialize the application
-		function init() {
-			// Initialize playlist order
-			playlistOrder = songs.map((_, index) => index);
-			
-			renderSongs();
-			renderPlaylist();
-			setupEventListeners();
-			if (songs.length > 0) {
-				loadCurrentSong();
-			} else {
-				showNoSongsMessage();
-			}
-		}
+        let playlistOrder = [];
+        let originalVolume = 0.7;
+        let isMuted = false;
+        let queue = []; // Additional songs queued to play next
 
-        // Show message when no songs are available
-        function showNoSongsMessage() {
-            const songGrid = document.getElementById('songGrid');
-            songGrid.innerHTML = `
-                <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
-                    <h3>🎵 No songs available yet</h3>
-                    <p>Upload your MP3 files to the /audio/ folder and matching JPG images to the /img/ folder.</p>
-                    <p>Make sure the files are named exactly the same (e.g., HardtoThink.mp3 and HardtoThink.jpg)</p>
-                </div>
-            `;
-            
-            // Hide radio player if no songs
-            document.querySelector('.radio-player').style.display = 'none';
+        // Initialize the application
+        function init() {
+            playlistOrder = songs.map((_, index) => index);
+            renderSongs();
+            renderPlaylist();
+            setupEventListeners();
+            if (songs.length > 0) {
+                loadCurrentSong();
+            }
         }
 
-        // Render songs based on current filter
+        // Render songs in grid
         function renderSongs() {
             const songGrid = document.getElementById('songGrid');
             const filteredSongs = currentFilter === 'all' ? songs : songs.filter(song => song.genre === currentFilter);
             
-            songGrid.innerHTML = filteredSongs.map((song, index) => `
-                <div class="song-card" data-genre="${song.genre}">
-                    <img src="https://tolerable.github.io/EZTUNES.XYZ/img/${song.image}" alt="${song.title}" class="song-artwork" loading="lazy">
-                    <div class="song-info">
-                        <div class="song-title">${song.title}</div>
-                        <div class="song-meta">
-                            <span class="genre">${song.genre.charAt(0).toUpperCase() + song.genre.slice(1)}</span>
-                            <span class="duration">${song.duration}</span>
-                        </div>
-                        <div class="song-actions">
-                            <button class="action-btn" onclick="playSong(${songs.indexOf(song)})">▶️ Play</button>
-                            <button class="action-btn" onclick="showLyrics(${songs.indexOf(song)})">📝 Lyrics</button>
-                            <button class="action-btn" onclick="addToQueue(${songs.indexOf(song)})">➕ Queue</button>
+            songGrid.innerHTML = filteredSongs.map((song, index) => {
+                const songIndex = songs.indexOf(song);
+                return `
+                    <div class="song-card" data-genre="${song.genre}">
+                        <img src="https://tolerable.github.io/EZTUNES.XYZ/img/${song.image}" alt="${song.title}" class="song-artwork" loading="lazy">
+                        <div class="song-info">
+                            <div class="song-title">${song.title}</div>
+                            <div class="song-meta">
+                                <span class="genre">${song.genre.charAt(0).toUpperCase() + song.genre.slice(1)}</span>
+                                <span class="duration">${song.duration}</span>
+                            </div>
+                            <div class="song-actions">
+                                <button class="action-btn" onclick="playSong(${songIndex})">▶️ Play</button>
+                                <button class="action-btn" onclick="addToQueue(${songIndex})">➕ Queue</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
-		function renderPlaylist() {
-			const container = document.getElementById('playlistContainer');
-			if (!container) return;
-			
-			const totalDuration = songs.reduce((total, song) => {
-				const [min, sec] = song.duration.split(':').map(Number);
-				return total + min * 60 + sec;
-			}, 0);
-			
-			const totalMin = Math.floor(totalDuration / 60);
-			const totalSec = totalDuration % 60;
-			
-			document.getElementById('playlistInfo').textContent = 
-				`${songs.length} songs • ${totalMin}:${totalSec.toString().padStart(2, '0')} total`;
-			
-			container.innerHTML = playlistOrder.map((songIndex, playlistPosition) => {
-				const song = songs[songIndex];
-				const isCurrentSong = songIndex === currentSongIndex;
-				
-				return `
-					<div class="playlist-item ${isCurrentSong ? 'playing' : ''}" 
-						 onclick="playFromPlaylist(${songIndex})" 
-						 data-song-index="${songIndex}">
-						<div class="playlist-number">
-							${isCurrentSong ? '▶️' : (playlistPosition + 1)}
-						</div>
-						<div class="playlist-info">
-							<div class="playlist-title">${song.title}</div>
-							<div class="playlist-meta">${song.genre.charAt(0).toUpperCase() + song.genre.slice(1)}</div>
-						</div>
-						<div class="playlist-duration">${song.duration}</div>
-					</div>
-				`;
-			}).join('');
-		}
+        // Render playlist
+        function renderPlaylist() {
+            const container = document.getElementById('playlistContainer');
+            if (!container) return;
+            
+            // Combine playlist order and queue
+            const fullPlaylist = [...playlistOrder, ...queue];
+            
+            container.innerHTML = fullPlaylist.map((songIndex, position) => {
+                const song = songs[songIndex];
+                const isCurrentSong = songIndex === currentSongIndex && position < playlistOrder.length;
+                const isQueued = position >= playlistOrder.length;
+                
+                return `
+                    <div class="playlist-item ${isCurrentSong ? 'playing' : ''}" 
+                         onclick="playFromPlaylist(${songIndex}, ${position})" 
+                         data-song-index="${songIndex}">
+                        <div class="playlist-number">
+                            ${isCurrentSong ? 
+                                `<div class="equalizer">
+                                    <div class="equalizer-bar"></div>
+                                    <div class="equalizer-bar"></div>
+                                    <div class="equalizer-bar"></div>
+                                    <div class="equalizer-bar"></div>
+                                </div>` : 
+                                (position + 1)}
+                        </div>
+                        <img src="https://tolerable.github.io/EZTUNES.XYZ/img/${song.image}" alt="${song.title}" class="playlist-thumbnail">
+                        <div class="playlist-info">
+                            <div class="playlist-title">${song.title} ${isQueued ? '(Queued)' : ''}</div>
+                            <div class="playlist-meta">${song.genre.charAt(0).toUpperCase() + song.genre.slice(1)}</div>
+                        </div>
+                        <div class="playlist-duration">${song.duration}</div>
+                    </div>
+                `;
+            }).join('');
+        }
 
-		function playFromPlaylist(songIndex) {
-			currentSongIndex = songIndex;
-			loadCurrentSong();
-			renderPlaylist(); // Update the playlist to show new playing song
-			
-			if (!isPlaying) {
-				togglePlay();
-			} else {
-				playAudio();
-			}
-		}
-
-		// Toggle repeat mode
-		function toggleRepeat() {
-			const modes = ['none', 'all', 'one'];
-			const currentIndex = modes.indexOf(repeatMode);
-			repeatMode = modes[(currentIndex + 1) % modes.length];
-			
-			const repeatBtn = document.getElementById('repeatBtn');
-			switch(repeatMode) {
-				case 'none':
-					repeatBtn.textContent = '🔁 Repeat';
-					repeatBtn.style.background = 'linear-gradient(45deg, #ff6b6b, #4ecdc4)';
-					break;
-				case 'all':
-					repeatBtn.textContent = '🔁 All';
-					repeatBtn.style.background = 'linear-gradient(45deg, #4ecdc4, #ff6b6b)';
-					break;
-				case 'one':
-					repeatBtn.textContent = '🔂 One';
-					repeatBtn.style.background = 'linear-gradient(45deg, #45b7d1, #ff6b6b)';
-					break;
-			}
-		}
+        // Play from playlist
+        function playFromPlaylist(songIndex, position) {
+            if (position >= playlistOrder.length) {
+                // Playing from queue - remove from queue and make it current
+                queue = queue.filter(idx => idx !== songIndex);
+            }
+            currentSongIndex = songIndex;
+            loadCurrentSong();
+            renderPlaylist();
+            if (!isPlaying) {
+                togglePlay();
+            } else {
+                playAudio();
+            }
+        }
 
         // Setup event listeners
         function setupEventListeners() {
-            // Play/Pause button
+            // Play/Pause
             document.getElementById('playBtn').addEventListener('click', togglePlay);
             
-            // Previous/Next buttons
+            // Previous/Next
             document.getElementById('prevBtn').addEventListener('click', previousSong);
             document.getElementById('nextBtn').addEventListener('click', nextSong);
             
-            // Shuffle button
+            // Shuffle
             document.getElementById('shuffleBtn').addEventListener('click', toggleShuffle);
             
-            // Volume control
+            // Repeat
+            document.getElementById('repeatBtn').addEventListener('click', toggleRepeat);
+            
+            // Volume
             const volumeSlider = document.getElementById('volumeSlider');
             volumeSlider.addEventListener('input', updateVolume);
             
-			// Repeat button
-			document.getElementById('repeatBtn').addEventListener('click', toggleRepeat);
-						
-            // Filter buttons
+            // Volume icon click for mute
+            document.getElementById('volumeIcon').addEventListener('click', toggleMute);
+            
+            // Progress bar click to seek
+            document.getElementById('progressContainer').addEventListener('click', seekToPosition);
+            
+            // Filters
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     document.querySelector('.filter-btn.active').classList.remove('active');
@@ -747,223 +842,206 @@
                 });
             });
             
-            // Lyrics modal
-            document.getElementById('closeLyrics').addEventListener('click', hideLyrics);
-            document.getElementById('lyricsModal').addEventListener('click', (e) => {
-                if (e.target.id === 'lyricsModal') hideLyrics();
-            });
+            // Playlist controls
+            document.getElementById('clearQueueBtn').addEventListener('click', clearQueue);
+            document.getElementById('savePlaylistBtn').addEventListener('click', savePlaylist);
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', handleKeyPress);
         }
 
-        // Load current song info
-		function loadCurrentSong() {
-			if (songs.length === 0) {
-				showNoSongsMessage();
-				return;
-			}
-			
-			const song = songs[currentSongIndex];
-			document.getElementById('currentTitle').textContent = song.title;
+        // Keyboard shortcuts
+        function handleKeyPress(e) {
+            if (e.target.tagName === 'INPUT') return;
+            
+            switch(e.code) {
+                case 'Space':
+                    e.preventDefault();
+                    togglePlay();
+                    break;
+                case 'ArrowLeft':
+                    previousSong();
+                    break;
+                case 'ArrowRight':
+                    nextSong();
+                    break;
+                case 'KeyM':
+                    toggleMute();
+                    break;
+            }
+        }
+
+        // Load current song
+        function loadCurrentSong() {
+            const song = songs[currentSongIndex];
+            
+            // Update UI (BREAK)
+            document.getElementById('currentTitle').textContent = song.title;
 			document.getElementById('currentGenre').textContent = song.genre.charAt(0).toUpperCase() + song.genre.slice(1);
-			document.getElementById('currentDuration').textContent = song.duration;
-			
-			// Handle image loading with fallback
-			const artworkImg = document.getElementById('currentArtwork');
-			artworkImg.onerror = function() {
-				this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120"><rect width="120" height="120" fill="%23667eea"/><text x="60" y="60" text-anchor="middle" dy=".3em" fill="white" font-size="14">🎵</text></svg>';
-			};
-			artworkImg.src = `https://tolerable.github.io/EZTUNES.XYZ/img/${song.image}`;
-			
-			// Stop current audio if playing
-			if (currentAudio) {
-				currentAudio.pause();
-				clearInterval(progressInterval);
-			}
-			
-			// Create new audio element with error handling
-			currentAudio = new Audio(`https://tolerable.github.io/EZTUNES.XYZ/audio/${song.file}`);
-			currentAudio.preload = 'auto';
-			
-			// Auto-advance to next song when current song ends
-			currentAudio.addEventListener('ended', () => {
-				if (repeatMode === 'one') {
-					// Replay the same song
-					currentAudio.currentTime = 0;
-					playAudio();
-				} else {
-					// Move to next song (or stop if repeat is 'none' and we're at the end)
-					if (repeatMode === 'none' && !isShuffled && currentSongIndex === songs.length - 1) {
-						// Stop playing at the end of playlist
-						isPlaying = false;
-						document.getElementById('playBtn').textContent = '▶️ Play';
-						clearInterval(progressInterval);
-					} else {
-						isPlaying = true; // Force this to true before calling nextSong
-						nextSong();
-					}
-				}
-			});
-			
-			currentAudio.addEventListener('loadedmetadata', updateProgress);
-			
-			// Handle play/pause state properly
-			currentAudio.addEventListener('play', () => {
-				isPlaying = true;
-				document.getElementById('playBtn').textContent = '⏸️ Pause';
-				startProgressTracking();
-			});
-			
-			currentAudio.addEventListener('pause', () => {
-				isPlaying = false;
-				document.getElementById('playBtn').textContent = '▶️ Play';
-				clearInterval(progressInterval);
-			});
-			
-			// More detailed error handling
-			currentAudio.addEventListener('error', (e) => {
-				console.error('Audio loading error for:', song.file);
-				console.error('Error details:', e);
-				console.error('Audio error code:', currentAudio.error?.code);
-				console.error('Audio error message:', currentAudio.error?.message);
-				const playBtn = document.getElementById('playBtn');
-				playBtn.textContent = '❌ Error';
-				setTimeout(() => {
-					playBtn.textContent = '▶️ Play';
-				}, 2000);
-			});
-			
-			// Add load success listener
-			currentAudio.addEventListener('canplaythrough', () => {
-				console.log('Audio loaded successfully:', song.file);
-			});
-			
-			currentAudio.addEventListener('loadstart', () => {
-				console.log('Started loading audio:', song.file);
-			});
-			
-			// Set volume to current slider value
-			const volume = document.getElementById('volumeSlider').value;
-			currentAudio.volume = volume / 100;
-		}
+            document.getElementById('currentDuration').textContent = song.duration;
+            
+            // Update album artwork
+            const artworkImg = document.getElementById('currentArtwork');
+            artworkImg.src = `https://tolerable.github.io/EZTUNES.XYZ/img/${song.image}`;
+            
+            // Stop current audio if playing
+            if (currentAudio) {
+                currentAudio.pause();
+                clearInterval(progressInterval);
+            }
+            
+            // Create new audio element
+            currentAudio = new Audio(`https://tolerable.github.io/EZTUNES.XYZ/audio/${song.file}`);
+            currentAudio.volume = document.getElementById('volumeSlider').value / 100;
+            
+            // Audio event listeners
+            currentAudio.addEventListener('ended', handleSongEnd);
+            currentAudio.addEventListener('loadedmetadata', updateDuration);
+            currentAudio.addEventListener('timeupdate', updateProgress);
+            currentAudio.addEventListener('play', () => {
+                isPlaying = true;
+                document.getElementById('playBtn').innerHTML = '⏸️ Pause';
+                document.getElementById('currentArtwork').classList.add('spinning');
+            });
+            currentAudio.addEventListener('pause', () => {
+                isPlaying = false;
+                document.getElementById('playBtn').innerHTML = '▶️ Play';
+                document.getElementById('currentArtwork').classList.remove('spinning');
+            });
+            currentAudio.addEventListener('error', (e) => {
+                console.error('Audio loading error:', e);
+                showNotification('Error loading audio file', 'error');
+            });
+        }
 
         // Toggle play/pause
         function togglePlay() {
-            if (songs.length === 0) {
-                alert('No songs available to play. Please add songs to the songs array.');
-                return;
-            }
-            
-            const playBtn = document.getElementById('playBtn');
+            if (!currentAudio) return;
             
             if (isPlaying) {
                 currentAudio.pause();
-                playBtn.textContent = '▶️ Play';
-                clearInterval(progressInterval);
-                isPlaying = false;
             } else {
-                // Randomly play commercial before song (10% chance)
-                if (Math.random() < 0.1 && speechSynthesis) {
-                    playCommercial(() => {
-                        playAudio();
-                    });
-                } else {
-                    playAudio();
-                }
+                playAudio();
             }
         }
-        
-        // Helper function to play audio
+
+        // Play audio
         function playAudio() {
-            const playBtn = document.getElementById('playBtn');
-            currentAudio.play().then(() => {
-                playBtn.textContent = '⏸️ Pause';
-                startProgressTracking();
-                isPlaying = true;
-            }).catch(e => {
+            currentAudio.play().catch(e => {
                 console.error('Playback error:', e);
-                playBtn.textContent = '❌ Error';
-                setTimeout(() => {
-                    playBtn.textContent = '▶️ Play';
-                }, 2000);
+                showNotification('Playback error', 'error');
             });
         }
 
-        // Play commercial break
-        function playCommercial(callback) {
-            const randomCommercial = commercials[Math.floor(Math.random() * commercials.length)];
-            const utterance = new SpeechSynthesisUtterance(randomCommercial);
-            utterance.rate = 0.9;
-            utterance.pitch = 1.1;
-            utterance.onend = callback;
-            speechSynthesis.speak(utterance);
-        }
-
-        // Start progress tracking
-		function startProgressTracking() {
-			// Clear any existing interval first
-			clearInterval(progressInterval);
-			progressInterval = setInterval(updateProgress, 1000);
-		}
-
-        // Update progress bar
-        function updateProgress() {
-            if (currentAudio && currentAudio.duration) {
-                const progress = (currentAudio.currentTime / currentAudio.duration) * 100;
-                document.getElementById('progressFill').style.width = progress + '%';
+        // Handle song end
+        function handleSongEnd() {
+            if (repeatMode === 'one') {
+                currentAudio.currentTime = 0;
+                playAudio();
+            } else if (queue.length > 0) {
+                // Play next queued song
+                currentSongIndex = queue.shift();
+                loadCurrentSong();
+                playAudio();
+                renderPlaylist();
+            } else if (repeatMode === 'all' || currentSongIndex < songs.length - 1) {
+                nextSong();
+            } else {
+                // End of playlist
+                isPlaying = false;
+                document.getElementById('playBtn').innerHTML = '▶️ Play';
+                document.getElementById('currentArtwork').classList.remove('spinning');
             }
         }
 
         // Previous song
-		function previousSong() {
-			if (songs.length === 0) return;
-			
-			// Find current song in the playlist order
-			const currentPositionInPlaylist = playlistOrder.findIndex(index => index === currentSongIndex);
-			const prevPosition = currentPositionInPlaylist > 0 ? currentPositionInPlaylist - 1 : playlistOrder.length - 1;
-			
-			currentSongIndex = playlistOrder[prevPosition];
-			loadCurrentSong();
-			renderPlaylist();
-			
-			if (isPlaying) {
-				setTimeout(() => {
-					playAudio();
-				}, 500);
-			}
-		}
+        function previousSong() {
+            const currentPosition = playlistOrder.findIndex(index => index === currentSongIndex);
+            if (currentPosition > 0) {
+                currentSongIndex = playlistOrder[currentPosition - 1];
+            } else if (repeatMode === 'all') {
+                currentSongIndex = playlistOrder[playlistOrder.length - 1];
+            } else {
+                return;
+            }
+            
+            loadCurrentSong();
+            renderPlaylist();
+            if (isPlaying) playAudio();
+        }
 
         // Next song
-		function nextSong() {
-			if (songs.length === 0) return;
-			
-			const wasPlaying = isPlaying;
-			
-			// Find current song in the playlist order
-			const currentPositionInPlaylist = playlistOrder.findIndex(index => index === currentSongIndex);
-			const nextPosition = (currentPositionInPlaylist + 1) % playlistOrder.length;
-			
-			currentSongIndex = playlistOrder[nextPosition];
-			loadCurrentSong();
-			renderPlaylist();
-			
-			if (wasPlaying && currentAudio) {
-				// Wait for audio to be ready
-				currentAudio.addEventListener('canplay', function onCanPlay() {
-					currentAudio.removeEventListener('canplay', onCanPlay);
-					playAudio();
-				});
-			}
-		}
+        function nextSong() {
+            if (queue.length > 0) {
+                // Play from queue
+                currentSongIndex = queue.shift();
+            } else {
+                const currentPosition = playlistOrder.findIndex(index => index === currentSongIndex);
+                if (currentPosition < playlistOrder.length - 1) {
+                    currentSongIndex = playlistOrder[currentPosition + 1];
+                } else if (repeatMode === 'all') {
+                    currentSongIndex = playlistOrder[0];
+                } else {
+                    return;
+                }
+            }
+            
+            loadCurrentSong();
+            renderPlaylist();
+            if (isPlaying) playAudio();
+        }
 
         // Toggle shuffle
-		function toggleShuffle() {
-			// Just shuffle the whole playlist
-			for (let i = playlistOrder.length - 1; i > 0; i--) {
-				const j = Math.floor(Math.random() * (i + 1));
-				[playlistOrder[i], playlistOrder[j]] = [playlistOrder[j], playlistOrder[i]];
-			}
-			
-			renderPlaylist();
-		}
+        function toggleShuffle() {
+            const btn = document.getElementById('shuffleBtn');
+            
+            // Shuffle the playlist order
+            for (let i = playlistOrder.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [playlistOrder[i], playlistOrder[j]] = [playlistOrder[j], playlistOrder[i]];
+            }
+            
+            // Make sure current song is first
+            const currentIndex = playlistOrder.indexOf(currentSongIndex);
+            if (currentIndex > 0) {
+                [playlistOrder[0], playlistOrder[currentIndex]] = [playlistOrder[currentIndex], playlistOrder[0]];
+            }
+            
+            btn.classList.add('active');
+            setTimeout(() => btn.classList.remove('active'), 2000);
+            
+            renderPlaylist();
+            showNotification('Playlist shuffled!', 'success');
+        }
+
+        // Toggle repeat mode
+        function toggleRepeat() {
+            const modes = ['none', 'all', 'one'];
+            const currentIndex = modes.indexOf(repeatMode);
+            repeatMode = modes[(currentIndex + 1) % modes.length];
+            
+            const btn = document.getElementById('repeatBtn');
+            btn.classList.remove('active');
+            
+            switch(repeatMode) {
+                case 'none':
+                    btn.innerHTML = '🔁';
+                    btn.title = 'Repeat: Off';
+                    break;
+                case 'all':
+                    btn.innerHTML = '🔁';
+                    btn.classList.add('active');
+                    btn.title = 'Repeat: All';
+                    showNotification('Repeat all enabled', 'success');
+                    break;
+                case 'one':
+                    btn.innerHTML = '🔂';
+                    btn.classList.add('active');
+                    btn.title = 'Repeat: One';
+                    showNotification('Repeat one enabled', 'success');
+                    break;
+            }
+        }
 
         // Update volume
         function updateVolume() {
@@ -972,46 +1050,170 @@
             if (currentAudio) {
                 currentAudio.volume = volume / 100;
             }
+            
+            // Update volume icon
+            const icon = document.getElementById('volumeIcon');
+            if (volume == 0) {
+                icon.textContent = '🔇';
+            } else if (volume < 50) {
+                icon.textContent = '🔉';
+            } else {
+                icon.textContent = '🔊';
+            }
+            
+            if (volume > 0) {
+                isMuted = false;
+                originalVolume = volume / 100;
+            }
+        }
+
+        // Toggle mute
+        function toggleMute() {
+            const slider = document.getElementById('volumeSlider');
+            const icon = document.getElementById('volumeIcon');
+            
+            if (isMuted) {
+                slider.value = originalVolume * 100;
+                icon.textContent = '🔊';
+                isMuted = false;
+            } else {
+                originalVolume = slider.value / 100;
+                slider.value = 0;
+                icon.textContent = '🔇';
+                isMuted = true;
+            }
+            
+            updateVolume();
+        }
+
+        // Update duration display
+        function updateDuration() {
+            const duration = currentAudio.duration;
+            document.getElementById('totalTime').textContent = formatTime(duration);
+        }
+
+        // Update progress
+        function updateProgress() {
+            if (!currentAudio || !currentAudio.duration) return;
+            
+            const progress = (currentAudio.currentTime / currentAudio.duration) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('currentTime').textContent = formatTime(currentAudio.currentTime);
+        }
+
+        // Seek to position
+        function seekToPosition(e) {
+            if (!currentAudio || !currentAudio.duration) return;
+            
+            const rect = e.currentTarget.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const percentage = x / rect.width;
+            currentAudio.currentTime = percentage * currentAudio.duration;
+        }
+
+        // Format time
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return '0:00';
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
         }
 
         // Play specific song
         function playSong(index) {
             currentSongIndex = index;
             loadCurrentSong();
+            renderPlaylist();
             if (!isPlaying) {
                 togglePlay();
             } else {
-                currentAudio.play().catch(e => {
-                    console.error('Playback error in playSong:', e);
-                    const playBtn = document.getElementById('playBtn');
-                    playBtn.textContent = '❌ Error';
-                    setTimeout(() => {
-                        playBtn.textContent = '▶️ Play';
-                    }, 2000);
-                });
+                playAudio();
             }
         }
 
-        // Show lyrics modal
-        function showLyrics(index) {
-            const song = songs[index];
-            document.getElementById('lyricsTitle').textContent = song.title;
-            document.getElementById('lyricsText').innerHTML = song.lyrics.replace(/\n/g, '<br>');
-            document.getElementById('lyricsModal').style.display = 'block';
-        }
-
-        // Hide lyrics modal
-        function hideLyrics() {
-            document.getElementById('lyricsModal').style.display = 'none';
-        }
-
-        // Add to queue (placeholder function)
+        // Add to queue
         function addToQueue(index) {
-            alert(`"${songs[index].title}" added to queue!`);
+            if (index === currentSongIndex) {
+                showNotification('This song is currently playing', 'info');
+                return;
+            }
+            
+            if (queue.includes(index)) {
+                showNotification('Song already in queue', 'info');
+                return;
+            }
+            
+            queue.push(index);
+            renderPlaylist();
+            showNotification(`"${songs[index].title}" added to queue`, 'success');
+        }
+
+        // Clear queue
+        function clearQueue() {
+            queue = [];
+            renderPlaylist();
+            showNotification('Queue cleared', 'success');
+        }
+
+        // Save playlist (mock function)
+        function savePlaylist() {
+            const playlistData = {
+                name: 'My EzTunes Playlist',
+                songs: playlistOrder.map(idx => songs[idx].title),
+                date: new Date().toISOString()
+            };
+            
+            // In a real app, this would save to a database
+            console.log('Saving playlist:', playlistData);
+            showNotification('Playlist saved!', 'success');
+        }
+
+        // Show notification
+        function showNotification(message, type = 'info') {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: ${type === 'error' ? '#ff6b6b' : type === 'success' ? '#4ecdc4' : '#667eea'};
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            
+            // Add animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); }
+                    to { transform: translateX(0); }
+                }
+                @keyframes slideOut {
+                    from { transform: translateX(0); }
+                    to { transform: translateX(100%); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            document.body.appendChild(notification);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    notification.remove();
+                    style.remove();
+                }, 300);
+            }, 3000);
         }
 
         // Initialize when page loads
         window.addEventListener('load', init);
     </script>
 </body>
-</html>
+</html>			
