@@ -355,7 +355,7 @@
             </div>
             
             <div class="current-song">
-                <img src="/img/HardToThink.jpg" alt="Current Song" class="current-artwork" id="currentArtwork">
+                <img src="/img/HardtoThink.jpg" alt="Current Song" class="current-artwork" id="currentArtwork">
                 <div class="current-info">
                     <h3 id="currentTitle">Hard to Think</h3>
                     <p id="currentGenre">Electronic</p>
@@ -443,8 +443,8 @@
     </div>
 
     <script>
-        // Sample song database - add your actual songs here
-        const allSongs = [
+        // Song database - add your actual songs here
+        const songs = [
             {
                 title: "Hard To Think",
                 file: "HardToThink.mp3",
@@ -465,9 +465,6 @@
             // }
         ];
 
-        // Available songs (will be populated with existing files)
-        let songs = [];
-
         // Commercial breaks for radio mode
         const commercials = [
             "Thanks for listening to EzTunes.XYZ - Where AI meets melody!",
@@ -483,29 +480,8 @@
         let currentFilter = 'all';
         let progressInterval;
 
-        // Check if audio file exists
-        async function checkAudioExists(audioPath) {
-            try {
-                const response = await fetch(audioPath, { method: 'HEAD' });
-                return response.ok;
-            } catch (error) {
-                return false;
-            }
-        }
-
-        // Check if image exists
-        async function checkImageExists(imagePath) {
-            return new Promise((resolve) => {
-                const img = new Image();
-                img.onload = () => resolve(true);
-                img.onerror = () => resolve(false);
-                img.src = imagePath;
-            });
-        }
-
         // Initialize the application
-        async function init() {
-            await loadAvailableSongs();
+        function init() {
             renderSongs();
             setupEventListeners();
             if (songs.length > 0) {
@@ -515,27 +491,6 @@
             }
         }
 
-        // Load only songs that actually exist
-        async function loadAvailableSongs() {
-            songs = [];
-            
-            for (const song of allSongs) {
-                const audioExists = await checkAudioExists(`/audio/${song.file}`);
-                const imageExists = await checkImageExists(`/img/${song.image}`);
-                
-                if (audioExists) {
-                    // Use placeholder image if specific image doesn't exist
-                    const finalImagePath = imageExists ? song.image : 'placeholder.jpg';
-                    songs.push({
-                        ...song,
-                        image: finalImagePath
-                    });
-                }
-            }
-            
-            console.log(`Loaded ${songs.length} available songs`);
-        }
-
         // Show message when no songs are available
         function showNoSongsMessage() {
             const songGrid = document.getElementById('songGrid');
@@ -543,7 +498,7 @@
                 <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
                     <h3>🎵 No songs available yet</h3>
                     <p>Upload your MP3 files to the /audio/ folder and matching JPG images to the /img/ folder.</p>
-                    <p>Make sure the files are named exactly the same (e.g., HardToThink.mp3 and HardToThink.jpg)</p>
+                    <p>Make sure the files are named exactly the same (e.g., HardtoThink.mp3 and HardtoThink.jpg)</p>
                 </div>
             `;
             
@@ -619,7 +574,13 @@
             document.getElementById('currentTitle').textContent = song.title;
             document.getElementById('currentGenre').textContent = song.genre.charAt(0).toUpperCase() + song.genre.slice(1);
             document.getElementById('currentDuration').textContent = song.duration;
-            document.getElementById('currentArtwork').src = `/img/${song.image}`;
+            
+            // Handle image loading with fallback
+            const artworkImg = document.getElementById('currentArtwork');
+            artworkImg.onerror = function() {
+                this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120"><rect width="120" height="120" fill="%23667eea"/><text x="60" y="60" text-anchor="middle" dy=".3em" fill="white" font-size="14">🎵</text></svg>';
+            };
+            artworkImg.src = `/img/${song.image}`;
             
             // Stop current audio if playing
             if (currentAudio) {
@@ -635,8 +596,12 @@
             
             // Handle audio loading errors
             currentAudio.addEventListener('error', (e) => {
-                console.error('Audio loading error:', e);
-                alert(`Error loading "${song.title}". Please check if the file exists.`);
+                console.error('Audio loading error for:', song.file, e);
+                const playBtn = document.getElementById('playBtn');
+                playBtn.textContent = '❌ Error';
+                setTimeout(() => {
+                    playBtn.textContent = '▶️ Play';
+                }, 2000);
             });
             
             // Set volume to current slider value
@@ -647,7 +612,7 @@
         // Toggle play/pause
         function togglePlay() {
             if (songs.length === 0) {
-                alert('No songs available to play. Please upload songs to the /audio/ folder.');
+                alert('No songs available to play. Please add songs to the songs array.');
                 return;
             }
             
@@ -657,28 +622,33 @@
                 currentAudio.pause();
                 playBtn.textContent = '▶️ Play';
                 clearInterval(progressInterval);
+                isPlaying = false;
             } else {
                 // Randomly play commercial before song (10% chance)
-                if (Math.random() < 0.1) {
+                if (Math.random() < 0.1 && speechSynthesis) {
                     playCommercial(() => {
-                        currentAudio.play().catch(e => {
-                            console.error('Playback error:', e);
-                            alert('Error playing audio. Please check if the file exists and is a valid MP3.');
-                        });
-                        playBtn.textContent = '⏸️ Pause';
-                        startProgressTracking();
+                        playAudio();
                     });
                 } else {
-                    currentAudio.play().catch(e => {
-                        console.error('Playback error:', e);
-                        alert('Error playing audio. Please check if the file exists and is a valid MP3.');
-                        return;
-                    });
-                    playBtn.textContent = '⏸️ Pause';
-                    startProgressTracking();
+                    playAudio();
                 }
             }
-            isPlaying = !isPlaying;
+        }
+        
+        // Helper function to play audio
+        function playAudio() {
+            const playBtn = document.getElementById('playBtn');
+            currentAudio.play().then(() => {
+                playBtn.textContent = '⏸️ Pause';
+                startProgressTracking();
+                isPlaying = true;
+            }).catch(e => {
+                console.error('Playback error:', e);
+                playBtn.textContent = '❌ Error';
+                setTimeout(() => {
+                    playBtn.textContent = '▶️ Play';
+                }, 2000);
+            });
         }
 
         // Play commercial break
