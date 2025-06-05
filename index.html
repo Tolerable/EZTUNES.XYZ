@@ -815,6 +815,7 @@
 				} while (newIndex === currentSongIndex && songs.length > 1);
 				currentSongIndex = newIndex;
 			} else {
+				// Normal playlist order
 				currentSongIndex = (currentSongIndex + 1) % songs.length;
 			}
 			
@@ -829,13 +830,34 @@
 		}
 
         // Toggle shuffle
-        function toggleShuffle() {
-            isShuffled = !isShuffled;
-            const shuffleBtn = document.getElementById('shuffleBtn');
-            shuffleBtn.style.background = isShuffled ? 
-                'linear-gradient(45deg, #4ecdc4, #ff6b6b)' : 
-                'linear-gradient(45deg, #ff6b6b, #4ecdc4)';
-        }
+		function toggleShuffle() {
+		   isShuffled = !isShuffled;
+		   const shuffleBtn = document.getElementById('shuffleBtn');
+		   
+		   if (isShuffled) {
+			   shuffleBtn.style.background = 'linear-gradient(45deg, #4ecdc4, #ff6b6b)';
+			   shuffleBtn.textContent = '🔀 Shuffled';
+			   
+			   // When shuffle is turned on, immediately jump to a random song
+			   let newIndex;
+			   do {
+				   newIndex = Math.floor(Math.random() * songs.length);
+			   } while (newIndex === currentSongIndex && songs.length > 1);
+			   
+			   currentSongIndex = newIndex;
+			   loadCurrentSong();
+			   
+			   // If we were playing, continue playing the new shuffled song
+			   if (isPlaying) {
+				   setTimeout(() => {
+					   playAudio();
+				   }, 100);
+			   }
+		   } else {
+			   shuffleBtn.style.background = 'linear-gradient(45deg, #ff6b6b, #4ecdc4)';
+			   shuffleBtn.textContent = '🔀 Shuffle';
+		   }
+		}
 
         // Update volume
         function updateVolume() {
