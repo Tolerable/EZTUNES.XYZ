@@ -1204,7 +1204,7 @@
 			// Populate album header
 			const albumHeader = document.getElementById('albumHeader');
 			albumHeader.innerHTML = `
-				<img src="${safeImageSrc(album.albumArt)}" 
+				<img src="${safeImageSrc(album.albumArt, album.id)}"
 					 alt="${album.title}" 
 					 class="album-header-art"
 					 onerror="this.src='${safeImageSrc('default-album.jpg')}'">
