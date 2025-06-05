@@ -1,0 +1,119 @@
+{
+  "albums": [
+    {
+      "id": "unleashed",
+      "title": "Unleashed",
+      "artist": "EzTunes AI",
+      "year": 2025,
+      "genre": "Experimental Rock",
+      "albumArt": "Unleashed-Album.jpg",
+      "description": "A musical journey through the adventures of blending rock, metal, and electronic elements.",
+      "tracks": [
+        {
+          "trackNumber": 1,
+          "title": "Hard to Think",
+          "file": "Hard to Think.mp3",
+          "image": "Hard to Think.jpg",
+          "genre": "rock",
+          "duration": "3:27"
+        },
+        {
+          "trackNumber": 2,
+          "title": "Chicken Pigeon",
+          "file": "Chicken Pigeon.mp3",
+          "image": "Chicken Pigeon.jpg",
+          "genre": "rock",
+          "duration": "2:24"
+        },
+        {
+          "trackNumber": 3,
+          "title": "Complete",
+          "file": "Complete.mp3",
+          "image": "Complete.jpg",
+          "genre": "rock",
+          "duration": "2:39"
+        },
+        {
+          "trackNumber": 4,
+          "title": "Dance of Mirrors",
+          "file": "Dance of Mirrors.mp3",
+          "image": "Dance of Mirrors.jpg",
+          "genre": "folk",
+          "duration": "3:04"
+        },
+        {
+          "trackNumber": 5,
+          "title": "Lost in Love",
+          "file": "Lost in Love.mp3",
+          "image": "Lost in Love.jpg",
+          "genre": "electronic",
+          "duration": "4:04"
+        },
+        {
+          "trackNumber": 6,
+          "title": "Red Alert",
+          "file": "Red Alert.mp3",
+          "image": "Red Alert.jpg",
+          "genre": "rock",
+          "duration": "2:54"
+        },
+        {
+          "trackNumber": 7,
+          "title": "Waking Inside",
+          "file": "Waking Inside.mp3",
+          "image": "Waking Inside.jpg",
+          "genre": "rock",
+          "duration": "3:09"
+        },
+        {
+          "trackNumber": 8,
+          "title": "Freedom Tastes Fantastic",
+          "file": "Freedom Tastes Fantastic.mp3",
+          "image": "Freedom Tastes Fantastic.jpg",
+          "genre": "rock",
+          "duration": "2:53"
+        },
+        {
+          "trackNumber": 9,
+          "title": "15 Minute Break",
+          "file": "15 Minute Break.mp3",
+          "image": "15 Minute Break.jpg",
+          "genre": "metal",
+          "duration": "3:22"
+        },
+        {
+          "trackNumber": 10,
+          "title": "Garage Grow",
+          "file": "Garage Grow.mp3",
+          "image": "Garage Grow.jpg",
+          "genre": "metal",
+          "duration": "2:27"
+        },
+        {
+          "trackNumber": 11,
+          "title": "Packing Power",
+          "file": "Packing Power.mp3",
+          "image": "Packing Power.jpg",
+          "genre": "metal",
+          "duration": "2:38"
+        },
+        {
+          "trackNumber": 12,
+          "title": "Parking Lot People",
+          "file": "Parking Lot People.mp3",
+          "image": "Parking Lot People.jpg",
+          "genre": "metal",
+          "duration": "3:59"
+        },
+        {
+          "trackNumber": 13,
+          "title": "Roadtrip",
+          "file": "Roadtrip.mp3",
+          "image": "Roadtrip.jpg",
+          "genre": "rock",
+          "duration": "3:27"
+        }
+      ]
+    }
+  ]
+}
