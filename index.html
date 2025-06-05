@@ -1521,42 +1521,46 @@
 			}
 		}
 
-        // Previous song
-        function previousSong() {
-            const currentPosition = playlistOrder.findIndex(index => index === currentSongIndex);
-            if (currentPosition > 0) {
-                currentSongIndex = playlistOrder[currentPosition - 1];
-            } else if (repeatMode === 'all') {
-                currentSongIndex = playlistOrder[playlistOrder.length - 1];
-            } else {
-                return;
-            }
-            
-            loadCurrentSong();
-            renderPlaylist();
-            if (isPlaying) playAudio();
-        }
+		// Previous song
+		function previousSong() {
+		   if (currentAudio) currentAudio.pause();
+		   
+		   const currentPosition = playlistOrder.findIndex(index => index === currentSongIndex);
+		   if (currentPosition > 0) {
+			   currentSongIndex = playlistOrder[currentPosition - 1];
+		   } else if (repeatMode === 'all') {
+			   currentSongIndex = playlistOrder[playlistOrder.length - 1];
+		   } else {
+			   return;
+		   }
+		   
+		   loadCurrentSong();
+		   renderPlaylist();
+		   if (isPlaying) playAudio();
+		}
 
-        // Next song
-        function nextSong() {
-            if (queue.length > 0) {
-                // Play from queue
-                currentSongIndex = queue.shift();
-            } else {
-                const currentPosition = playlistOrder.findIndex(index => index === currentSongIndex);
-                if (currentPosition < playlistOrder.length - 1) {
-                    currentSongIndex = playlistOrder[currentPosition + 1];
-                } else if (repeatMode === 'all') {
-                    currentSongIndex = playlistOrder[0];
-                } else {
-                    return;
-                }
-            }
-            
-            loadCurrentSong();
-            renderPlaylist();
-            if (isPlaying) playAudio();
-        }
+		// Next song
+		function nextSong() {
+		   if (currentAudio) currentAudio.pause();
+		   
+		   if (queue.length > 0) {
+			   // Play from queue
+			   currentSongIndex = queue.shift();
+		   } else {
+			   const currentPosition = playlistOrder.findIndex(index => index === currentSongIndex);
+			   if (currentPosition < playlistOrder.length - 1) {
+				   currentSongIndex = playlistOrder[currentPosition + 1];
+			   } else if (repeatMode === 'all') {
+				   currentSongIndex = playlistOrder[0];
+			   } else {
+				   return;
+			   }
+		   }
+		   
+		   loadCurrentSong();
+		   renderPlaylist();
+		   if (isPlaying) playAudio();
+		}
 
         // Toggle shuffle
         function toggleShuffle() {
