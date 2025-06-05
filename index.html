@@ -1148,38 +1148,35 @@
 			}
 		}
 
-		// Updated renderAlbums function
 		function renderAlbums() {
-			const albumsGrid = document.getElementById('albumsGrid');
-			if (!musicData || !musicData.albums) return;
-			
-			albumsGrid.innerHTML = musicData.albums.map(album => {
-				const trackCount = album.tracks.length;
-				const totalDuration = calculateAlbumDuration(album);
-				
-				return `
-					<div class="album-card" onclick="showAlbumDetail('${album.id}')">
-						<img src="${safeImageSrc(album.albumArt, album.id)}" 
-							 alt="${album.title}" 
-							 class="album-artwork" 
-							 onerror="this.src='https://tolerable.github.io/EZTUNES.XYZ/img/default-album.jpg'">
-						<div class="album-info">
-							<div class="album-title">${album.title}</div>
-							<div class="album-meta">
-								<span>${album.artist}</span>
-								<span>${album.year}</span>
-							</div>
-							<div class="album-description">${album.description}</div>
-							<div class="album-stats">
-								<span>${trackCount} tracks</span>
-								<span>${totalDuration}</span>
-							</div>
-						</div>
-					</div>
-				`;
-			}).join('');
+		   const albumsGrid = document.getElementById('albumsGrid');
+		   if (!musicData || !musicData.albums) return;
+		   
+		   albumsGrid.innerHTML = musicData.albums.map(album => {
+			   const trackCount = album.tracks.length;
+			   const totalDuration = calculateAlbumDuration(album);
+			   
+			   return `
+				   <div class="album-card" onclick="showAlbumDetail('${album.id}')">
+					   <img src="${safeImageSrc(album.albumArt, album.id)}" 
+							alt="${album.title}" 
+							class="album-artwork">
+					   <div class="album-info">
+						   <div class="album-title">${album.title}</div>
+						   <div class="album-meta">
+							   <span>${album.artist}</span>
+							   <span>${album.year}</span>
+						   </div>
+						   <div class="album-description">${album.description}</div>
+						   <div class="album-stats">
+							   <span>${trackCount} tracks</span>
+							   <span>${totalDuration}</span>
+						   </div>
+					   </div>
+				   </div>
+			   `;
+		   }).join('');
 		}
-
 
 		// Calculate album duration
 		function calculateAlbumDuration(album) {
