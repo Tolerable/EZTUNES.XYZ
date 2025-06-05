@@ -721,7 +721,14 @@
             if (!isPlaying) {
                 togglePlay();
             } else {
-                currentAudio.play();
+                currentAudio.play().catch(e => {
+                    console.error('Playback error in playSong:', e);
+                    const playBtn = document.getElementById('playBtn');
+                    playBtn.textContent = '❌ Error';
+                    setTimeout(() => {
+                        playBtn.textContent = '▶️ Play';
+                    }, 2000);
+                });
             }
         }
 
