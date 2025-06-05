@@ -934,26 +934,49 @@
             });
         }
 
-        // Handle song end
-        function handleSongEnd() {
-            if (repeatMode === 'one') {
-                currentAudio.currentTime = 0;
-                playAudio();
-            } else if (queue.length > 0) {
-                // Play next queued song
-                currentSongIndex = queue.shift();
-                loadCurrentSong();
-                playAudio();
-                renderPlaylist();
-            } else if (repeatMode === 'all' || currentSongIndex < songs.length - 1) {
-                nextSong();
-            } else {
-                // End of playlist
-                isPlaying = false;
-                document.getElementById('playBtn').innerHTML = '▶️ Play';
-                document.getElementById('currentArtwork').classList.remove('spinning');
-            }
-        }
+		// Handle song end
+		function handleSongEnd() {
+			if (repeatMode === 'one') {
+				currentAudio.currentTime = 0;
+				playAudio();
+			} else if (queue.length > 0) {
+				// Play next queued song
+				currentSongIndex = queue.shift();
+				loadCurrentSong();
+				renderPlaylist();
+				// Wait for the audio to be ready before playing
+				currentAudio.addEventListener('canplay', function() {
+					currentAudio.play();
+				}, { once: true });
+			} else {
+				// Check if we should continue to next song
+				const currentPosition = playlistOrder.findIndex(index => index === currentSongIndex);
+				if (currentPosition < playlistOrder.length - 1) {
+					// Go to next song
+					currentSongIndex = playlistOrder[currentPosition + 1];
+					loadCurrentSong();
+					renderPlaylist();
+					// Wait for the audio to be ready before playing
+					currentAudio.addEventListener('canplay', function() {
+						currentAudio.play();
+					}, { once: true });
+				} else if (repeatMode === 'all') {
+					// Loop back to beginning
+					currentSongIndex = playlistOrder[0];
+					loadCurrentSong();
+					renderPlaylist();
+					// Wait for the audio to be ready before playing
+					currentAudio.addEventListener('canplay', function() {
+						currentAudio.play();
+					}, { once: true });
+				} else {
+					// End of playlist
+					isPlaying = false;
+					document.getElementById('playBtn').innerHTML = '▶️ Play';
+					document.getElementById('currentArtwork').classList.remove('spinning');
+				}
+			}
+		}
 
         // Previous song
         function previousSong() {
