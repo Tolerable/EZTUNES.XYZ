@@ -2295,6 +2295,13 @@
 		function nextSong() {
 			if (playlistOrder.length === 0) return;
 			
+			// Stop current audio completely
+			if (currentAudio) {
+				currentAudio.pause();
+				currentAudio.currentTime = 0;
+				currentAudio = null;
+			}
+			
 			const currentPosition = playlistOrder.indexOf(currentSongIndex);
 			
 			if (shuffleMode) {
@@ -2313,6 +2320,8 @@
 			
 			loadCurrentSong();
 			renderPlaylist();
+			
+			// Start playing the new song if we were playing before
 			if (isPlaying) {
 				playAudio();
 			}
@@ -2320,6 +2329,13 @@
 
 		function previousSong() {
 			if (playlistOrder.length === 0) return;
+			
+			// Stop current audio completely
+			if (currentAudio) {
+				currentAudio.pause();
+				currentAudio.currentTime = 0;
+				currentAudio = null;
+			}
 			
 			const currentPosition = playlistOrder.indexOf(currentSongIndex);
 			
@@ -2339,6 +2355,8 @@
 			
 			loadCurrentSong();
 			renderPlaylist();
+			
+			// Start playing the new song if we were playing before
 			if (isPlaying) {
 				playAudio();
 			}
