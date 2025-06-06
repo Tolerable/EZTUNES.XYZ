@@ -425,6 +425,14 @@
 			"file": "Taking Chances.mp3",
 			"image": "Taking Chances.jpg",
 			"genre": "alternative"
+		},
+		{
+			"trackNumber": 10,
+			"title": "Nothing Compares",
+			"duration": "3:09",
+			"file": "Nothing Compares.mp3",
+			"image": "Nothing Compares.jpg",
+			"genre": "alternative"
 		}
 	  ]
 	}
