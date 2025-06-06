@@ -1010,7 +1010,7 @@
                 <button class="control-btn main-play" id="playBtn" title="Play/Pause">▶️ Play</button>
                 <button class="control-btn" id="nextBtn" title="Next track">⏭️</button>
                 <button class="control-btn" id="shuffleBtn" title="Shuffle playlist">🔀</button>
-                <button class="control-btn" id="repeatBtn" title="Repeat mode">🔁</button>
+                <button class="control-btn active" id="repeatBtn" title="Repeat: All" style="background: linear-gradient(45deg, #4ecdc4, #45b7d1); border: 2px solid #4ecdc4;">🔁</button>
             </div>
             
             <div class="volume-control">
@@ -1130,11 +1130,18 @@
 				return;
 			}
 			
-			playlistOrder = [];
+			playlistOrder = []; // Start with empty playlist
 			renderAlbums();
 			renderSongs();
 			renderPlaylist();
 			setupEventListeners();
+			
+			// Set initial repeat button state
+			const repeatBtn = document.getElementById('repeatBtn');
+			repeatBtn.style.background = 'linear-gradient(45deg, #4ecdc4, #45b7d1) !important';
+			repeatBtn.style.border = '2px solid #4ecdc4 !important';
+			repeatBtn.classList.add('active');
+			repeatBtn.title = 'Repeat: All';
 			
 			if (songs.length > 0) {
 				loadCurrentSong();
@@ -1760,16 +1767,16 @@
 				case 'all':
 					btn.innerHTML = '🔁';
 					btn.classList.add('active');
-					btn.style.background = 'linear-gradient(45deg, #4ecdc4, #45b7d1)';
-					btn.style.border = '2px solid #4ecdc4';
+					btn.style.background = 'linear-gradient(45deg, #4ecdc4, #45b7d1) !important';
+					btn.style.border = '2px solid #4ecdc4 !important';
 					btn.title = 'Repeat: All';
 					showNotification('Repeat all enabled', 'success');
 					break;
 				case 'one':
 					btn.innerHTML = '🔂';
 					btn.classList.add('active');
-					btn.style.background = 'linear-gradient(45deg, #ff6b6b, #ff8e8e)';
-					btn.style.border = '2px solid #ff6b6b';
+					btn.style.background = 'linear-gradient(45deg, #ff6b6b, #ff8e8e) !important';
+					btn.style.border = '2px solid #ff6b6b !important';
 					btn.title = 'Repeat: One';
 					showNotification('Repeat one enabled', 'success');
 					break;
