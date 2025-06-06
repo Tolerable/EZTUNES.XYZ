@@ -691,14 +691,59 @@
             margin-bottom: 2rem;
         }
         
-        .current-song {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-        
+		.current-song {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 2rem;
+			margin-bottom: 2rem;
+		}
+
+		.album-artwork-container {
+			display: flex;
+			align-items: center;
+			gap: 1.5rem;
+		}
+
+		.album-cover {
+			width: 120px;
+			height: 120px;
+			border-radius: 8px;
+			border: 2px solid rgba(255, 255, 255, 0.3);
+			box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+			object-fit: cover;
+			transition: all 0.3s ease;
+		}
+
+		.album-cover:hover {
+			transform: scale(1.05);
+			box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+		}
+
+		.album-info-display {
+			text-align: left;
+		}
+
+		.album-info-display .album-title-display {
+			font-size: 1.1rem;
+			font-weight: bold;
+			margin-bottom: 0.3rem;
+			background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+			background-clip: text;
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+		}
+
+		.album-info-display .album-year {
+			font-size: 0.9rem;
+			opacity: 0.7;
+			margin-bottom: 0.2rem;
+		}
+
+		.album-info-display .album-track-count {
+			font-size: 0.8rem;
+			opacity: 0.6;
+		}        
         .album-container {
             position: relative;
             width: 180px;
@@ -1144,27 +1189,37 @@
 		}
         
         @media (max-width: 768px) {
-            .logo h1 {
-                font-size: 2rem;
-            }
-            
-            .current-song {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .radio-controls {
-                flex-wrap: wrap;
-            }
-            
-            .song-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .album-container {
-                width: 150px;
-                height: 150px;
-            }
+			.logo h1 {
+				font-size: 2rem;
+			}
+			
+			.current-song {
+				flex-direction: column;
+				text-align: center;
+			}
+			
+			.album-artwork-container {
+				flex-direction: column;
+				gap: 1rem;
+			}
+			
+			.album-cover {
+				width: 80px;
+				height: 80px;
+			}
+			
+			.radio-controls {
+				flex-wrap: wrap;
+			}
+			
+			.song-grid {
+				grid-template-columns: 1fr;
+			}
+			
+			.album-container {
+				width: 150px;
+				height: 150px;
+			}
         }
     </style>
 </head>
@@ -1185,16 +1240,26 @@
                 <h2>🎧 Now Playing on EzTunes Radio</h2>
             </div>
             
-            <div class="current-song">
-                <div class="album-container">
-                    <img src="https://www.eztunes.xyz/img/Hard%20to%20Think.jpg" alt="Current Song" class="current-artwork" id="currentArtwork">
-                </div>
-                <div class="current-info">
-                    <h3 id="currentTitle">Hard to Think</h3>
-                    <p id="currentGenre">Electronic</p>
-                    <p id="currentDuration">3:27</p>
-                </div>
-            </div>
+			<div class="current-song">
+				<div class="album-artwork-container">
+					<div id="albumCoverContainer" style="display: none;">
+						<img src="" alt="Album Cover" class="album-cover" id="albumCover">
+						<div class="album-info-display">
+							<div class="album-title-display" id="albumTitleDisplay"></div>
+							<div class="album-year" id="albumYearDisplay"></div>
+							<div class="album-track-count" id="albumTrackCountDisplay"></div>
+						</div>
+					</div>
+					<div class="album-container">
+						<img src="https://www.eztunes.xyz/img/Hard%20to%20Think.jpg" alt="Current Song" class="current-artwork" id="currentArtwork">
+					</div>
+				</div>
+				<div class="current-info">
+					<h3 id="currentTitle">Hard to Think</h3>
+					<p id="currentGenre">Electronic</p>
+					<p id="currentDuration">3:27</p>
+				</div>
+			</div>
             
             <div class="progress-container" id="progressContainer">
                 <div class="progress-bar">
@@ -1924,6 +1989,14 @@
             // Progress bar click to seek
             document.getElementById('progressContainer').addEventListener('click', seekToPosition);
 
+			// Album cover click to show album details
+			document.getElementById('albumCover').addEventListener('click', () => {
+				const song = songs[currentSongIndex];
+				if (song && song.albumId) {
+					showAlbumDetail(song.albumId);
+				}
+			});
+
 			// Close share modal when clicking outside
 			document.getElementById('shareModal').addEventListener('click', (e) => {
 				if (e.target.id === 'shareModal') {
@@ -2035,15 +2108,30 @@
 			}
 			
 			const song = songs[currentSongIndex];
+			const album = musicData.albums.find(a => a.id === song.albumId);
 			
 			// Update the display info to match the actual song
 			document.getElementById('currentTitle').textContent = song.title;
 			document.getElementById('currentGenre').textContent = song.genre.charAt(0).toUpperCase() + song.genre.slice(1);
 			document.getElementById('currentDuration').textContent = song.duration;
 			
-			// Update album artwork
+			// Update spinning track artwork
 			const artworkImg = document.getElementById('currentArtwork');
 			artworkImg.src = safeImageSrc(song.image, song.albumId);
+			
+			// Update album info if track belongs to an album
+			const albumCoverContainer = document.getElementById('albumCoverContainer');
+			if (album && album.tracks && album.tracks.length > 1) {
+				// Show album info for multi-track albums
+				document.getElementById('albumCover').src = safeImageSrc(album.albumArt, album.id);
+				document.getElementById('albumTitleDisplay').textContent = album.title;
+				document.getElementById('albumYearDisplay').textContent = `${album.artist} • ${album.year}`;
+				document.getElementById('albumTrackCountDisplay').textContent = `${album.tracks.length} tracks`;
+				albumCoverContainer.style.display = 'block';
+			} else {
+				// Hide album info for singles
+				albumCoverContainer.style.display = 'none';
+			}
 			
 			// Create new audio element
 			currentAudio = new Audio(safeAudioSrc(song.file, song.albumId));
