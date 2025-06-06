@@ -1113,7 +1113,7 @@
 		let currentAlbum = null;
 		let currentSongIndex = 0;
 		let isPlaying = false;
-		let repeatMode = 'none';
+		let repeatMode = 'all';
 		let currentAudio = null;
 		let currentFilter = 'all';
 		let progressInterval;
@@ -1746,9 +1746,8 @@
 
         // Toggle repeat mode
 		function toggleRepeat() {
-			const modes = ['none', 'all', 'one'];
-			const currentIndex = modes.indexOf(repeatMode);
-			repeatMode = modes[(currentIndex + 1) % modes.length];
+			// Only two modes: 'all' and 'one'
+			repeatMode = repeatMode === 'all' ? 'one' : 'all';
 			
 			const btn = document.getElementById('repeatBtn');
 			
@@ -1758,12 +1757,6 @@
 			btn.style.border = '';
 			
 			switch(repeatMode) {
-				case 'none':
-					btn.innerHTML = '🔁';
-					btn.title = 'Repeat: Off';
-					btn.style.background = 'rgba(255, 255, 255, 0.1)';
-					btn.style.border = '2px solid rgba(255, 255, 255, 0.3)';
-					break;
 				case 'all':
 					btn.innerHTML = '🔁';
 					btn.classList.add('active');
