@@ -417,6 +417,14 @@
 			"file": "Endless Hope.mp3",
 			"image": "Endless Hope.jpg",
 			"genre": "alternative"
+		},
+		{
+			"trackNumber": 9,
+			"title": "Taking Chances",
+			"duration": "2:20",
+			"file": "Taking Chances.mp3",
+			"image": "Taking Chances.jpg",
+			"genre": "alternative"
 		}		
 	  ]
 	}	
