@@ -1640,6 +1640,7 @@
 			container.innerHTML = playlistOrder.map((songIndex, position) => {
 				const song = songs[songIndex];
 				const isCurrentSong = songIndex === currentSongIndex;
+				const trackId = `${song.albumId}_${song.trackNumber}`;
 				
 				return `
 					<div class="playlist-item ${isCurrentSong ? 'playing' : ''}" 
@@ -1660,6 +1661,7 @@
 						<div class="playlist-info">
 							<div class="playlist-title">${song.title}</div>
 							<div class="playlist-meta">${song.genre.charAt(0).toUpperCase() + song.genre.slice(1)}</div>
+							${createStarRating(trackId, getRating(trackId))}
 						</div>
 						<div class="playlist-duration">${song.duration}</div>
 					</div>
