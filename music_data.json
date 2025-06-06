@@ -286,7 +286,63 @@
 		  "duration": "2:20",
 		  "file": "Weed Weavels.mp3",
 		  "image": "Weed Weavels.jpg"
-		}
+		},
+		{
+		  "trackNumber": 7,
+		  "title": "Cut Yourself Out",
+		  "genre": "metal",
+		  "duration": "1:54",
+		  "file": "Cut Yourself Out.mp3",
+		  "image": "Cut Yourself Out.jpg"
+		},
+		{
+		  "trackNumber": 8,
+		  "title": "Apocoplypse Rising",
+		  "genre": "metal",
+		  "duration": "3:53",
+		  "file": "Apocoplypse Rising.mp3",
+		  "image": "Apocoplypse Rising.jpg"
+		},
+		{
+		  "trackNumber": 9,
+		  "title": "Trapped",
+		  "genre": "metal",
+		  "duration": "3:30",
+		  "file": "Trapped.mp3",
+		  "image": "Trapped.jpg"
+		},
+		{
+		  "trackNumber": 10,
+		  "title": "Corrupted Controller",
+		  "genre": "metal",
+		  "duration": "2:59",
+		  "file": "Corrupted Controller.mp3",
+		  "image": "Corrupted Controller.jpg"
+		},
+		{
+		  "trackNumber": 11,
+		  "title": "I Am So Evil",
+		  "genre": "metal",
+		  "duration": "4:09",
+		  "file": "I Am So Evil.mp3",
+		  "image": "I Am So Evil.jpg"
+		},
+		{
+		  "trackNumber": 12,
+		  "title": "Watcher of the Buds",
+		  "genre": "folk",
+		  "duration": "3:18",
+		  "file": "Watcher of the Buds.mp3",
+		  "image": "Watcher of the Buds.jpg"
+		},
+		{
+		  "trackNumber": 13,
+		  "title": "Weed Thief",
+		  "genre": "metal",
+		  "duration": "3:43",
+		  "file": "Weed Thief.mp3",
+		  "image": "Weed Thief.jpg"
+		}		
 	  ]
 	}	
   ]
