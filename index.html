@@ -1795,16 +1795,18 @@
 				currentAudio.pause();
 			}
 			
-			// Replace playlist with album tracks
-			playlistOrder = [];
+			// Get album track indices
+			const albumTrackIndices = [];
 			songs.forEach((song, index) => {
 				if (song.albumId === albumId) {
-					playlistOrder.push(index);
+					albumTrackIndices.push(index);
 				}
 			});
 			
-			// Start with first track
+			// Replace playlist with album tracks
+			playlistOrder = albumTrackIndices;
 			currentSongIndex = playlistOrder[0];
+			
 			loadCurrentSong();
 			renderPlaylist();
 			
@@ -1903,7 +1905,16 @@
 				return;
 			}
 			
-			container.innerHTML = playlistOrder.map((songIndex, position) => {
+			// Create a display order where current song is always first
+			let displayOrder = [...playlistOrder];
+			
+			// If there's a current song, make sure it's first in display
+			if (currentSongIndex !== -1 && playlistOrder.includes(currentSongIndex)) {
+				displayOrder = displayOrder.filter(idx => idx !== currentSongIndex);
+				displayOrder.unshift(currentSongIndex);
+			}
+			
+			container.innerHTML = displayOrder.map((songIndex, displayPosition) => {
 				const song = songs[songIndex];
 				const isCurrentSong = songIndex === currentSongIndex;
 				const trackId = `${song.albumId}_${song.trackNumber}`;
@@ -1911,7 +1922,7 @@
 				return `
 					<div class="playlist-item ${isCurrentSong ? 'playing' : ''}" 
 						 data-song-index="${songIndex}"
-						 data-position="${position}"
+						 data-position="${displayPosition}"
 						 draggable="true">
 						<div class="playlist-number">
 							${isCurrentSong ? 
@@ -1921,7 +1932,7 @@
 									<div class="equalizer-bar"></div>
 									<div class="equalizer-bar"></div>
 								</div>` : 
-								(position + 1)}
+								(displayPosition + 1)}
 						</div>
 						<img src="${safeImageSrc(song.image, song.albumId)}" alt="${song.title}" class="playlist-thumbnail">
 						<div class="playlist-info">
@@ -2005,7 +2016,7 @@
 		}
 
         // Play from playlist
-		function playFromPlaylist(songIndex, position) {
+		function playFromPlaylist(songIndex, displayPosition) {
 			// Don't restart if it's already the current song and playing
 			if (songIndex === currentSongIndex && isPlaying) {
 				return;
@@ -2020,7 +2031,7 @@
 			
 			currentSongIndex = songIndex;
 			loadCurrentSong();
-			renderPlaylist();
+			renderPlaylist(); // This will put the new current song at #1
 			
 			// Start playing the new song
 			playAudio();
@@ -2260,26 +2271,35 @@
 				currentAudio.currentTime = 0;
 				playAudio();
 			} else {
-				// Check if we should continue to next song
-				const currentPosition = playlistOrder.findIndex(index => index === currentSongIndex);
-				if (currentPosition < playlistOrder.length - 1) {
-					// Go to next song
-					currentSongIndex = playlistOrder[currentPosition + 1];
+				// Find the next song in the playlist
+				const currentDisplayIndex = 0; // Current song is always at display position 0
+				const displayOrder = [...playlistOrder];
+				
+				if (currentSongIndex !== -1 && playlistOrder.includes(currentSongIndex)) {
+					displayOrder.splice(displayOrder.indexOf(currentSongIndex), 1);
+					displayOrder.unshift(currentSongIndex);
+				}
+				
+				if (displayOrder.length > 1) {
+					// Go to next song (position 1 in display order)
+					currentSongIndex = displayOrder[1];
 					loadCurrentSong();
 					renderPlaylist();
 					// Wait for the audio to be ready before playing
 					currentAudio.addEventListener('canplay', function() {
 						currentAudio.play();
 					}, { once: true });
-				} else if (repeatMode === 'all') {
-					// Loop back to beginning
-					currentSongIndex = playlistOrder[0];
-					loadCurrentSong();
-					renderPlaylist();
-					// Wait for the audio to be ready before playing
-					currentAudio.addEventListener('canplay', function() {
-						currentAudio.play();
-					}, { once: true });
+				} else if (repeatMode === 'all' && playlistOrder.length > 1) {
+					// Loop back to second song in original playlist order
+					const nextIndex = playlistOrder.find(idx => idx !== currentSongIndex);
+					if (nextIndex !== undefined) {
+						currentSongIndex = nextIndex;
+						loadCurrentSong();
+						renderPlaylist();
+						currentAudio.addEventListener('canplay', function() {
+							currentAudio.play();
+						}, { once: true });
+					}
 				} else {
 					// End of playlist
 					isPlaying = false;
@@ -2469,6 +2489,12 @@
 			}
 			
 			currentSongIndex = index;
+			
+			// Add to playlist if not already there
+			if (!playlistOrder.includes(index)) {
+				playlistOrder.unshift(index); // Add to beginning
+			}
+			
 			loadCurrentSong();
 			renderPlaylist();
 			if (!isPlaying) {
@@ -2486,6 +2512,13 @@
 			}
 			
 			playlistOrder.push(index);
+			
+			// If this is the first song added to an empty playlist, make it current
+			if (playlistOrder.length === 1) {
+				currentSongIndex = index;
+				loadCurrentSong();
+			}
+			
 			renderPlaylist();
 			showNotification(`"${songs[index].title}" added to playlist`, 'success');
 		}
