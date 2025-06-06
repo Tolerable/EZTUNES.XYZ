@@ -1681,6 +1681,36 @@
 			showNotification(`Shuffled ${album.title}`, 'success');
 		}
 
+		function shareAlbum(albumId) {
+			const album = musicData.albums.find(a => a.id === albumId);
+			const shareUrl = `${window.location.origin}${window.location.pathname}?album=${encodeURIComponent(albumId)}`;
+			
+			// Update modal content for album
+			document.getElementById('shareTrackInfo').innerHTML = `
+				<div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+					<img src="${safeImageSrc(album.albumArt, album.id)}" 
+						 alt="${album.title}" 
+						 style="width: 60px; height: 60px; border-radius: 8px; object-fit: cover;">
+					<div>
+						<div style="font-weight: bold; font-size: 1.1rem;">${album.title}</div>
+						<div style="opacity: 0.8;">${album.artist} • ${album.year} • ${album.tracks.length} tracks</div>
+					</div>
+				</div>
+			`;
+			
+			document.getElementById('shareUrl').value = shareUrl;
+			
+			// Update social media links
+			const text = `Check out the album "${album.title}" by ${album.artist} on EzTunes.XYZ - Free AI-Generated Music!`;
+			
+			document.getElementById('twitterShare').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(shareUrl)}`;
+			document.getElementById('facebookShare').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+			document.getElementById('whatsappShare').href = `https://wa.me/?text=${encodeURIComponent(text + ' ' + shareUrl)}`;
+			document.getElementById('redditShare').href = `https://reddit.com/submit?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(text)}`;
+			
+			document.getElementById('shareModal').classList.add('active');
+		}
+
 		function renderAlbums() {
 			const albumsGrid = document.getElementById('albumsGrid');
 			if (!musicData || !musicData.albums) return;
@@ -1709,6 +1739,9 @@
 							<div class="album-stats">
 								<span>${trackCount} tracks</span>
 								<span>${totalDuration}</span>
+							</div>
+							<div style="margin-top: 1rem;">
+								<button class="share-btn" onclick="event.stopPropagation(); shareAlbum('${album.id}')">🔗 Share Album</button>
 							</div>
 						</div>
 					</div>
@@ -2760,6 +2793,7 @@
 		function handleSharedTrack() {
 			const urlParams = new URLSearchParams(window.location.search);
 			const trackParam = urlParams.get('track');
+			const albumParam = urlParams.get('album');
 			
 			if (trackParam) {
 				const [albumId, trackNumber] = trackParam.split('_');
@@ -2774,6 +2808,12 @@
 						showNotification(`Playing shared track: "${songs[songIndex].title}"`, 'success');
 					}, 1000);
 				}
+			} else if (albumParam) {
+				// Show album detail view
+				setTimeout(() => {
+					showAlbumDetail(albumParam);
+					showNotification(`Viewing shared album`, 'success');
+				}, 500);
 			}
 		}
 
