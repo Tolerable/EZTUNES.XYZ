@@ -409,6 +409,14 @@
 			"file": "Can They Ever.mp3",
 			"image": "Can They Ever.jpg",
 			"genre": "alternative"
+		},
+		{
+			"trackNumber": 8,
+			"title": "Endless Hope",
+			"duration": "2:58",
+			"file": "Endless Hope.mp3",
+			"image": "Endless Hope.jpg",
+			"genre": "alternative"
 		}		
 	  ]
 	}	
