@@ -194,15 +194,29 @@
 			color: rgba(255, 255, 255, 0.3);
 			font-size: 1.2rem;
 			transition: color 0.2s ease;
+			user-select: none;
 		}
 
-		.star.filled,
-		.star:hover {
+		.star.filled {
 			color: #FFD700;
 		}
 
-		.star:hover ~ .star {
+		/* Hover effect - light up current star and all before it */
+		.star-rating:hover .star {
 			color: rgba(255, 255, 255, 0.3);
+		}
+
+		.star-rating:hover .star:hover,
+		.star-rating:hover .star:hover ~ .star {
+			color: rgba(255, 255, 255, 0.3);
+		}
+
+		.star-rating:hover .star:hover {
+			color: #FFD700;
+		}
+
+		.star-rating .star:hover ~ .star.temp-fill {
+			color: #FFD700;
 		}
 
 		.track-item .star-rating {
@@ -1227,6 +1241,17 @@
 			return `<div class="star-rating" data-track-id="${trackId}">${stars.join('')}</div>`;
 		}
 
+		function updateStarDisplay(container, rating) {
+			const stars = container.querySelectorAll('.star');
+			stars.forEach((star, index) => {
+				if (index < rating) {
+					star.classList.add('filled');
+				} else {
+					star.classList.remove('filled');
+				}
+			});
+		}
+
 		// Add drag and drop functionality to playlist items
 		function addDragAndDrop() {
 			const playlistItems = document.querySelectorAll('.playlist-item');
@@ -1767,7 +1792,7 @@
                 });
             });
 
-			// Star rating clicks
+			// Star rating clicks and hover
 			document.addEventListener('click', (e) => {
 				if (e.target.classList.contains('star')) {
 					const rating = parseInt(e.target.dataset.rating);
@@ -1775,14 +1800,52 @@
 					const trackId = container.dataset.trackId;
 					
 					saveRating(trackId, rating);
+					updateStarDisplay(container, rating);
 					
-					// Update visual
-					const stars = container.querySelectorAll('.star');
-					stars.forEach((star, index) => {
-						star.classList.toggle('filled', index < rating);
+					// Update all other instances of this track
+					document.querySelectorAll(`[data-track-id="${trackId}"]`).forEach(otherContainer => {
+						if (otherContainer !== container) {
+							updateStarDisplay(otherContainer, rating);
+						}
 					});
 					
 					showNotification(`Rated ${rating} star${rating !== 1 ? 's' : ''}!`, 'success');
+				}
+			});
+
+			// Star rating hover effects
+			document.addEventListener('mouseover', (e) => {
+				if (e.target.classList.contains('star')) {
+					const rating = parseInt(e.target.dataset.rating);
+					const container = e.target.closest('.star-rating');
+					const stars = container.querySelectorAll('.star');
+					
+					// Light up stars from 1 to current hovered star
+					stars.forEach((star, index) => {
+						if (index < rating) {
+							star.style.color = '#FFD700';
+						} else {
+							star.style.color = 'rgba(255, 255, 255, 0.3)';
+						}
+					});
+				}
+			});
+
+			// Reset hover effect when mouse leaves star rating
+			document.addEventListener('mouseout', (e) => {
+				if (e.target.classList.contains('star')) {
+					const container = e.target.closest('.star-rating');
+					const trackId = container.dataset.trackId;
+					const currentRating = getRating(trackId);
+					
+					// Reset to actual saved rating
+					updateStarDisplay(container, currentRating);
+					
+					// Clear any inline styles
+					const stars = container.querySelectorAll('.star');
+					stars.forEach(star => {
+						star.style.color = '';
+					});
 				}
 			});
             
