@@ -114,6 +114,121 @@
           "duration": "3:27"
         }
       ]
-    }
+    },
+	{
+	  "id": "greatest-hits",
+	  "title": "Greatest Hits",
+	  "artist": "Various Artists",
+	  "year": 2024,
+	  "genre": "Alternative Rock",
+	  "albumArt": "Greatest Hits - Album.jpg",
+	  "description": "A collection of our greatest tracks",
+	  "tracks": [
+		{
+		  "trackNumber": 1,
+		  "title": "Buying Shitty Buds [UNRATED]",
+		  "file": "Buying Shitty Buds [UNRATED].mp3",
+		  "image": "Buying Shitty Buds [UNRATED].jpg",
+		  "genre": "rock",
+		  "duration": "1:10"
+		},
+		{
+		  "trackNumber": 2,
+		  "title": "Discord Smoke Seth",
+		  "file": "Discord Smoke Seth.mp3",
+		  "image": "Discord Smoke Seth.jpg",
+		  "genre": "rock",
+		  "duration": "1:10"
+		},
+		{
+		  "trackNumber": 3,
+		  "title": "Feed The Squirrels",
+		  "file": "Feed The Squirrels.mp3",
+		  "image": "Feed The Squirrels.jpg",
+		  "genre": "rock",
+		  "duration": "1:10"
+		},
+		{
+		  "trackNumber": 4,
+		  "title": "Forge of Fire",
+		  "file": "Forge of Fire.mp3",
+		  "image": "Forge of Fire.jpg",
+		  "genre": "metal",
+		  "duration": "1:10"
+		},
+		{
+		  "trackNumber": 5,
+		  "title": "Gloop's World",
+		  "file": "Gloop's World.mp3",
+		  "image": "Gloop's World.jpg",
+		  "genre": "rock",
+		  "duration": "1:10"
+		},
+		{
+		  "trackNumber": 6,
+		  "title": "Hash Hole Heaven",
+		  "file": "Hash Hole Heaven.mp3",
+		  "image": "Hash Hole Heaven.jpg",
+		  "genre": "rock",
+		  "duration": "1:10"
+		},
+		{
+		  "trackNumber": 7,
+		  "title": "I Hate Music",
+		  "file": "I Hate Music.mp3",
+		  "image": "I Hate Music.jpg",
+		  "genre": "rock",
+		  "duration": "1:10"
+		},
+		{
+		  "trackNumber": 8,
+		  "title": "Lung Bash",
+		  "file": "Lung Bash.mp3",
+		  "image": "Lung Bash.jpg",
+		  "genre": "metal",
+		  "duration": "1:10"
+		},
+		{
+		  "trackNumber": 9,
+		  "title": "PH Lockout Blues",
+		  "file": "PH Lockout Blues.mp3",
+		  "image": "PH Lockout Blues.jpg",
+		  "genre": "blues",
+		  "duration": "1:10"
+		},
+		{
+		  "trackNumber": 10,
+		  "title": "PH Lockout",
+		  "file": "PH Lockout.mp3",
+		  "image": "PH Lockout.jpg",
+		  "genre": "rock",
+		  "duration": "1:10"
+		},
+		{
+		  "trackNumber": 11,
+		  "title": "Rent Time Blues",
+		  "file": "Rent Time Blues.mp3",
+		  "image": "Rent Time Blues.jpg",
+		  "genre": "blues",
+		  "duration": "1:10"
+		},
+		{
+		  "trackNumber": 12,
+		  "title": "Sweetleaf Bondage",
+		  "file": "Sweetleaf Bondage.mp3",
+		  "image": "Sweetleaf Bondage.jpg",
+		  "genre": "rock",
+		  "duration": "1:10"
+		},
+		{
+		  "trackNumber": 13,
+		  "title": "The God Seed",
+		  "file": "The God Seed.mp3",
+		  "image": "The God Seed.jpg",
+		  "genre": "rock",
+		  "duration": "1:10"
+		}
+	  ]
+	}		
   ]
 }
