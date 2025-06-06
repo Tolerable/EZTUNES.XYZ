@@ -1379,15 +1379,26 @@
 		}
 
 		function playTrackFromAlbum(globalIndex) {
+			// Don't restart if it's already the current song and playing
+			if (globalIndex === currentSongIndex && isPlaying) {
+				return;
+			}
+			
 			// Stop current audio if playing
 			if (currentAudio) {
 				currentAudio.pause();
+				currentAudio.currentTime = 0;
+				currentAudio = null;
 			}
 			
-			playSong(globalIndex);
+			currentSongIndex = globalIndex;
+			loadCurrentSong();
+			playAudio();
+			
 			if (currentAlbum) {
 				renderAlbumTracks(currentAlbum);
 			}
+			renderPlaylist();
 		}
 
 		function addAlbumToQueue(albumId) {
@@ -1734,33 +1745,43 @@
         }
 
         // Toggle repeat mode
-        function toggleRepeat() {
-            const modes = ['none', 'all', 'one'];
-            const currentIndex = modes.indexOf(repeatMode);
-            repeatMode = modes[(currentIndex + 1) % modes.length];
-            
-            const btn = document.getElementById('repeatBtn');
-            btn.classList.remove('active');
-            
-            switch(repeatMode) {
-                case 'none':
-                    btn.innerHTML = '🔁';
-                    btn.title = 'Repeat: Off';
-                    break;
-                case 'all':
-                    btn.innerHTML = '🔁';
-                    btn.classList.add('active');
-                    btn.title = 'Repeat: All';
-                    showNotification('Repeat all enabled', 'success');
-                    break;
-                case 'one':
-                    btn.innerHTML = '🔂';
-                    btn.classList.add('active');
-                    btn.title = 'Repeat: One';
-                    showNotification('Repeat one enabled', 'success');
-                    break;
-            }
-        }
+		function toggleRepeat() {
+			const modes = ['none', 'all', 'one'];
+			const currentIndex = modes.indexOf(repeatMode);
+			repeatMode = modes[(currentIndex + 1) % modes.length];
+			
+			const btn = document.getElementById('repeatBtn');
+			
+			// Remove all previous states
+			btn.classList.remove('active');
+			btn.style.background = '';
+			btn.style.border = '';
+			
+			switch(repeatMode) {
+				case 'none':
+					btn.innerHTML = '🔁';
+					btn.title = 'Repeat: Off';
+					btn.style.background = 'rgba(255, 255, 255, 0.1)';
+					btn.style.border = '2px solid rgba(255, 255, 255, 0.3)';
+					break;
+				case 'all':
+					btn.innerHTML = '🔁';
+					btn.classList.add('active');
+					btn.style.background = 'linear-gradient(45deg, #4ecdc4, #45b7d1)';
+					btn.style.border = '2px solid #4ecdc4';
+					btn.title = 'Repeat: All';
+					showNotification('Repeat all enabled', 'success');
+					break;
+				case 'one':
+					btn.innerHTML = '🔂';
+					btn.classList.add('active');
+					btn.style.background = 'linear-gradient(45deg, #ff6b6b, #ff8e8e)';
+					btn.style.border = '2px solid #ff6b6b';
+					btn.title = 'Repeat: One';
+					showNotification('Repeat one enabled', 'success');
+					break;
+			}
+		}
 
         // Update volume
 		function updateVolume() {
