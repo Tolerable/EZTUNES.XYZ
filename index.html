@@ -1816,10 +1816,10 @@
 						<div class="track-item ${isCurrentSong ? 'playing' : ''}" 
 							 onclick="playTrackFromAlbum(${globalIndex})">
 							<div class="track-number">${track.trackNumber}</div>
-							<img src="${safeImageSrc(getTrackPath(track) + '.jpg', album.id)}" 
+							<img src="${safeImageSrc(track.image, album.id)}" 
 								 alt="${track.title}" 
 								 class="track-thumbnail"
-								 onerror="this.src='${safeImageSrc('default-track.jpg')}'">
+								 onerror="this.src='${safeImageSrc('default-track.jpg', album.id)}'">
 							<div class="track-info">
 								<div class="track-title-text">${track.title}</div>
 								<div class="track-genre">${track.genre.charAt(0).toUpperCase() + track.genre.slice(1)}</div>
