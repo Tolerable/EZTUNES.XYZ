@@ -209,7 +209,7 @@
 			justify-content: center;
 			opacity: 0;
 			transition: opacity 0.3s ease;
-			cursor: pointer; /* Add cursor for the whole overlay */
+			pointer-events: none; /* This makes the overlay non-clickable */
 		}
 
 		.album-card:hover .album-overlay {
@@ -229,6 +229,7 @@
 			color: white;
 			cursor: pointer;
 			transition: transform 0.2s ease;
+			pointer-events: all; /* This makes ONLY the button clickable */
 		}
 
 		.album-play-btn:hover {
@@ -1229,16 +1230,16 @@
 		}
 
 		function renderAlbums() {
-		   const albumsGrid = document.getElementById('albumsGrid');
-		   if (!musicData || !musicData.albums) return;
-		   
+			const albumsGrid = document.getElementById('albumsGrid');
+			if (!musicData || !musicData.albums) return;
+			
 			albumsGrid.innerHTML = musicData.albums.map(album => {
 				const trackCount = album.tracks.length;
 				const totalDuration = calculateAlbumDuration(album);
 				
 				return `
 					<div class="album-card">
-						<div style="position: relative;">
+						<div style="position: relative;" onclick="showAlbumDetail('${album.id}')">
 							<img src="${safeImageSrc(album.albumArt, album.id)}" 
 								 alt="${album.title}" 
 								 class="album-artwork">
