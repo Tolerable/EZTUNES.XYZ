@@ -939,6 +939,19 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             opacity: 0.7;
         }
+
+		.playlist-item.dragging {
+			opacity: 0.5;
+			cursor: grabbing;
+		}
+
+		.playlist-item.drag-over {
+			border-top: 3px solid #4ecdc4;
+		}
+
+		.playlist-item {
+			cursor: grab;
+		}
         
         @media (max-width: 768px) {
             .logo h1 {
@@ -1120,6 +1133,8 @@
 		let playlistOrder = [];
 		let originalVolume = 0.7;
 		let isMuted = false;
+		let draggedElement = null;
+		let draggedIndex = null;
 
         // Initialize the application
 		async function init() {
@@ -1141,8 +1156,7 @@
 			repeatBtn.style.background = 'linear-gradient(45deg, #4ecdc4, #45b7d1) !important';
 			repeatBtn.style.border = '2px solid #4ecdc4 !important';
 			repeatBtn.classList.add('active');
-			repeatBtn.title = 'Repeat: All';
-			
+			repeatBtn.title = 'Repeat: All';			
 		}
 
 		// Simplified path functions
@@ -1152,6 +1166,74 @@
 
 		function safeAudioSrc(audioPath, albumId) {
 			return `https://tolerable.github.io/EZTUNES.XYZ/albums/${albumId}/${audioPath}`;
+		}
+
+		// Add drag and drop functionality to playlist items
+		function addDragAndDrop() {
+			const playlistItems = document.querySelectorAll('.playlist-item');
+			
+			playlistItems.forEach((item, index) => {
+				item.draggable = true;
+				
+				item.addEventListener('dragstart', (e) => {
+					draggedElement = item;
+					draggedIndex = index;
+					item.classList.add('dragging');
+					e.dataTransfer.effectAllowed = 'move';
+					e.dataTransfer.setData('text/html', item.innerHTML);
+				});
+				
+				item.addEventListener('dragend', (e) => {
+					item.classList.remove('dragging');
+				});
+				
+				item.addEventListener('dragover', (e) => {
+					e.preventDefault();
+					e.dataTransfer.dropEffect = 'move';
+					
+					const afterElement = getDragAfterElement(document.getElementById('playlistContainer'), e.clientY);
+					if (afterElement == null) {
+						item.classList.add('drag-over');
+					}
+				});
+				
+				item.addEventListener('dragleave', (e) => {
+					item.classList.remove('drag-over');
+				});
+				
+				item.addEventListener('drop', (e) => {
+					e.preventDefault();
+					item.classList.remove('drag-over');
+					
+					if (draggedElement !== item) {
+						const allItems = [...document.querySelectorAll('.playlist-item')];
+						const draggedOverIndex = allItems.indexOf(item);
+						
+						// Reorder the playlistOrder array
+						const [removed] = playlistOrder.splice(draggedIndex, 1);
+						playlistOrder.splice(draggedOverIndex, 0, removed);
+						
+						// Re-render playlist
+						renderPlaylist();
+					}
+				});
+			});
+		}
+
+		// Helper function to determine where to insert
+		function getDragAfterElement(container, y) {
+			const draggableElements = [...container.querySelectorAll('.playlist-item:not(.dragging)')];
+			
+			return draggableElements.reduce((closest, child) => {
+				const box = child.getBoundingClientRect();
+				const offset = y - box.top - box.height / 2;
+				
+				if (offset < 0 && offset > closest.offset) {
+					return { offset: offset, element: child };
+				} else {
+					return closest;
+				}
+			}, { offset: Number.NEGATIVE_INFINITY }).element;
 		}
 
 		// Load music data from JSON
@@ -1495,6 +1577,9 @@
 					</div>
 				`;
 			}).join('');
+			
+			// Add drag and drop functionality
+			addDragAndDrop();
 		}
 
         // Play from playlist
