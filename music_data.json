@@ -3,7 +3,7 @@
     {
       "id": "Unleashed",
       "title": "Unleashed",
-      "artist": "EzTunes AI",
+      "artist": "AI Collective",
       "year": 2025,
       "genre": "Experimental Rock",
       "albumArt": "Unleashed - Album.jpg",
@@ -118,7 +118,7 @@
 	{
 	  "id": "Greatest Hits",
 	  "title": "Greatest Hits",
-	  "artist": "Various Artists",
+	  "artist": "AI Collective",
 	  "year": 2024,
 	  "genre": "Alternative Rock",
 	  "albumArt": "Greatest Hits - Album.jpg",
@@ -366,8 +366,8 @@
 	  		"trackNumber": 2,
 	  		"title": "Vanished At Dawn's Light",
 	  		"duration": "3:38",
-	  		"file": "Vanished At Dawn's Light.mp3",
-	  		"image": "Vanished At Dawn's Light.jpg",
+	  		"file": "Vanished At Dawns Light.mp3",
+	  		"image": "Vanished At Dawns Light.jpg",
 	  		"genre": "alternative"
 	  	},
 	  	{
