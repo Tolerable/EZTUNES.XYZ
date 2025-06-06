@@ -1478,15 +1478,24 @@
 
         // Play from playlist
 		function playFromPlaylist(songIndex, position) {
-			if (currentAudio) currentAudio.pause();
+			// Don't restart if it's already the current song and playing
+			if (songIndex === currentSongIndex && isPlaying) {
+				return;
+			}
+			
+			// STOP the current audio completely
+			if (currentAudio) {
+				currentAudio.pause();
+				currentAudio.currentTime = 0;
+				currentAudio = null;
+			}
+			
 			currentSongIndex = songIndex;
 			loadCurrentSong();
 			renderPlaylist();
-			if (!isPlaying) {
-				togglePlay();
-			} else {
-				playAudio();
-			}
+			
+			// Start playing the new song
+			playAudio();
 		}
 
         // Setup event listeners
@@ -1830,16 +1839,21 @@
         }
 
         // Play specific song
-        function playSong(index) {
-            currentSongIndex = index;
-            loadCurrentSong();
-            renderPlaylist();
-            if (!isPlaying) {
-                togglePlay();
-            } else {
-                playAudio();
-            }
-        }
+		function playSong(index) {
+			// Don't restart if it's already the current song and playing
+			if (index === currentSongIndex && isPlaying) {
+				return;
+			}
+			
+			currentSongIndex = index;
+			loadCurrentSong();
+			renderPlaylist();
+			if (!isPlaying) {
+				togglePlay();
+			} else {
+				playAudio();
+			}
+		}
 
         // Add to queue
 		function addToQueue(index) {
