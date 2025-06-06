@@ -139,7 +139,7 @@
   </script>
   
     <title>EzTunes.XYZ - Free AI-Generated Music</title>
-    <link rel="icon" type="image/x-icon" href="https://tolerable.github.io/EZTUNES.XYZ/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="https://www.eztunes.xyz/favicon.ico">
     <style>
         * {
             margin: 0;
@@ -1006,7 +1006,7 @@
             
             <div class="current-song">
                 <div class="album-container">
-                    <img src="https://tolerable.github.io/EZTUNES.XYZ/img/Hard%20to%20Think.jpg" alt="Current Song" class="current-artwork" id="currentArtwork">
+                    <img src="https://www.eztunes.xyz/img/Hard%20to%20Think.jpg" alt="Current Song" class="current-artwork" id="currentArtwork">
                 </div>
                 <div class="current-info">
                     <h3 id="currentTitle">Hard to Think</h3>
@@ -1170,17 +1170,14 @@
 			repeatBtn.title = 'Repeat: All';			
 		}
 
-		// Update the safeImageSrc function to handle special characters
 		function safeImageSrc(imagePath, albumId) {
-			// URL encode the albumId to handle spaces and apostrophes
 			const encodedAlbumId = encodeURIComponent(albumId);
-			return `https://tolerable.github.io/EZTUNES.XYZ/albums/${encodedAlbumId}/${imagePath}`;
+			return `https://www.eztunes.xyz/albums/${encodedAlbumId}/${imagePath}`;
 		}
 
 		function safeAudioSrc(audioPath, albumId) {
-			// URL encode the albumId to handle spaces and apostrophes
 			const encodedAlbumId = encodeURIComponent(albumId);
-			return `https://tolerable.github.io/EZTUNES.XYZ/albums/${encodedAlbumId}/${audioPath}`;
+			return `https://www.eztunes.xyz/albums/${encodedAlbumId}/${audioPath}`;
 		}
 
 		// Add drag and drop functionality to playlist items
