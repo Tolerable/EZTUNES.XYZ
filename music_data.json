@@ -116,117 +116,117 @@
       ]
     },
 	{
-	  "id": "Greatest Hits",
-	  "title": "Greatest Hits",
+	  "id": "Ghosts",
+	  "title": "Ghosts",
 	  "artist": "AI Collective",
-	  "year": 2024,
-	  "genre": "Alternative Rock",
-	  "albumArt": "Greatest Hits - Album.jpg",
-	  "description": "A collection of our greatest tracks",
+	  "year": "2025",
+	  "genre": "Alternative",
+	  "albumArt": "Ghosts - Album.jpg",
+	  "description": "An emotional journey through finding and losing love, exploring the lingering memories and ghosts that remain.",
 	  "tracks": [
+	  	{
+	  		"trackNumber": 1,
+	  		"title": "Finding Her",
+	  		"duration": "3:23",
+	  		"file": "Finding Her.mp3",
+	  		"image": "Finding Her.jpg",
+	  		"genre": "alternative"
+	  	},
+	  	{
+	  		"trackNumber": 2,
+	  		"title": "Vanished At Dawn's Light",
+	  		"duration": "3:38",
+	  		"file": "Vanished At Dawns Light.mp3",
+	  		"image": "Vanished At Dawns Light.jpg",
+	  		"genre": "alternative"
+	  	},
+	  	{
+	  		"trackNumber": 3,
+	  		"title": "Was She Real",
+	  		"duration": "3:14",
+	  		"file": "Was She Real.mp3",
+	  		"image": "Was She Real.jpg",
+	  		"genre": "pop"
+	  	},
+	  	{
+	  		"trackNumber": 4,
+	  		"title": "Destiny Denied",
+	  		"duration": "3:01",
+	  		"file": "Destiny Denied.mp3",
+	  		"image": "Destiny Denied.jpg",
+	  		"genre": "pop"
+	  	},
+	  	{
+	  		"trackNumber": 5,
+	  		"title": "Faded Soul",
+	  		"duration": "3:10",
+	  		"file": "Faded Soul.mp3",
+	  		"image": "Faded Soul.jpg",
+	  		"genre": "pop"
+	  	},
+	  	{
+	  		"trackNumber": 6,
+	  		"title": "Shattered World",
+	  		"duration": "3:21",
+	  		"file": "Shattered World.mp3",
+	  		"image": "Shattered World.jpg",
+	  		"genre": "pop"
+	  	},
 		{
-		  "trackNumber": 1,
-		  "title": "Buying Shitty Buds [UNRATED]",
-		  "file": "Buying Shitty Buds [UNRATED].mp3",
-		  "image": "Buying Shitty Buds [UNRATED].jpg",
-		  "genre": "rock",
-		  "duration": "1:43"
+			"trackNumber": 7,
+			"title": "Can They Ever",
+			"duration": "2:51",
+			"file": "Can They Ever.mp3",
+			"image": "Can They Ever.jpg",
+			"genre": "alternative"
 		},
 		{
-		  "trackNumber": 2,
-		  "title": "Discord Smoke Sesh",
-		  "file": "Discord Smoke Sesh.mp3",
-		  "image": "Discord Smoke Sesh.jpg",
-		  "genre": "rock",
-		  "duration": "2:29"
+			"trackNumber": 8,
+			"title": "Endless Hope",
+			"duration": "2:58",
+			"file": "Endless Hope.mp3",
+			"image": "Endless Hope.jpg",
+			"genre": "alternative"
 		},
 		{
-		  "trackNumber": 3,
-		  "title": "Feed The Squirrels",
-		  "file": "Feed The Squirrels.mp3",
-		  "image": "Feed The Squirrels.jpg",
-		  "genre": "rock",
-		  "duration": "1:45"
+			"trackNumber": 9,
+			"title": "Taking Chances",
+			"duration": "2:20",
+			"file": "Taking Chances.mp3",
+			"image": "Taking Chances.jpg",
+			"genre": "alternative"
 		},
 		{
-		  "trackNumber": 4,
-		  "title": "Forge of Fire",
-		  "file": "Forge of Fire.mp3",
-		  "image": "Forge of Fire.jpg",
-		  "genre": "metal",
-		  "duration": "2:17"
+			"trackNumber": 10,
+			"title": "Nothing Compares",
+			"duration": "3:09",
+			"file": "Nothing Compares.mp3",
+			"image": "Nothing Compares.jpg",
+			"genre": "alternative"
 		},
 		{
-		  "trackNumber": 5,
-		  "title": "Gloop's World",
-		  "file": "Gloop's World.mp3",
-		  "image": "Gloop's World.jpg",
-		  "genre": "rock",
-		  "duration": "1:50"
+			"trackNumber": 11,
+			"title": "Tried Not To",
+			"duration": "4:00",
+			"file": "Tried Not To.mp3",
+			"image": "Tried Not To.jpg",
+			"genre": "alternative"
 		},
 		{
-		  "trackNumber": 6,
-		  "title": "Hash Hole Heaven",
-		  "file": "Hash Hole Heaven.mp3",
-		  "image": "Hash Hole Heaven.jpg",
-		  "genre": "rock",
-		  "duration": "2:46"
+			"trackNumber": 12,
+			"title": "Sleepless Days",
+			"duration": "3:29",
+			"file": "Sleepless Days.mp3",
+			"image": "Sleepless Days.jpg",
+			"genre": "alternative"
 		},
 		{
-		  "trackNumber": 7,
-		  "title": "I Hate Music",
-		  "file": "I Hate Music.mp3",
-		  "image": "I Hate Music.jpg",
-		  "genre": "rock",
-		  "duration": "2:28"
-		},
-		{
-		  "trackNumber": 8,
-		  "title": "Lung Bash",
-		  "file": "Lung Bash.mp3",
-		  "image": "Lung Bash.jpg",
-		  "genre": "metal",
-		  "duration": "3:35"
-		},
-		{
-		  "trackNumber": 9,
-		  "title": "PH Lockout Blues",
-		  "file": "PH Lockout Blues.mp3",
-		  "image": "PH Lockout Blues.jpg",
-		  "genre": "blues",
-		  "duration": "3:27"
-		},
-		{
-		  "trackNumber": 10,
-		  "title": "PH Lockout",
-		  "file": "PH Lockout.mp3",
-		  "image": "PH Lockout.jpg",
-		  "genre": "rock",
-		  "duration": "1:55"
-		},
-		{
-		  "trackNumber": 11,
-		  "title": "Rent Time Blues",
-		  "file": "Rent Time Blues.mp3",
-		  "image": "Rent Time Blues.jpg",
-		  "genre": "blues",
-		  "duration": "3:22"
-		},
-		{
-		  "trackNumber": 12,
-		  "title": "Sweetleaf Bondage",
-		  "file": "Sweetleaf Bondage.mp3",
-		  "image": "Sweetleaf Bondage.jpg",
-		  "genre": "rock",
-		  "duration": "3:56"
-		},
-		{
-		  "trackNumber": 13,
-		  "title": "The God Seed",
-		  "file": "The God Seed.mp3",
-		  "image": "The God Seed.jpg",
-		  "genre": "rock",
-		  "duration": "3:26"
+			"trackNumber": 13,
+			"title": "On The Edge",
+			"duration": "2:34",
+			"file": "On The Edge.mp3",
+			"image": "On The Edge.jpg",
+			"genre": "alternative"
 		}
 	  ]
 	},
@@ -346,119 +346,119 @@
 	  ]
 	},
 	{
-	  "id": "Ghosts",
-	  "title": "Ghosts",
+	  "id": "Greatest Hits",
+	  "title": "Greatest Hits",
 	  "artist": "AI Collective",
-	  "year": "2025",
-	  "genre": "Alternative",
-	  "albumArt": "Ghosts - Album.jpg",
-	  "description": "An emotional journey through finding and losing love, exploring the lingering memories and ghosts that remain.",
+	  "year": 2025,
+	  "genre": "Alternative Rock",
+	  "albumArt": "Greatest Hits - Album.jpg",
+	  "description": "A collection of our greatest tracks",
 	  "tracks": [
-	  	{
-	  		"trackNumber": 1,
-	  		"title": "Finding Her",
-	  		"duration": "3:23",
-	  		"file": "Finding Her.mp3",
-	  		"image": "Finding Her.jpg",
-	  		"genre": "alternative"
-	  	},
-	  	{
-	  		"trackNumber": 2,
-	  		"title": "Vanished At Dawn's Light",
-	  		"duration": "3:38",
-	  		"file": "Vanished At Dawns Light.mp3",
-	  		"image": "Vanished At Dawns Light.jpg",
-	  		"genre": "alternative"
-	  	},
-	  	{
-	  		"trackNumber": 3,
-	  		"title": "Was She Real",
-	  		"duration": "3:14",
-	  		"file": "Was She Real.mp3",
-	  		"image": "Was She Real.jpg",
-	  		"genre": "pop"
-	  	},
-	  	{
-	  		"trackNumber": 4,
-	  		"title": "Destiny Denied",
-	  		"duration": "3:01",
-	  		"file": "Destiny Denied.mp3",
-	  		"image": "Destiny Denied.jpg",
-	  		"genre": "pop"
-	  	},
-	  	{
-	  		"trackNumber": 5,
-	  		"title": "Faded Soul",
-	  		"duration": "3:10",
-	  		"file": "Faded Soul.mp3",
-	  		"image": "Faded Soul.jpg",
-	  		"genre": "pop"
-	  	},
-	  	{
-	  		"trackNumber": 6,
-	  		"title": "Shattered World",
-	  		"duration": "3:21",
-	  		"file": "Shattered World.mp3",
-	  		"image": "Shattered World.jpg",
-	  		"genre": "pop"
-	  	},
 		{
-			"trackNumber": 7,
-			"title": "Can They Ever",
-			"duration": "2:51",
-			"file": "Can They Ever.mp3",
-			"image": "Can They Ever.jpg",
-			"genre": "alternative"
+		  "trackNumber": 1,
+		  "title": "Buying Shitty Buds [UNRATED]",
+		  "file": "Buying Shitty Buds [UNRATED].mp3",
+		  "image": "Buying Shitty Buds [UNRATED].jpg",
+		  "genre": "rock",
+		  "duration": "1:43"
 		},
 		{
-			"trackNumber": 8,
-			"title": "Endless Hope",
-			"duration": "2:58",
-			"file": "Endless Hope.mp3",
-			"image": "Endless Hope.jpg",
-			"genre": "alternative"
+		  "trackNumber": 2,
+		  "title": "Discord Smoke Sesh",
+		  "file": "Discord Smoke Sesh.mp3",
+		  "image": "Discord Smoke Sesh.jpg",
+		  "genre": "rock",
+		  "duration": "2:29"
 		},
 		{
-			"trackNumber": 9,
-			"title": "Taking Chances",
-			"duration": "2:20",
-			"file": "Taking Chances.mp3",
-			"image": "Taking Chances.jpg",
-			"genre": "alternative"
+		  "trackNumber": 3,
+		  "title": "Feed The Squirrels",
+		  "file": "Feed The Squirrels.mp3",
+		  "image": "Feed The Squirrels.jpg",
+		  "genre": "rock",
+		  "duration": "1:45"
 		},
 		{
-			"trackNumber": 10,
-			"title": "Nothing Compares",
-			"duration": "3:09",
-			"file": "Nothing Compares.mp3",
-			"image": "Nothing Compares.jpg",
-			"genre": "alternative"
+		  "trackNumber": 4,
+		  "title": "Forge of Fire",
+		  "file": "Forge of Fire.mp3",
+		  "image": "Forge of Fire.jpg",
+		  "genre": "metal",
+		  "duration": "2:17"
 		},
 		{
-			"trackNumber": 11,
-			"title": "Tried Not To",
-			"duration": "4:00",
-			"file": "Tried Not To.mp3",
-			"image": "Tried Not To.jpg",
-			"genre": "alternative"
+		  "trackNumber": 5,
+		  "title": "Gloop's World",
+		  "file": "Gloop's World.mp3",
+		  "image": "Gloop's World.jpg",
+		  "genre": "rock",
+		  "duration": "1:50"
 		},
 		{
-			"trackNumber": 12,
-			"title": "Sleepless Days",
-			"duration": "3:29",
-			"file": "Sleepless Days.mp3",
-			"image": "Sleepless Days.jpg",
-			"genre": "alternative"
+		  "trackNumber": 6,
+		  "title": "Hash Hole Heaven",
+		  "file": "Hash Hole Heaven.mp3",
+		  "image": "Hash Hole Heaven.jpg",
+		  "genre": "rock",
+		  "duration": "2:46"
 		},
 		{
-			"trackNumber": 13,
-			"title": "On The Edge",
-			"duration": "2:34",
-			"file": "On The Edge.mp3",
-			"image": "On The Edge.jpg",
-			"genre": "alternative"
+		  "trackNumber": 7,
+		  "title": "I Hate Music",
+		  "file": "I Hate Music.mp3",
+		  "image": "I Hate Music.jpg",
+		  "genre": "rock",
+		  "duration": "2:28"
+		},
+		{
+		  "trackNumber": 8,
+		  "title": "Lung Bash",
+		  "file": "Lung Bash.mp3",
+		  "image": "Lung Bash.jpg",
+		  "genre": "metal",
+		  "duration": "3:35"
+		},
+		{
+		  "trackNumber": 9,
+		  "title": "PH Lockout Blues",
+		  "file": "PH Lockout Blues.mp3",
+		  "image": "PH Lockout Blues.jpg",
+		  "genre": "blues",
+		  "duration": "3:27"
+		},
+		{
+		  "trackNumber": 10,
+		  "title": "PH Lockout",
+		  "file": "PH Lockout.mp3",
+		  "image": "PH Lockout.jpg",
+		  "genre": "rock",
+		  "duration": "1:55"
+		},
+		{
+		  "trackNumber": 11,
+		  "title": "Rent Time Blues",
+		  "file": "Rent Time Blues.mp3",
+		  "image": "Rent Time Blues.jpg",
+		  "genre": "blues",
+		  "duration": "3:22"
+		},
+		{
+		  "trackNumber": 12,
+		  "title": "Sweetleaf Bondage",
+		  "file": "Sweetleaf Bondage.mp3",
+		  "image": "Sweetleaf Bondage.jpg",
+		  "genre": "rock",
+		  "duration": "3:56"
+		},
+		{
+		  "trackNumber": 13,
+		  "title": "The God Seed",
+		  "file": "The God Seed.mp3",
+		  "image": "The God Seed.jpg",
+		  "genre": "rock",
+		  "duration": "3:26"
 		}
 	  ]
-	}
+	},
   ]
 }
