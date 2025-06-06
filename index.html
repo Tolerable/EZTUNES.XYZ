@@ -1245,7 +1245,7 @@
 						<div class="track-item ${isCurrentSong ? 'playing' : ''}" 
 							 onclick="playTrackFromAlbum(${globalIndex})">
 							<div class="track-number">${track.trackNumber}</div>
-							<img src="${safeImageSrc(track.image)}" 
+							<img src="${safeImageSrc(track.image, album.id)}" 
 								 alt="${track.title}" 
 								 class="track-thumbnail"
 								 onerror="this.src='${safeImageSrc('default-track.jpg')}'">
