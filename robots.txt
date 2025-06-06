@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.eztunes.xyz/sitemap.xml
+
+# Allow crawling of CSS and JS
+Allow: /*.css
+Allow: /*.js
+Allow: /*.jpg
+Allow: /*.png
+Allow: /*.gif
+Allow: /*.webp
+Allow: /*.mp3
+Allow: /*.json
+
+# Crawl delay to be respectful
+Crawl-delay: 1
