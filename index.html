@@ -1606,7 +1606,7 @@
 		// Load music data from JSON
 		async function loadMusicData() {
 			try {
-				const response = await fetch('music_data.json');
+				const response = await fetch(`music_data.json?v=${Date.now()}`);
 				musicData = await response.json();
 				
 				// Check if musicData has the expected structure
@@ -1715,7 +1715,15 @@
 			const albumsGrid = document.getElementById('albumsGrid');
 			if (!musicData || !musicData.albums) return;
 			
-			albumsGrid.innerHTML = musicData.albums.map(album => {
+			// Define your custom album order here
+			const albumOrder = ['Ghosts', 'Unleashed', 'Sinners-Feast', 'Greatest Hits'];
+			
+			// Sort albums according to your custom order
+			const sortedAlbums = albumOrder.map(id => 
+				musicData.albums.find(album => album.id === id)
+			).filter(Boolean); // Remove any undefined albums
+			
+			albumsGrid.innerHTML = sortedAlbums.map(album => {
 				const trackCount = album.tracks.length;
 				const totalDuration = calculateAlbumDuration(album);
 				
