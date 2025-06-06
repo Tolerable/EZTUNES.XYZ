@@ -1149,6 +1149,34 @@
 			}
 		}
 
+		// Add this function
+		function shuffleAlbum(albumId) {
+			const album = musicData.albums.find(a => a.id === albumId);
+			if (!album || !album.tracks.length) return;
+			
+			// Get all track indices for this album
+			const albumTrackIndices = [];
+			songs.forEach((song, index) => {
+				if (song.albumId === albumId) {
+					albumTrackIndices.push(index);
+				}
+			});
+			
+			// Shuffle the indices
+			for (let i = albumTrackIndices.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1));
+				[albumTrackIndices[i], albumTrackIndices[j]] = [albumTrackIndices[j], albumTrackIndices[i]];
+			}
+			
+			// Replace the playlist with shuffled album tracks
+			playlistOrder = albumTrackIndices;
+			currentSongIndex = playlistOrder[0];
+			
+			loadCurrentSong();
+			renderPlaylist();
+			playAudio();
+		}
+
 		function renderAlbums() {
 		   const albumsGrid = document.getElementById('albumsGrid');
 		   if (!musicData || !musicData.albums) return;
