@@ -493,6 +493,143 @@
 			background: rgba(255, 255, 255, 0.2);
 		}
 
+		.share-btn {
+			background: linear-gradient(45deg, #667eea, #764ba2);
+			border: none;
+			border-radius: 20px;
+			padding: 0.5rem 1rem;
+			color: white;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			font-size: 0.9rem;
+			display: flex;
+			align-items: center;
+			gap: 0.3rem;
+		}
+
+		.share-btn:hover {
+			transform: translateY(-1px);
+			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+			background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+		}
+
+		.share-modal {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.8);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			z-index: 1000;
+			opacity: 0;
+			visibility: hidden;
+			transition: all 0.3s ease;
+		}
+
+		.share-modal.active {
+			opacity: 1;
+			visibility: visible;
+		}
+
+		.share-content {
+			background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #667eea 100%);
+			border-radius: 15px;
+			padding: 2rem;
+			max-width: 500px;
+			width: 90%;
+			border: 2px solid rgba(255, 255, 255, 0.2);
+			backdrop-filter: blur(10px);
+		}
+
+		.share-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 1.5rem;
+		}
+
+		.share-close {
+			background: none;
+			border: none;
+			color: white;
+			font-size: 1.5rem;
+			cursor: pointer;
+			padding: 0.5rem;
+			border-radius: 50%;
+			transition: background 0.3s ease;
+		}
+
+		.share-close:hover {
+			background: rgba(255, 255, 255, 0.2);
+		}
+
+		.share-link {
+			display: flex;
+			gap: 0.5rem;
+			margin: 1rem 0;
+		}
+
+		.share-url {
+			flex: 1;
+			padding: 0.8rem;
+			border: 1px solid rgba(255, 255, 255, 0.3);
+			border-radius: 8px;
+			background: rgba(0, 0, 0, 0.3);
+			color: white;
+			font-family: 'Courier New', monospace;
+			font-size: 0.9rem;
+		}
+
+		.copy-btn {
+			background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+			border: none;
+			border-radius: 8px;
+			padding: 0.8rem 1.2rem;
+			color: white;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			font-weight: bold;
+		}
+
+		.copy-btn:hover {
+			transform: translateY(-1px);
+			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+		}
+
+		.social-shares {
+			display: flex;
+			gap: 0.5rem;
+			margin-top: 1.5rem;
+			flex-wrap: wrap;
+		}
+
+		.social-btn {
+			padding: 0.8rem 1.2rem;
+			border: none;
+			border-radius: 8px;
+			color: white;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			font-weight: bold;
+			text-decoration: none;
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+		}
+
+		.social-btn.twitter { background: #1DA1F2; }
+		.social-btn.facebook { background: #4267B2; }
+		.social-btn.whatsapp { background: #25D366; }
+		.social-btn.reddit { background: #FF4500; }
+
+		.social-btn:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+		}
+
 		.back-btn {
 			background: rgba(255, 255, 255, 0.1);
 			border: 1px solid rgba(255, 255, 255, 0.3);
@@ -1205,6 +1342,7 @@
 			renderSongs();
 			renderPlaylist();
 			setupEventListeners();
+			handleSharedTrack();
 			
 			// Set initial repeat button state
 			const repeatBtn = document.getElementById('repeatBtn');
@@ -1612,10 +1750,11 @@
 								<span class="duration">${song.duration}</span>
 							</div>
 							${createStarRating(`${song.albumId}_${song.trackNumber}`, getRating(`${song.albumId}_${song.trackNumber}`))}
-                            <div class="song-actions">
-                                <button class="action-btn" onclick="playSong(${songIndex})">▶️ Play</button>
-                                <button class="action-btn" onclick="addToQueue(${songIndex})">➕ Add</button>
-                            </div>
+							<div class="song-actions">
+								<button class="action-btn" onclick="playSong(${songIndex})">▶️ Play</button>
+								<button class="action-btn" onclick="addToQueue(${songIndex})">➕ Add</button>
+								<button class="share-btn" onclick="openShareModal(${songIndex})">🔗 Share</button>
+							</div>
                         </div>
                     </div>
                 `;
@@ -1784,6 +1923,13 @@
             
             // Progress bar click to seek
             document.getElementById('progressContainer').addEventListener('click', seekToPosition);
+
+			// Close share modal when clicking outside
+			document.getElementById('shareModal').addEventListener('click', (e) => {
+				if (e.target.id === 'shareModal') {
+					closeShareModal();
+				}
+			});
             
             // Filters
             document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -2250,8 +2396,110 @@
             }, 3000);
         }
 
+		/ Share functionality
+		function openShareModal(songIndex) {
+			const song = songs[songIndex];
+			const shareUrl = `${window.location.origin}${window.location.pathname}?track=${encodeURIComponent(song.albumId)}_${song.trackNumber}`;
+			
+			// Update modal content
+			document.getElementById('shareTrackInfo').innerHTML = `
+				<div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+					<img src="${safeImageSrc(song.image, song.albumId)}" 
+						 alt="${song.title}" 
+						 style="width: 60px; height: 60px; border-radius: 8px; object-fit: cover;">
+					<div>
+						<div style="font-weight: bold; font-size: 1.1rem;">${song.title}</div>
+						<div style="opacity: 0.8;">${song.albumTitle} • ${song.genre}</div>
+					</div>
+				</div>
+			`;
+			
+			document.getElementById('shareUrl').value = shareUrl;
+			
+			// Update social media links
+			const text = `Check out "${song.title}" by ${song.albumTitle} on EzTunes.XYZ - Free AI-Generated Music!`;
+			
+			document.getElementById('twitterShare').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(shareUrl)}`;
+			document.getElementById('facebookShare').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+			document.getElementById('whatsappShare').href = `https://wa.me/?text=${encodeURIComponent(text + ' ' + shareUrl)}`;
+			document.getElementById('redditShare').href = `https://reddit.com/submit?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(text)}`;
+			
+			document.getElementById('shareModal').classList.add('active');
+		}
+
+		function closeShareModal() {
+			document.getElementById('shareModal').classList.remove('active');
+		}
+
+		function copyShareLink() {
+			const shareUrl = document.getElementById('shareUrl');
+			shareUrl.select();
+			shareUrl.setSelectionRange(0, 99999);
+			
+			navigator.clipboard.writeText(shareUrl.value).then(() => {
+				showNotification('Link copied to clipboard!', 'success');
+			}).catch(() => {
+				// Fallback for older browsers
+				document.execCommand('copy');
+				showNotification('Link copied to clipboard!', 'success');
+			});
+		}
+
+		// Handle shared links when page loads
+		function handleSharedTrack() {
+			const urlParams = new URLSearchParams(window.location.search);
+			const trackParam = urlParams.get('track');
+			
+			if (trackParam) {
+				const [albumId, trackNumber] = trackParam.split('_');
+				const songIndex = songs.findIndex(song => 
+					song.albumId === albumId && song.trackNumber === parseInt(trackNumber)
+				);
+				
+				if (songIndex !== -1) {
+					// Auto-play the shared track
+					setTimeout(() => {
+						playSong(songIndex);
+						showNotification(`Playing shared track: "${songs[songIndex].title}"`, 'success');
+					}, 1000);
+				}
+			}
+		}
+
         // Initialize when page loads
         window.addEventListener('load', init);
     </script>
+
+	<!-- Share Modal -->
+	<div class="share-modal" id="shareModal">
+		<div class="share-content">
+			<div class="share-header">
+				<h3>Share This Track</h3>
+				<button class="share-close" onclick="closeShareModal()">×</button>
+			</div>
+			<div id="shareTrackInfo">
+				<!-- Track info will be populated here -->
+			</div>
+			<div class="share-link">
+				<input type="text" class="share-url" id="shareUrl" readonly>
+				<button class="copy-btn" onclick="copyShareLink()">Copy</button>
+			</div>
+			<div class="social-shares">
+				<a class="social-btn twitter" id="twitterShare" target="_blank">
+					🐦 Twitter
+				</a>
+				<a class="social-btn facebook" id="facebookShare" target="_blank">
+					📘 Facebook
+				</a>
+				<a class="social-btn whatsapp" id="whatsappShare" target="_blank">
+					💬 WhatsApp
+				</a>
+				<a class="social-btn reddit" id="redditShare" target="_blank">
+					🔴 Reddit
+				</a>
+			</div>
+		</div>
+	</div>
+	
 </body>
 </html>			
