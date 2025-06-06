@@ -1170,13 +1170,17 @@
 			repeatBtn.title = 'Repeat: All';			
 		}
 
-		// Simplified path functions
+		// Update the safeImageSrc function to handle special characters
 		function safeImageSrc(imagePath, albumId) {
-			return `https://tolerable.github.io/EZTUNES.XYZ/albums/${albumId}/${imagePath}`;
+			// URL encode the albumId to handle spaces and apostrophes
+			const encodedAlbumId = encodeURIComponent(albumId);
+			return `https://tolerable.github.io/EZTUNES.XYZ/albums/${encodedAlbumId}/${imagePath}`;
 		}
 
 		function safeAudioSrc(audioPath, albumId) {
-			return `https://tolerable.github.io/EZTUNES.XYZ/albums/${albumId}/${audioPath}`;
+			// URL encode the albumId to handle spaces and apostrophes
+			const encodedAlbumId = encodeURIComponent(albumId);
+			return `https://tolerable.github.io/EZTUNES.XYZ/albums/${encodedAlbumId}/${audioPath}`;
 		}
 
 		// Add drag and drop functionality to playlist items
