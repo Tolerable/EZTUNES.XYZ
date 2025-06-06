@@ -709,6 +709,7 @@
 			display: flex;
 			align-items: center;
 			gap: 1rem;
+			flex-direction: row-reverse; /* This puts the image on the right, text on the left */
 		}
 
 		.album-cover {
@@ -728,7 +729,7 @@
 		}
 
 		.album-info-display {
-			text-align: left;
+			text-align: right; /* Right-align the text so it flows toward the image */
 			max-width: 120px;
 		}
 
@@ -1246,18 +1247,18 @@
 			}
 			
 			.album-cover-section {
-				flex-direction: column;
+				flex-direction: column; /* Stack vertically on mobile */
 				text-align: center;
+			}
+			
+			.album-info-display {
+				max-width: none;
+				text-align: center; /* Center text on mobile */
 			}
 			
 			.album-cover, .placeholder-artwork, .current-artwork {
 				width: 150px;
 				height: 150px;
-			}
-			
-			.album-info-display {
-				max-width: none;
-				text-align: center;
 			}
 			
 			.radio-controls {
