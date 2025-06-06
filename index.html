@@ -1143,9 +1143,6 @@
 			repeatBtn.classList.add('active');
 			repeatBtn.title = 'Repeat: All';
 			
-			if (songs.length > 0) {
-				loadCurrentSong();
-			}
 		}
 
 		// Simplified path functions
@@ -1419,6 +1416,12 @@
 					addedCount++;
 				}
 			});
+			
+			// If playlist was empty before adding, load the first song
+			if (playlistOrder.length === addedCount) {
+				currentSongIndex = playlistOrder[0];
+				loadCurrentSong();
+			}
 			
 			renderPlaylist();
 			showNotification(`Added ${addedCount} tracks from "${album.title}" to playlist`, 'success');
