@@ -1796,6 +1796,9 @@
 			// Star rating clicks and hover
 			document.addEventListener('click', (e) => {
 				if (e.target.classList.contains('star')) {
+					e.stopPropagation(); // Prevent the click from bubbling up to parent elements
+					e.preventDefault(); // Prevent any default behavior
+					
 					const rating = parseInt(e.target.dataset.rating);
 					const container = e.target.closest('.star-rating');
 					const trackId = container.dataset.trackId;
