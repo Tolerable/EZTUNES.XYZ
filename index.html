@@ -1814,15 +1814,6 @@
 			if (repeatMode === 'one') {
 				currentAudio.currentTime = 0;
 				playAudio();
-			} else if (queue.length > 0) {
-				// Play next queued song
-				currentSongIndex = queue.shift();
-				loadCurrentSong();
-				renderPlaylist();
-				// Wait for the audio to be ready before playing
-				currentAudio.addEventListener('canplay', function() {
-					currentAudio.play();
-				}, { once: true });
 			} else {
 				// Check if we should continue to next song
 				const currentPosition = playlistOrder.findIndex(index => index === currentSongIndex);
@@ -1873,25 +1864,20 @@
 
 		// Next song
 		function nextSong() {
-		   if (currentAudio) currentAudio.pause();
-		   
-		   if (queue.length > 0) {
-			   // Play from queue
-			   currentSongIndex = queue.shift();
-		   } else {
-			   const currentPosition = playlistOrder.findIndex(index => index === currentSongIndex);
-			   if (currentPosition < playlistOrder.length - 1) {
-				   currentSongIndex = playlistOrder[currentPosition + 1];
-			   } else if (repeatMode === 'all') {
-				   currentSongIndex = playlistOrder[0];
-			   } else {
-				   return;
-			   }
-		   }
-		   
-		   loadCurrentSong();
-		   renderPlaylist();
-		   if (isPlaying) playAudio();
+			if (currentAudio) currentAudio.pause();
+			
+			const currentPosition = playlistOrder.findIndex(index => index === currentSongIndex);
+			if (currentPosition < playlistOrder.length - 1) {
+				currentSongIndex = playlistOrder[currentPosition + 1];
+			} else if (repeatMode === 'all') {
+				currentSongIndex = playlistOrder[0];
+			} else {
+				return;
+			}
+			
+			loadCurrentSong();
+			renderPlaylist();
+			if (isPlaying) playAudio();
 		}
 
         // Toggle shuffle
