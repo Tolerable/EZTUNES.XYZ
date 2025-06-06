@@ -1555,7 +1555,19 @@
 
         // Load current song
 		function loadCurrentSong() {
+			// Clean up previous audio completely
+			if (currentAudio) {
+				currentAudio.pause();
+				currentAudio.currentTime = 0;
+				currentAudio = null;
+			}
+			
 			const song = songs[currentSongIndex];
+			
+			// Update the display info to match the actual song
+			document.getElementById('currentTitle').textContent = song.title;
+			document.getElementById('currentGenre').textContent = song.genre.charAt(0).toUpperCase() + song.genre.slice(1);
+			document.getElementById('currentDuration').textContent = song.duration;
 			
 			// Update album artwork
 			const artworkImg = document.getElementById('currentArtwork');
@@ -1565,25 +1577,25 @@
 			currentAudio = new Audio(safeAudioSrc(song.file, song.albumId));
 			currentAudio.volume = document.getElementById('volumeSlider').value / 100;
 			
-			// Audio event listeners (same as before)
+			// Audio event listeners
 			currentAudio.addEventListener('ended', handleSongEnd);
 			currentAudio.addEventListener('loadedmetadata', updateDuration);
 			currentAudio.addEventListener('timeupdate', updateProgress);
-            currentAudio.addEventListener('play', () => {
-                isPlaying = true;
-                document.getElementById('playBtn').innerHTML = '⏸️ Pause';
-                document.getElementById('currentArtwork').classList.add('spinning');
-            });
-            currentAudio.addEventListener('pause', () => {
-                isPlaying = false;
-                document.getElementById('playBtn').innerHTML = '▶️ Play';
-                document.getElementById('currentArtwork').classList.remove('spinning');
-            });
-            currentAudio.addEventListener('error', (e) => {
-                console.error('Audio loading error:', e);
-                showNotification('Error loading audio file', 'error');
-            });
-        }
+			currentAudio.addEventListener('play', () => {
+				isPlaying = true;
+				document.getElementById('playBtn').innerHTML = '⏸️ Pause';
+				document.getElementById('currentArtwork').classList.add('spinning');
+			});
+			currentAudio.addEventListener('pause', () => {
+				isPlaying = false;
+				document.getElementById('playBtn').innerHTML = '▶️ Play';
+				document.getElementById('currentArtwork').classList.remove('spinning');
+			});
+			currentAudio.addEventListener('error', (e) => {
+				console.error('Audio loading error:', e);
+				showNotification('Error loading audio file', 'error');
+			});
+		}
 
         // Toggle play/pause
         function togglePlay() {
