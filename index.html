@@ -194,6 +194,47 @@
 			backdrop-filter: blur(10px);
 			cursor: pointer;
 			width: 280px;  /* ADD THIS - locks card to image width */
+			position: relative;
+		}
+
+		.album-overlay {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 280px; /* match image height */
+			background: rgba(0, 0, 0, 0.7);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			opacity: 0;
+			transition: opacity 0.3s ease;
+			pointer-events: none;
+		}
+
+		.album-card:hover .album-overlay {
+			opacity: 1;
+			pointer-events: all;
+		}
+
+		.album-play-btn {
+			background: rgba(78, 205, 196, 0.9);
+			border: none;
+			border-radius: 50%;
+			width: 60px;
+			height: 60px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 1.5rem;
+			color: white;
+			cursor: pointer;
+			transition: transform 0.2s ease;
+		}
+
+		.album-play-btn:hover {
+			transform: scale(1.1);
+			background: rgba(78, 205, 196, 1);
 		}
 
 		.album-card:hover {
@@ -1192,30 +1233,35 @@
 		   const albumsGrid = document.getElementById('albumsGrid');
 		   if (!musicData || !musicData.albums) return;
 		   
-		   albumsGrid.innerHTML = musicData.albums.map(album => {
-			   const trackCount = album.tracks.length;
-			   const totalDuration = calculateAlbumDuration(album);
-			   
-			   return `
-				   <div class="album-card" onclick="showAlbumDetail('${album.id}')">
-					   <img src="${safeImageSrc(album.albumArt, album.id)}" 
-							alt="${album.title}" 
-							class="album-artwork">
-					   <div class="album-info">
-						   <div class="album-title">${album.title}</div>
-						   <div class="album-meta">
-							   <span>${album.artist}</span>
-							   <span>${album.year}</span>
-						   </div>
-						   <div class="album-description">${album.description}</div>
-						   <div class="album-stats">
-							   <span>${trackCount} tracks</span>
-							   <span>${totalDuration}</span>
-						   </div>
-					   </div>
-				   </div>
-			   `;
-		   }).join('');
+			albumsGrid.innerHTML = musicData.albums.map(album => {
+				const trackCount = album.tracks.length;
+				const totalDuration = calculateAlbumDuration(album);
+				
+				return `
+					<div class="album-card">
+						<div style="position: relative;">
+							<img src="${safeImageSrc(album.albumArt, album.id)}" 
+								 alt="${album.title}" 
+								 class="album-artwork">
+							<div class="album-overlay">
+								<button class="album-play-btn" onclick="event.stopPropagation(); playAlbum('${album.id}')">▶</button>
+							</div>
+						</div>
+						<div class="album-info" onclick="showAlbumDetail('${album.id}')">
+							<div class="album-title">${album.title}</div>
+							<div class="album-meta">
+								<span>${album.artist}</span>
+								<span>${album.year}</span>
+							</div>
+							<div class="album-description">${album.description}</div>
+							<div class="album-stats">
+								<span>${trackCount} tracks</span>
+								<span>${totalDuration}</span>
+							</div>
+						</div>
+					</div>
+				`;
+			}).join('');
 		}
 
 		// Calculate album duration
