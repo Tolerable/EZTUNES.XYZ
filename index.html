@@ -1398,7 +1398,7 @@
                 const songIndex = songs.indexOf(song);
                 return `
                     <div class="song-card" data-genre="${song.genre}">
-                        <img src="https://tolerable.github.io/EZTUNES.XYZ/img/${song.image}" alt="${song.title}" class="song-artwork" loading="lazy">
+                        <img src="${safeImageSrc(song.image, song.albumId)}" alt="${song.title}" class="song-artwork" loading="lazy">
                         <div class="song-info">
                             <div class="song-title">${song.title}</div>
                             <div class="song-meta">
@@ -1442,7 +1442,7 @@
                                 </div>` : 
                                 (position + 1)}
                         </div>
-                        <img src="https://tolerable.github.io/EZTUNES.XYZ/img/${song.image}" alt="${song.title}" class="playlist-thumbnail">
+                        <img src="${safeImageSrc(song.image, song.albumId)}" alt="${song.title}" class="playlist-thumbnail">
                         <div class="playlist-info">
                             <div class="playlist-title">${song.title} ${isQueued ? '(Queued)' : ''}</div>
                             <div class="playlist-meta">${song.genre.charAt(0).toUpperCase() + song.genre.slice(1)}</div>
