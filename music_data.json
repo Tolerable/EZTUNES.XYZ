@@ -433,6 +433,14 @@
 			"file": "Nothing Compares.mp3",
 			"image": "Nothing Compares.jpg",
 			"genre": "alternative"
+		},
+		{
+			"trackNumber": 11,
+			"title": "Tried Not To",
+			"duration": "4:00",
+			"file": "Tried Not To.mp3",
+			"image": "Tried Not To.jpg",
+			"genre": "alternative"
 		}
 	  ]
 	}
