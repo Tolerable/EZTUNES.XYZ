@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Track Not Found | EzTunes.XYZ</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #667eea 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .error-container {
+            max-width: 600px;
+            animation: fadeIn 0.8s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .error-code {
+            font-size: 8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+            margin-bottom: 1rem;
+        }
+        
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3)); }
+            to { filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.6)); }
+        }
+        
+        .error-message {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+        
+        .error-description {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .vinyl-record {
+            width: 200px;
+            height: 200px;
+            margin: 2rem auto;
+            position: relative;
+            animation: spin 4s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .vinyl-record .outer {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(
+                to bottom,
+                #1a1a1a 0%,
+                #2a2a2a 20%,
+                #1a1a1a 40%,
+                #2a2a2a 60%,
+                #1a1a1a 80%,
+                #2a2a2a 100%
+            );
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+        
+        .vinyl-record .inner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: #ff6b6b;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .vinyl-record .hole {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #667eea;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 25px;
+            padding: 1rem 2rem;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn.primary {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        }
+        
+        .musical-notes {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .note {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.3;
+            animation: float 8s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .note:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .note:nth-child(2) { left: 25%; animation-delay: 1s; }
+        .note:nth-child(3) { left: 40%; animation-delay: 2s; }
+        .note:nth-child(4) { left: 55%; animation-delay: 3s; }
+        .note:nth-child(5) { left: 70%; animation-delay: 4s; }
+        .note:nth-child(6) { left: 85%; animation-delay: 5s; }
+        
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 6rem;
+            }
+            
+            .error-message {
+                font-size: 1.5rem;
+            }
+            
+            .error-description {
+                font-size: 1rem;
+            }
+            
+            .vinyl-record {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="musical-notes">
+        <div class="note">♪</div>
+        <div class="note">♫</div>
+        <div class="note">♬</div>
+        <div class="note">♩</div>
+        <div class="note">♪</div>
+        <div class="note">♫</div>
+    </div>
+    
+    <div class="error-container">
+        <div class="error-code">404</div>
+        <h1 class="error-message">🎵 Track Not Found 🎵</h1>
+        <p class="error-description">
+            Oops! Looks like this track skipped a beat and wandered off our playlist. 
+            The page you're looking for doesn't exist in our music library.
+        </p>
+        
+        <div class="vinyl-record">
+            <div class="outer">
+                <div class="inner">
+                    <div class="hole"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="action-buttons">
+            <a href="/" class="btn primary">🏠 Back to Home</a>
+            <a href="/" class="btn">🎧 Browse Music</a>
+        </div>
+        
+        <p style="margin-top: 3rem; opacity: 0.6; font-size: 0.9rem;">
+            If you think this is an error, please contact us at contact@eztunes.xyz
+        </p>
+    </div>
+    
+    <script>
+        // Add some randomness to the floating notes
+        document.querySelectorAll('.note').forEach(note => {
+            note.style.animationDuration = (6 + Math.random() * 4) + 's';
+            note.style.fontSize = (1.5 + Math.random() * 1) + 'rem';
+        });
+        
+        // Redirect to home after 10 seconds
+        setTimeout(() => {
+            window.location.href = '/';
+        }, 10000);
+    </script>
+</body>
+</html>
