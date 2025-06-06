@@ -1131,7 +1131,7 @@
 				return;
 			}
 			
-			playlistOrder = songs.map((_, index) => index);
+			playlistOrder = [];
 			renderAlbums();
 			renderSongs();
 			renderPlaylist();
@@ -1354,9 +1354,28 @@
 			const album = musicData.albums.find(a => a.id === albumId);
 			if (!album || !album.tracks.length) return;
 			
-			const firstTrackGlobalIndex = songs.findIndex(s => s.albumId === albumId && s.trackIndex === 0);
-			if (firstTrackGlobalIndex !== -1) {
-				playSong(firstTrackGlobalIndex);
+			// Stop current audio
+			if (currentAudio) {
+				currentAudio.pause();
+			}
+			
+			// Replace playlist with album tracks
+			playlistOrder = [];
+			songs.forEach((song, index) => {
+				if (song.albumId === albumId) {
+					playlistOrder.push(index);
+				}
+			});
+			
+			// Start with first track
+			currentSongIndex = playlistOrder[0];
+			loadCurrentSong();
+			renderPlaylist();
+			
+			if (!isPlaying) {
+				togglePlay();
+			} else {
+				playAudio();
 			}
 		}
 
@@ -1416,42 +1435,52 @@
         }
 
         // Render playlist
-        function renderPlaylist() {
-            const container = document.getElementById('playlistContainer');
-            if (!container) return;
-            
-            // Combine playlist order and queue
-            const fullPlaylist = [...playlistOrder, ...queue];
-            
-            container.innerHTML = fullPlaylist.map((songIndex, position) => {
-                const song = songs[songIndex];
-                const isCurrentSong = songIndex === currentSongIndex && position < playlistOrder.length;
-                const isQueued = position >= playlistOrder.length;
-                
-                return `
-                    <div class="playlist-item ${isCurrentSong ? 'playing' : ''}" 
-                         onclick="playFromPlaylist(${songIndex}, ${position})" 
-                         data-song-index="${songIndex}">
-                        <div class="playlist-number">
-                            ${isCurrentSong ? 
-                                `<div class="equalizer">
-                                    <div class="equalizer-bar"></div>
-                                    <div class="equalizer-bar"></div>
-                                    <div class="equalizer-bar"></div>
-                                    <div class="equalizer-bar"></div>
-                                </div>` : 
-                                (position + 1)}
-                        </div>
-                        <img src="${safeImageSrc(song.image, song.albumId)}" alt="${song.title}" class="playlist-thumbnail">
-                        <div class="playlist-info">
-                            <div class="playlist-title">${song.title} ${isQueued ? '(Queued)' : ''}</div>
-                            <div class="playlist-meta">${song.genre.charAt(0).toUpperCase() + song.genre.slice(1)}</div>
-                        </div>
-                        <div class="playlist-duration">${song.duration}</div>
-                    </div>
-                `;
-            }).join('');
-        }
+		function renderPlaylist() {
+			const container = document.getElementById('playlistContainer');
+			if (!container) return;
+			
+			// Combine playlist order and queue
+			const fullPlaylist = [...playlistOrder, ...queue];
+			
+			if (fullPlaylist.length === 0) {
+				container.innerHTML = `
+					<div style="text-align: center; padding: 2rem; opacity: 0.7;">
+						<p>Playlist is empty</p>
+						<p style="font-size: 0.9rem; margin-top: 0.5rem;">Add songs by clicking "Play Album" or "Add to Queue" buttons</p>
+					</div>
+				`;
+				return;
+			}
+			
+			container.innerHTML = fullPlaylist.map((songIndex, position) => {
+				const song = songs[songIndex];
+				const isCurrentSong = songIndex === currentSongIndex && position < playlistOrder.length;
+				const isQueued = position >= playlistOrder.length;
+				
+				return `
+					<div class="playlist-item ${isCurrentSong ? 'playing' : ''}" 
+						 onclick="playFromPlaylist(${songIndex}, ${position})" 
+						 data-song-index="${songIndex}">
+						<div class="playlist-number">
+							${isCurrentSong ? 
+								`<div class="equalizer">
+									<div class="equalizer-bar"></div>
+									<div class="equalizer-bar"></div>
+									<div class="equalizer-bar"></div>
+									<div class="equalizer-bar"></div>
+								</div>` : 
+								(position + 1)}
+						</div>
+						<img src="${safeImageSrc(song.image, song.albumId)}" alt="${song.title}" class="playlist-thumbnail">
+						<div class="playlist-info">
+							<div class="playlist-title">${song.title} ${isQueued ? '(Queued)' : ''}</div>
+							<div class="playlist-meta">${song.genre.charAt(0).toUpperCase() + song.genre.slice(1)}</div>
+						</div>
+						<div class="playlist-duration">${song.duration}</div>
+					</div>
+				`;
+			}).join('');
+		}
 
         // Play from playlist
         function playFromPlaylist(songIndex, position) {
@@ -1827,11 +1856,23 @@
         }
 
         // Clear queue
-        function clearQueue() {
-            queue = [];
-            renderPlaylist();
-            showNotification('Queue cleared', 'success');
-        }
+		function clearQueue() {
+			// Stop current audio
+			if (currentAudio) {
+				currentAudio.pause();
+			}
+			
+			queue = [];
+			playlistOrder = [];
+			isPlaying = false;
+			
+			// Reset UI
+			document.getElementById('playBtn').innerHTML = '▶️ Play';
+			document.getElementById('currentArtwork').classList.remove('spinning');
+			
+			renderPlaylist();
+			showNotification('Playlist cleared', 'success');
+		}
 
         // Save playlist (mock function)
         function savePlaylist() {
