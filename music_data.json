@@ -344,6 +344,65 @@
 		  "image": "Weed Thief.jpg"
 		}		
 	  ]
+	},
+	{
+	  "id": "Ghosts",
+	  "title": "Ghosts",
+	  "artist": "AI Collective",
+	  "year": "2025",
+	  "genre": "Alternative",
+	  "albumArt": "Ghosts - Album.jpg",
+	  "description": "An emotional journey through finding and losing love, exploring the lingering memories and ghosts that remain.",
+	  "tracks": [
+	  	{
+	  		"trackNumber": 1,
+	  		"title": "Finding Her",
+	  		"duration": "3:23",
+	  		"file": "Finding Her.mp3",
+	  		"image": "Finding Her.jpg",
+	  		"genre": "alternative"
+	  	},
+	  	{
+	  		"trackNumber": 2,
+	  		"title": "Vanished At Dawn's Light",
+	  		"duration": "3:38",
+	  		"file": "Vanished At Dawn's Light.mp3",
+	  		"image": "Vanished At Dawn's Light.jpg",
+	  		"genre": "alternative"
+	  	},
+	  	{
+	  		"trackNumber": 3,
+	  		"title": "Was She Real",
+	  		"duration": "3:14",
+	  		"file": "Was She Real.mp3",
+	  		"image": "Was She Real.jpg",
+	  		"genre": "pop"
+	  	},
+	  	{
+	  		"trackNumber": 4,
+	  		"title": "Destiny Denied",
+	  		"duration": "3:01",
+	  		"file": "Destiny Denied.mp3",
+	  		"image": "Destiny Denied.jpg",
+	  		"genre": "pop"
+	  	},
+	  	{
+	  		"trackNumber": 5,
+	  		"title": "Faded Soul",
+	  		"duration": "3:10",
+	  		"file": "Faded Soul.mp3",
+	  		"image": "Faded Soul.jpg",
+	  		"genre": "pop"
+	  	},
+	  	{
+	  		"trackNumber": 6,
+	  		"title": "Shattered World",
+	  		"duration": "3:21",
+	  		"file": "Shattered World.mp3",
+	  		"image": "Shattered World.jpg",
+	  		"genre": "pop"
+	  	}
+	  ]
 	}	
   ]
 }
