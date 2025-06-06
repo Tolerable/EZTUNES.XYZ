@@ -1244,6 +1244,7 @@
 		function updateStarDisplay(container, rating) {
 			const stars = container.querySelectorAll('.star');
 			stars.forEach((star, index) => {
+				star.style.color = ''; // Clear any hover styles
 				if (index < rating) {
 					star.classList.add('filled');
 				} else {
@@ -1800,13 +1801,10 @@
 					const trackId = container.dataset.trackId;
 					
 					saveRating(trackId, rating);
-					updateStarDisplay(container, rating);
 					
-					// Update all other instances of this track
-					document.querySelectorAll(`[data-track-id="${trackId}"]`).forEach(otherContainer => {
-						if (otherContainer !== container) {
-							updateStarDisplay(otherContainer, rating);
-						}
+					// Update ALL instances of this track rating EVERYWHERE on the page
+					document.querySelectorAll(`[data-track-id="${trackId}"]`).forEach(ratingContainer => {
+						updateStarDisplay(ratingContainer, rating);
 					});
 					
 					showNotification(`Rated ${rating} star${rating !== 1 ? 's' : ''}!`, 'success');
@@ -1820,31 +1818,29 @@
 					const container = e.target.closest('.star-rating');
 					const stars = container.querySelectorAll('.star');
 					
-					// Light up stars from 1 to current hovered star
+					// Show preview: light up stars 1 through the hovered star
 					stars.forEach((star, index) => {
-						if (index < rating) {
-							star.style.color = '#FFD700';
-						} else {
-							star.style.color = 'rgba(255, 255, 255, 0.3)';
-						}
+						star.style.color = (index < rating) ? '#FFD700' : 'rgba(255, 255, 255, 0.3)';
 					});
 				}
 			});
 
-			// Reset hover effect when mouse leaves star rating
+			// Reset hover effect when mouse leaves
 			document.addEventListener('mouseout', (e) => {
 				if (e.target.classList.contains('star')) {
 					const container = e.target.closest('.star-rating');
 					const trackId = container.dataset.trackId;
 					const currentRating = getRating(trackId);
-					
-					// Reset to actual saved rating
-					updateStarDisplay(container, currentRating);
-					
-					// Clear any inline styles
 					const stars = container.querySelectorAll('.star');
-					stars.forEach(star => {
+					
+					// Clear inline styles and restore saved rating display
+					stars.forEach((star, index) => {
 						star.style.color = '';
+						if (index < currentRating) {
+							star.classList.add('filled');
+						} else {
+							star.classList.remove('filled');
+						}
 					});
 				}
 			});
