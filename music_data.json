@@ -229,6 +229,65 @@
 		  "duration": "3:26"
 		}
 	  ]
-	}		
+	},
+	{
+	  "id": "Sinner's Feast",
+	  "title": "Sinner's Feast",
+	  "artist": "AI Collective",
+	  "year": "2025",
+	  "genre": "Rock",
+	  "albumArt": "Sinner's Feast - Album.jpg",
+	  "description": "A dark rock odyssey exploring temptation and redemption",
+	  "tracks": [
+		{
+		  "trackNumber": "1",
+		  "title": "Hold On, Stand Strong",
+		  "genre": "rock",
+		  "duration": "4:00",
+		  "file": "Hold On, Stand Strong.mp3",
+		  "image": "track1.jpg"
+		},
+		{
+		  "trackNumber": "2",
+		  "title": "Six Plants on My Balcony",
+		  "genre": "rock",
+		  "duration": "2:47",
+		  "file": "Six Plants on My Balcony.mp3",
+		  "image": "track2.jpg"
+		},
+		{
+		  "trackNumber": "3",
+		  "title": "Spit On The Cat",
+		  "genre": "rock",
+		  "duration": "2:47",
+		  "file": "Spit On The Cat.mp3",
+		  "image": "track3.jpg"
+		},
+		{
+		  "trackNumber": "4",
+		  "title": "Suppertime Pizza",
+		  "genre": "rock",
+		  "duration": "2:31",
+		  "file": "Suppertime Pizza.mp3",
+		  "image": "track4.jpg"
+		},
+		{
+		  "trackNumber": "5",
+		  "title": "Sweater Dog",
+		  "genre": "rock",
+		  "duration": "2:19",
+		  "file": "Sweater Dog.mp3",
+		  "image": "track5.jpg"
+		},
+		{
+		  "trackNumber": "6",
+		  "title": "Weed Weavels",
+		  "genre": "rock",
+		  "duration": "2:20",
+		  "file": "Weed Weavels.mp3",
+		  "image": "track6.jpg"
+		}
+	  ]
+	}	
   ]
 }
