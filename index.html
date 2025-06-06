@@ -1154,6 +1154,11 @@
 			const album = musicData.albums.find(a => a.id === albumId);
 			if (!album || !album.tracks.length) return;
 			
+			// Stop current audio first
+			if (currentAudio) {
+				currentAudio.pause();
+			}
+			
 			// Get all track indices for this album
 			const albumTrackIndices = [];
 			songs.forEach((song, index) => {
@@ -1174,7 +1179,13 @@
 			
 			loadCurrentSong();
 			renderPlaylist();
-			playAudio();
+			if (!isPlaying) {
+				togglePlay();
+			} else {
+				playAudio();
+			}
+			
+			showNotification(`Shuffled ${album.title}`, 'success');
 		}
 
 		function renderAlbums() {
@@ -1303,12 +1314,33 @@
 			}
 		}
 
-		// Play track from album
 		function playTrackFromAlbum(globalIndex) {
+			// Stop current audio if playing
+			if (currentAudio) {
+				currentAudio.pause();
+			}
+			
 			playSong(globalIndex);
 			if (currentAlbum) {
 				renderAlbumTracks(currentAlbum);
 			}
+		}
+
+		// Also add the missing addAlbumToQueue function
+		function addAlbumToQueue(albumId) {
+			const album = musicData.albums.find(a => a.id === albumId);
+			if (!album || !album.tracks.length) return;
+			
+			let addedCount = 0;
+			songs.forEach((song, index) => {
+				if (song.albumId === albumId && !queue.includes(index) && index !== currentSongIndex) {
+					queue.push(index);
+					addedCount++;
+				}
+			});
+			
+			renderPlaylist();
+			showNotification(`Added ${addedCount} tracks from "${album.title}" to queue`, 'success');
 		}
 
         // Render songs in grid
