@@ -702,17 +702,24 @@
 		.album-artwork-container {
 			display: flex;
 			align-items: center;
-			gap: 1.5rem;
+			gap: 2rem;
+		}
+
+		.album-cover-section {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
 		}
 
 		.album-cover {
-			width: 120px;
-			height: 120px;
+			width: 180px;
+			height: 180px;
 			border-radius: 8px;
 			border: 2px solid rgba(255, 255, 255, 0.3);
 			box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 			object-fit: cover;
 			transition: all 0.3s ease;
+			cursor: pointer;
 		}
 
 		.album-cover:hover {
@@ -722,6 +729,7 @@
 
 		.album-info-display {
 			text-align: left;
+			max-width: 120px;
 		}
 
 		.album-info-display .album-title-display {
@@ -732,18 +740,52 @@
 			background-clip: text;
 			-webkit-background-clip: text;
 			-webkit-text-fill-color: transparent;
+			line-height: 1.2;
 		}
 
 		.album-info-display .album-year {
 			font-size: 0.9rem;
 			opacity: 0.7;
 			margin-bottom: 0.2rem;
+			line-height: 1.2;
 		}
 
 		.album-info-display .album-track-count {
 			font-size: 0.8rem;
 			opacity: 0.6;
-		}        
+			line-height: 1.2;
+		}
+
+		.placeholder-state {
+			text-align: center;
+			opacity: 0.6;
+		}
+
+		.placeholder-state h3 {
+			font-size: 1.5rem;
+			margin-bottom: 0.5rem;
+			color: rgba(255, 255, 255, 0.7);
+		}
+
+		.placeholder-state p {
+			font-size: 1rem;
+			margin-bottom: 0.3rem;
+			color: rgba(255, 255, 255, 0.5);
+		}
+
+		.placeholder-artwork {
+			width: 180px;
+			height: 180px;
+			border-radius: 50%;
+			border: 3px dashed rgba(255, 255, 255, 0.3);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 3rem;
+			opacity: 0.4;
+			background: rgba(255, 255, 255, 0.05);
+		} 
+		
         .album-container {
             position: relative;
             width: 180px;
@@ -1203,9 +1245,19 @@
 				gap: 1rem;
 			}
 			
-			.album-cover {
-				width: 80px;
-				height: 80px;
+			.album-cover-section {
+				flex-direction: column;
+				text-align: center;
+			}
+			
+			.album-cover, .placeholder-artwork, .current-artwork {
+				width: 150px;
+				height: 150px;
+			}
+			
+			.album-info-display {
+				max-width: none;
+				text-align: center;
 			}
 			
 			.radio-controls {
@@ -1242,7 +1294,7 @@
             
 			<div class="current-song">
 				<div class="album-artwork-container">
-					<div id="albumCoverContainer" style="display: none;">
+					<div id="albumCoverSection" class="album-cover-section" style="display: none;">
 						<img src="" alt="Album Cover" class="album-cover" id="albumCover">
 						<div class="album-info-display">
 							<div class="album-title-display" id="albumTitleDisplay"></div>
@@ -1251,13 +1303,21 @@
 						</div>
 					</div>
 					<div class="album-container">
-						<img src="https://www.eztunes.xyz/img/Hard%20to%20Think.jpg" alt="Current Song" class="current-artwork" id="currentArtwork">
+						<div id="placeholderArtwork" class="placeholder-artwork">🎵</div>
+						<img src="" alt="Current Song" class="current-artwork" id="currentArtwork" style="display: none;">
 					</div>
 				</div>
 				<div class="current-info">
-					<h3 id="currentTitle">Hard to Think</h3>
-					<p id="currentGenre">Electronic</p>
-					<p id="currentDuration">3:27</p>
+					<div id="placeholderInfo" class="placeholder-state">
+						<h3>Ready to Play</h3>
+						<p>Select a song or album to begin</p>
+						<p>Click play for a random track</p>
+					</div>
+					<div id="currentSongInfo" style="display: none;">
+						<h3 id="currentTitle"></h3>
+						<p id="currentGenre"></p>
+						<p id="currentDuration"></p>
+					</div>
 				</div>
 			</div>
             
@@ -1403,6 +1463,7 @@
 			}
 			
 			playlistOrder = []; // Start with empty playlist
+			currentSongIndex = -1;
 			renderAlbums();
 			renderSongs();
 			renderPlaylist();
@@ -2110,6 +2171,12 @@
 			const song = songs[currentSongIndex];
 			const album = musicData.albums.find(a => a.id === song.albumId);
 			
+			// Hide placeholder and show actual content
+			document.getElementById('placeholderInfo').style.display = 'none';
+			document.getElementById('placeholderArtwork').style.display = 'none';
+			document.getElementById('currentSongInfo').style.display = 'block';
+			document.getElementById('currentArtwork').style.display = 'block';
+			
 			// Update the display info to match the actual song
 			document.getElementById('currentTitle').textContent = song.title;
 			document.getElementById('currentGenre').textContent = song.genre.charAt(0).toUpperCase() + song.genre.slice(1);
@@ -2120,17 +2187,17 @@
 			artworkImg.src = safeImageSrc(song.image, song.albumId);
 			
 			// Update album info if track belongs to an album
-			const albumCoverContainer = document.getElementById('albumCoverContainer');
+			const albumCoverSection = document.getElementById('albumCoverSection');
 			if (album && album.tracks && album.tracks.length > 1) {
 				// Show album info for multi-track albums
 				document.getElementById('albumCover').src = safeImageSrc(album.albumArt, album.id);
 				document.getElementById('albumTitleDisplay').textContent = album.title;
 				document.getElementById('albumYearDisplay').textContent = `${album.artist} • ${album.year}`;
 				document.getElementById('albumTrackCountDisplay').textContent = `${album.tracks.length} tracks`;
-				albumCoverContainer.style.display = 'block';
+				albumCoverSection.style.display = 'flex';
 			} else {
 				// Hide album info for singles
-				albumCoverContainer.style.display = 'none';
+				albumCoverSection.style.display = 'none';
 			}
 			
 			// Create new audio element
@@ -2158,15 +2225,25 @@
 		}
 
         // Toggle play/pause
-        function togglePlay() {
-            if (!currentAudio) return;
-            
-            if (isPlaying) {
-                currentAudio.pause();
-            } else {
-                playAudio();
-            }
-        }
+		function togglePlay() {
+			// If no song loaded and playlist is empty, pick a random song
+			if (!currentAudio && playlistOrder.length === 0) {
+				const randomIndex = Math.floor(Math.random() * songs.length);
+				currentSongIndex = randomIndex;
+				playlistOrder = [randomIndex];
+				loadCurrentSong();
+				renderPlaylist();
+				showNotification(`Playing random track: "${songs[randomIndex].title}"`, 'success');
+			}
+			
+			if (!currentAudio) return;
+			
+			if (isPlaying) {
+				currentAudio.pause();
+			} else {
+				playAudio();
+			}
+		}
 
         // Play audio
         function playAudio() {
