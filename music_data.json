@@ -130,7 +130,7 @@
 	  		"duration": "3:23",
 	  		"file": "Finding Her.mp3",
 	  		"image": "Finding Her.jpg",
-	  		"genre": "alternative"
+	  		"genre": "rock"
 	  	},
 	  	{
 	  		"trackNumber": 2,
@@ -138,7 +138,7 @@
 	  		"duration": "3:38",
 	  		"file": "Vanished At Dawns Light.mp3",
 	  		"image": "Vanished At Dawns Light.jpg",
-	  		"genre": "alternative"
+	  		"genre": "electronic"
 	  	},
 	  	{
 	  		"trackNumber": 3,
@@ -146,7 +146,7 @@
 	  		"duration": "3:14",
 	  		"file": "Was She Real.mp3",
 	  		"image": "Was She Real.jpg",
-	  		"genre": "pop"
+	  		"genre": "rock"
 	  	},
 	  	{
 	  		"trackNumber": 4,
@@ -154,7 +154,7 @@
 	  		"duration": "3:01",
 	  		"file": "Destiny Denied.mp3",
 	  		"image": "Destiny Denied.jpg",
-	  		"genre": "pop"
+	  		"genre": "rock"
 	  	},
 	  	{
 	  		"trackNumber": 5,
@@ -162,7 +162,7 @@
 	  		"duration": "3:10",
 	  		"file": "Faded Soul.mp3",
 	  		"image": "Faded Soul.jpg",
-	  		"genre": "pop"
+	  		"genre": "rock"
 	  	},
 	  	{
 	  		"trackNumber": 6,
@@ -170,7 +170,7 @@
 	  		"duration": "3:21",
 	  		"file": "Shattered World.mp3",
 	  		"image": "Shattered World.jpg",
-	  		"genre": "pop"
+	  		"genre": "rock"
 	  	},
 		{
 			"trackNumber": 7,
@@ -178,7 +178,7 @@
 			"duration": "2:51",
 			"file": "Can They Ever.mp3",
 			"image": "Can They Ever.jpg",
-			"genre": "alternative"
+			"genre": "rock"
 		},
 		{
 			"trackNumber": 8,
@@ -186,7 +186,7 @@
 			"duration": "2:58",
 			"file": "Endless Hope.mp3",
 			"image": "Endless Hope.jpg",
-			"genre": "alternative"
+			"genre": "electronic"
 		},
 		{
 			"trackNumber": 9,
@@ -194,7 +194,7 @@
 			"duration": "2:20",
 			"file": "Taking Chances.mp3",
 			"image": "Taking Chances.jpg",
-			"genre": "alternative"
+			"genre": "electronic"
 		},
 		{
 			"trackNumber": 10,
@@ -202,7 +202,7 @@
 			"duration": "3:09",
 			"file": "Nothing Compares.mp3",
 			"image": "Nothing Compares.jpg",
-			"genre": "alternative"
+			"genre": "rock"
 		},
 		{
 			"trackNumber": 11,
@@ -210,7 +210,7 @@
 			"duration": "4:00",
 			"file": "Tried Not To.mp3",
 			"image": "Tried Not To.jpg",
-			"genre": "alternative"
+			"genre": "reggae"
 		},
 		{
 			"trackNumber": 12,
@@ -218,7 +218,7 @@
 			"duration": "3:29",
 			"file": "Sleepless Days.mp3",
 			"image": "Sleepless Days.jpg",
-			"genre": "alternative"
+			"genre": "rock"
 		},
 		{
 			"trackNumber": 13,
@@ -226,7 +226,7 @@
 			"duration": "2:34",
 			"file": "On The Edge.mp3",
 			"image": "On The Edge.jpg",
-			"genre": "alternative"
+			"genre": "electronic"
 		}
 	  ]
 	},
