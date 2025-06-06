@@ -183,6 +183,36 @@
             animation: glow 2s ease-in-out infinite alternate;
         }
 
+		.star-rating {
+			display: flex;
+			gap: 2px;
+			margin: 0.5rem 0;
+		}
+
+		.star {
+			cursor: pointer;
+			color: rgba(255, 255, 255, 0.3);
+			font-size: 1.2rem;
+			transition: color 0.2s ease;
+		}
+
+		.star.filled,
+		.star:hover {
+			color: #FFD700;
+		}
+
+		.star:hover ~ .star {
+			color: rgba(255, 255, 255, 0.3);
+		}
+
+		.track-item .star-rating {
+			margin-right: 1rem;
+		}
+
+		.song-info .star-rating {
+			margin-top: 0.5rem;
+		}
+
 		.albums-section {
 			margin: 3rem 0;
 		}
@@ -1180,6 +1210,23 @@
 			return `https://www.eztunes.xyz/albums/${encodedAlbumId}/${audioPath}`;
 		}
 
+		// Rating system
+		function saveRating(trackId, rating) {
+			localStorage.setItem(`rating_${trackId}`, rating);
+		}
+
+		function getRating(trackId) {
+			return parseInt(localStorage.getItem(`rating_${trackId}`)) || 0;
+		}
+
+		function createStarRating(trackId, currentRating = 0) {
+			const stars = [];
+			for (let i = 1; i <= 5; i++) {
+				stars.push(`<span class="star ${i <= currentRating ? 'filled' : ''}" data-rating="${i}">★</span>`);
+			}
+			return `<div class="star-rating" data-track-id="${trackId}">${stars.join('')}</div>`;
+		}
+
 		// Add drag and drop functionality to playlist items
 		function addDragAndDrop() {
 			const playlistItems = document.querySelectorAll('.playlist-item');
@@ -1436,6 +1483,7 @@
 								<div class="track-title-text">${track.title}</div>
 								<div class="track-genre">${track.genre.charAt(0).toUpperCase() + track.genre.slice(1)}</div>
 							</div>
+							${createStarRating(`${album.id}_${track.trackNumber}`, getRating(`${album.id}_${track.trackNumber}`))}
 							<div class="track-duration">${track.duration}</div>
 							<div class="track-actions">
 								<button class="track-btn" onclick="event.stopPropagation(); addToQueue(${globalIndex})">Add</button>
@@ -1533,10 +1581,11 @@
                         <img src="${safeImageSrc(song.image, song.albumId)}" alt="${song.title}" class="song-artwork" loading="lazy">
                         <div class="song-info">
                             <div class="song-title">${song.title}</div>
-                            <div class="song-meta">
-                                <span class="genre">${song.genre.charAt(0).toUpperCase() + song.genre.slice(1)}</span>
-                                <span class="duration">${song.duration}</span>
-                            </div>
+							<div class="song-meta">
+								<span class="genre">${song.genre.charAt(0).toUpperCase() + song.genre.slice(1)}</span>
+								<span class="duration">${song.duration}</span>
+							</div>
+							${createStarRating(`${song.albumId}_${song.trackNumber}`, getRating(`${song.albumId}_${song.trackNumber}`))}
                             <div class="song-actions">
                                 <button class="action-btn" onclick="playSong(${songIndex})">▶️ Play</button>
                                 <button class="action-btn" onclick="addToQueue(${songIndex})">➕ Add</button>
@@ -1717,6 +1766,25 @@
                     renderSongs();
                 });
             });
+
+			// Star rating clicks
+			document.addEventListener('click', (e) => {
+				if (e.target.classList.contains('star')) {
+					const rating = parseInt(e.target.dataset.rating);
+					const container = e.target.closest('.star-rating');
+					const trackId = container.dataset.trackId;
+					
+					saveRating(trackId, rating);
+					
+					// Update visual
+					const stars = container.querySelectorAll('.star');
+					stars.forEach((star, index) => {
+						star.classList.toggle('filled', index < rating);
+					});
+					
+					showNotification(`Rated ${rating} star${rating !== 1 ? 's' : ''}!`, 'success');
+				}
+			});
             
             // Playlist controls
             document.getElementById('clearQueueBtn').addEventListener('click', clearPlaylist);
