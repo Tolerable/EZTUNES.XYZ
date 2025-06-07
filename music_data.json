@@ -459,6 +459,97 @@
 		  "duration": "3:26"
 		}
 	  ]
+	},
+	{
+	  "id": "Awakenings",
+	  "title": "Awakenings",
+	  "artist": "AI Collective",
+	  "year": 2025,
+	  "genre": "Electronic",
+	  "albumArt": "Awakenings - Album.jpg",
+	  "description": "A collection of electronic soundscapes exploring consciousness and awakening",
+	  "tracks": [
+		{
+		  "trackNumber": 1,
+		  "title": "Eyes Open Wide",
+		  "file": "Eyes Open Wide.mp3",
+		  "image": "Eyes Open Wide.jpg",
+		  "genre": "electronic",
+		  "duration": "3:22"
+		},
+		{
+		  "trackNumber": 2,
+		  "title": "Clean Cut",
+		  "file": "Clean Cut.mp3",
+		  "image": "Clean Cut.jpg",
+		  "genre": "electronic",
+		  "duration": "2:29"
+		},
+		{
+		  "trackNumber": 3,
+		  "title": "Breathe Again",
+		  "file": "Breathe Again.mp3",
+		  "image": "Breathe Again.jpg",
+		  "genre": "electronic",
+		  "duration": "3:29"
+		},
+		{
+		  "trackNumber": 4,
+		  "title": "Glass Skin",
+		  "file": "Glass Skin.mp3",
+		  "image": "Glass Skin.jpg",
+		  "genre": "electronic",
+		  "duration": "2:55"
+		},
+		{
+		  "trackNumber": 5,
+		  "title": "Reset",
+		  "file": "Reset.mp3",
+		  "image": "Reset.jpg",
+		  "genre": "electronic",
+		  "duration": "2:47"
+		},
+		{
+		  "trackNumber": 6,
+		  "title": "Unlearn Me",
+		  "file": "Unlearn Me.mp3",
+		  "image": "Unlearn Me.jpg",
+		  "genre": "electronic",
+		  "duration": "2:32"
+		},
+		{
+		  "trackNumber": 7,
+		  "title": "Chrysalis",
+		  "file": "Chrysalis.mp3",
+		  "image": "Chrysalis.jpg",
+		  "genre": "electronic",
+		  "duration": "2:55"
+		},
+		{
+		  "trackNumber": 8,
+		  "title": "Noise Floor",
+		  "file": "Noise Floor.mp3",
+		  "image": "Noise Floor.jpg",
+		  "genre": "electronic",
+		  "duration": "3:43"
+		},
+		{
+		  "trackNumber": 9,
+		  "title": "Echo Chamber",
+		  "file": "Echo Chamber.mp3",
+		  "image": "Echo Chamber.jpg",
+		  "genre": "electronic",
+		  "duration": "2:33"
+		},
+		{
+		  "trackNumber": 10,
+		  "title": "Post Hero",
+		  "file": "Post Hero.mp3",
+		  "image": "Post Hero.jpg",
+		  "genre": "electronic",
+		  "duration": "3:04"
+		}
+	  ]
 	}
   ]
 }
