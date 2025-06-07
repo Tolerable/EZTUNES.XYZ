@@ -1539,8 +1539,14 @@
 			}
 		}
 
-		// Initialize the application
 		async function init() {
+			// Make sure DOM is ready
+			if (!document.getElementById('albumsGrid')) {
+				console.error('DOM not ready, waiting...');
+				setTimeout(init, 100);
+				return;
+			}
+			
 			// Load music data first
 			const loaded = await loadMusicData();
 			if (!loaded) {
@@ -1548,24 +1554,7 @@
 				return;
 			}
 			
-			// DON'T set these to empty/default - let loadSavedPlaylist handle it
-			// playlistOrder = []; // REMOVE THIS LINE
-			// currentSongIndex = -1; // REMOVE THIS LINE
-			
-			renderAlbums();
-			
-			// Check if user prefers to see all songs (ONLY ONCE)
-			showAllSongs = localStorage.getItem('showAllSongs') === 'true';
-			if (showAllSongs) {
-				document.getElementById('songGrid').style.display = 'grid';
-				document.getElementById('filtersSection').style.display = 'flex';
-				document.getElementById('toggleSongsBtn').textContent = 'Hide All Songs';
-				renderSongs();
-			}
-			
-			setupEventListeners();
-			
-			// Load saved playlist BEFORE rendering and handling shared tracks
+			// Load saved playlist BEFORE setting defaults
 			if (!loadSavedPlaylist()) {
 				// Only set defaults if no saved playlist exists
 				playlistOrder = [];
@@ -1574,15 +1563,29 @@
 				document.getElementById('placeholderArtwork').style.display = 'block';
 			}
 			
+			renderAlbums();
+			
+			// Check if user prefers to see all songs
+			showAllSongs = localStorage.getItem('showAllSongs') === 'true';
+			if (showAllSongs) {
+				document.getElementById('songGrid').style.display = 'grid';
+				document.getElementById('filtersSection').style.display = 'flex';
+				document.getElementById('toggleSongsBtn').textContent = 'Hide All Songs';
+				renderSongs();
+			}
+			
 			renderPlaylist();
+			setupEventListeners();
 			handleSharedTrack();
 			
 			// Set initial repeat button state
 			const repeatBtn = document.getElementById('repeatBtn');
-			repeatBtn.style.background = 'linear-gradient(45deg, #4ecdc4, #45b7d1)';
-			repeatBtn.style.border = '2px solid #4ecdc4';
-			repeatBtn.classList.add('active');
-			repeatBtn.title = 'Loop: ON';
+			if (repeatBtn) {
+				repeatBtn.style.background = 'linear-gradient(45deg, #4ecdc4, #45b7d1)';
+				repeatBtn.style.border = '2px solid #4ecdc4';
+				repeatBtn.classList.add('active');
+				repeatBtn.title = 'Loop: ON';
+			}
 		}
 
 		function safeImageSrc(imagePath, albumId) {
@@ -2859,8 +2862,8 @@
 			currentSongIndex = -1;
 			isPlaying = false;
 			
-			// Clear saved playlist
-			localStorage.removeItem('eztunesPlaylist');
+			// Clear saved playlist using autoSavePlaylist
+			autoSavePlaylist(); // This will clear localStorage when playlistOrder is empty
 			
 			// Reset UI
 			document.getElementById('playBtn').innerHTML = '▶️ Play';
@@ -2878,20 +2881,23 @@
 		function loadSavedPlaylist() {
 			try {
 				const saved = localStorage.getItem('savedPlaylist');
-				if (saved) {  // CHANGE THIS - was 'savedData', should be 'saved'
-					const playlistData = JSON.parse(saved);  // CHANGE THIS - was 'savedData', should be 'saved'
+				console.log('Loading saved playlist:', saved); // DEBUG
+				
+				if (saved) {
+					const playlistData = JSON.parse(saved);
+					console.log('Parsed playlist data:', playlistData); // DEBUG
 					
-					// The saved format uses 'order' not 'songs'
-					const validSongs = playlistData.order.filter(index =>  // CHANGE from 'songs' to 'order'
+					const validSongs = playlistData.order.filter(index =>
 						index >= 0 && index < songs.length
 					);
+					
+					console.log('Valid songs after filter:', validSongs); // DEBUG
 					
 					if (validSongs.length > 0) {
 						playlistOrder = validSongs;
 						
-						// Restore current song - using 'currentIndex' not 'currentSong'
-						if (validSongs.includes(playlistData.currentIndex)) {  // CHANGE from 'currentSong' to 'currentIndex'
-							currentSongIndex = playlistData.currentIndex;  // CHANGE from 'currentSong' to 'currentIndex'
+						if (validSongs.includes(playlistData.currentIndex)) {
+							currentSongIndex = playlistData.currentIndex;
 							loadCurrentSong();
 						} else if (validSongs.length > 0) {
 							currentSongIndex = validSongs[0];
