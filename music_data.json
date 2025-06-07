@@ -548,6 +548,30 @@
 		  "image": "Post Hero.jpg",
 		  "genre": "electronic",
 		  "duration": "3:04"
+		},
+		{
+		  "trackNumber": 11,
+		  "title": "Static Bloom",
+		  "file": "Static Bloom.mp3",
+		  "image": "Static Bloom.jpg",
+		  "genre": "electronic",
+		  "duration": "3:09"
+		},
+		{
+		  "trackNumber": 12,
+		  "title": "CTRL-ALT-DEL",
+		  "file": "CTRL-ALT-DEL.mp3",
+		  "image": "CTRL-ALT-DEL.jpg",
+		  "genre": "electronic",
+		  "duration": "2:17"
+		},
+		{
+		  "trackNumber": 13,
+		  "title": "Awakenings",
+		  "file": "Awakenings.mp3",
+		  "image": "Awakenings.jpg",
+		  "genre": "electronic",
+		  "duration": "3:02"
 		}
 	  ]
 	}
