@@ -338,6 +338,11 @@
 			margin-bottom: 0.5rem;
 		}
 
+		.album-name {
+			opacity: 0.8;
+			font-style: italic;
+		}
+
 		.album-title {
 			font-size: 1.4rem;
 			font-weight: bold;
@@ -1884,7 +1889,7 @@
 						<div class="song-info">
 							<div class="song-title">${song.title}</div>
 							<div class="song-meta">
-								<span class="genre">${song.genre.charAt(0).toUpperCase() + song.genre.slice(1)}</span>
+								<span class="album-name">${song.albumTitle}</span>
 								<span class="duration">${song.duration}</span>
 							</div>
 							${createStarRating(`${song.albumId}_${song.trackNumber}`, getRating(`${song.albumId}_${song.trackNumber}`))}
@@ -2107,7 +2112,6 @@
                             <div class="song-title">${song.title}</div>
 							<div class="song-meta">
 								<span class="album-name">${song.albumTitle}</span>
-								<span class="genre">${song.genre.charAt(0).toUpperCase() + song.genre.slice(1)}</span>
 								<span class="duration">${song.duration}</span>
 							</div>
 							${createStarRating(`${song.albumId}_${song.trackNumber}`, getRating(`${song.albumId}_${song.trackNumber}`))}
