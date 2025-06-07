@@ -2015,7 +2015,7 @@
 				<img src="${safeImageSrc(album.albumArt, album.id)}"
 					 alt="${album.title}" 
 					 class="album-header-art"
-					 onerror="this.src='${safeImageSrc('default-album.jpg')}'">
+					 onerror="this.src='https://www.eztunes.xyz/albums/default/default-album.jpg'">
 				<div class="album-header-info">
 					<h2>${album.title}</h2>
 					<p><strong>${album.artist}</strong> • ${album.year} • ${album.genre}</p>
@@ -2060,7 +2060,7 @@
 							<img src="${safeImageSrc(track.image, album.id)}" 
 								 alt="${track.title}" 
 								 class="track-thumbnail"
-								 onerror="this.src='${safeImageSrc('default-track.jpg', album.id)}'">
+								 onerror="this.src='https://www.eztunes.xyz/albums/default/default-track.jpg'">
 							<div class="track-info">
 								<div class="track-title-text">${track.title}</div>
 								<div class="track-genre">${track.genre.charAt(0).toUpperCase() + track.genre.slice(1)}</div>
