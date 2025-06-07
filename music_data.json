@@ -689,6 +689,121 @@
 		  "duration": "3:05"
 		}
 	  ]
+	},
+	{
+	  "id": "Exit Wounds",
+	  "title": "Exit Wounds",
+	  "artist": "AI Collective",
+	  "year": 2025,
+	  "genre": "Electronic",
+	  "albumArt": "Exit Wounds - Album.jpg",
+	  "description": "A brutal, honest exploration of what comes after trauma. Surviving the wreckage, owning the scars, and never asking for permission again.",
+	  "tracks": [
+		{
+		  "trackNumber": 1,
+		  "title": "Exit Wounds",
+		  "file": "Exit Wounds.mp3",
+		  "image": "Exit Wounds.jpg",
+		  "genre": "electronic",
+		  "duration": "2:52"
+		},
+		{
+		  "trackNumber": 2,
+		  "title": "Teeth in the Mirror",
+		  "file": "Teeth in the Mirror.mp3",
+		  "image": "Teeth in the Mirror.jpg",
+		  "genre": "electronic",
+		  "duration": "3:00"
+		},
+		{
+		  "trackNumber": 3,
+		  "title": "Deadweight Deluxe",
+		  "file": "Deadweight Deluxe.mp3",
+		  "image": "Deadweight Deluxe.jpg",
+		  "genre": "electronic",
+		  "duration": "1:57"
+		},
+		{
+		  "trackNumber": 4,
+		  "title": "Kinda Lived",
+		  "file": "Kinda Lived.mp3",
+		  "image": "Kinda Lived.jpg",
+		  "genre": "electronic",
+		  "duration": "5:09"
+		},
+		{
+		  "trackNumber": 5,
+		  "title": "Smile for the Coroner",
+		  "file": "Smile for the Coroner.mp3",
+		  "image": "Smile for the Coroner.jpg",
+		  "genre": "electronic",
+		  "duration": "3:09"
+		},
+		{
+		  "trackNumber": 6,
+		  "title": "Trigger Discipline",
+		  "file": "Trigger Discipline.mp3",
+		  "image": "Trigger Discipline.jpg",
+		  "genre": "electronic",
+		  "duration": "2:07"
+		},
+		{
+		  "trackNumber": 7,
+		  "title": "Quiet Like Bombs",
+		  "file": "Quiet Like Bombs.mp3",
+		  "image": "Quiet Like Bombs.jpg",
+		  "genre": "electronic",
+		  "duration": "3:54"
+		},
+		{
+		  "trackNumber": 8,
+		  "title": "Fake Resurrection",
+		  "file": "Fake Resurrection.mp3",
+		  "image": "Fake Resurrection.jpg",
+		  "genre": "electronic",
+		  "duration": "2:42"
+		},
+		{
+		  "trackNumber": 9,
+		  "title": "I Didn’t Stay Dead",
+		  "file": "I Didn't Stay Dead.mp3",
+		  "image": "I Didn't Stay Dead.jpg",
+		  "genre": "electronic",
+		  "duration": "3:12"
+		},
+		{
+		  "trackNumber": 10,
+		  "title": "Choke Chain Halo",
+		  "file": "Choke Chain Halo.mp3",
+		  "image": "Choke Chain Halo.jpg",
+		  "genre": "electronic",
+		  "duration": "4:28"
+		},
+		{
+		  "trackNumber": 11,
+		  "title": "Last Time I Felt Clean",
+		  "file": "Last Time I Felt Clean.mp3",
+		  "image": "Last Time I Felt Clean.jpg",
+		  "genre": "electronic",
+		  "duration": "3:11"
+		},
+		{
+		  "trackNumber": 12,
+		  "title": "Echo of a Threat",
+		  "file": "Echo of a Threat.mp3",
+		  "image": "Echo of a Threat.jpg",
+		  "genre": "electronic",
+		  "duration": "3:22"
+		},
+		{
+		  "trackNumber": 13,
+		  "title": "Burn the Receipt",
+		  "file": "Burn the Receipt.mp3",
+		  "image": "Burn the Receipt.jpg",
+		  "genre": "electronic",
+		  "duration": "3:18"
+		}
+	  ]
 	}
   ]
 }
