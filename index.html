@@ -1540,13 +1540,6 @@
 		}
 
 		async function init() {
-			// Make sure DOM is ready
-			if (!document.getElementById('albumsGrid')) {
-				console.error('DOM not ready, waiting...');
-				setTimeout(init, 100);
-				return;
-			}
-			
 			// Load music data first
 			const loaded = await loadMusicData();
 			if (!loaded) {
@@ -1554,13 +1547,14 @@
 				return;
 			}
 			
-			// Load saved playlist BEFORE setting defaults
-			if (!loadSavedPlaylist()) {
+			// DON'T set these before loading saved playlist
+			// Load saved playlist FIRST
+			const playlistLoaded = loadSavedPlaylist();
+			
+			if (!playlistLoaded) {
 				// Only set defaults if no saved playlist exists
 				playlistOrder = [];
 				currentSongIndex = -1;
-				document.getElementById('placeholderInfo').style.display = 'block';
-				document.getElementById('placeholderArtwork').style.display = 'block';
 			}
 			
 			renderAlbums();
@@ -1578,14 +1572,18 @@
 			setupEventListeners();
 			handleSharedTrack();
 			
+			// Only show placeholder if no saved playlist was loaded
+			if (!playlistLoaded) {
+				document.getElementById('placeholderInfo').style.display = 'block';
+				document.getElementById('placeholderArtwork').style.display = 'block';
+			}
+			
 			// Set initial repeat button state
 			const repeatBtn = document.getElementById('repeatBtn');
-			if (repeatBtn) {
-				repeatBtn.style.background = 'linear-gradient(45deg, #4ecdc4, #45b7d1)';
-				repeatBtn.style.border = '2px solid #4ecdc4';
-				repeatBtn.classList.add('active');
-				repeatBtn.title = 'Loop: ON';
-			}
+			repeatBtn.style.background = 'linear-gradient(45deg, #4ecdc4, #45b7d1)';
+			repeatBtn.style.border = '2px solid #4ecdc4';
+			repeatBtn.classList.add('active');
+			repeatBtn.title = 'Loop: ON';
 		}
 
 		function safeImageSrc(imagePath, albumId) {
