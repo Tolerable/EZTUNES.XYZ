@@ -183,6 +183,35 @@
             animation: glow 2s ease-in-out infinite alternate;
         }
 
+		/* Add this to your <style> section */
+		.song-grid {
+			display: none;
+		}
+
+		.song-grid.active {
+			display: grid;
+		}
+
+		.toggle-songs-btn {
+			background: rgba(255, 255, 255, 0.1);
+			border: 1px solid rgba(255, 255, 255, 0.3);
+			border-radius: 25px;
+			padding: 0.8rem 1.5rem;
+			color: white;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			text-transform: uppercase;
+			font-weight: bold;
+			margin: 1rem auto;
+			display: block;
+		}
+
+		.toggle-songs-btn:hover {
+			background: rgba(255, 255, 255, 0.2);
+			border-color: rgba(255, 255, 255, 0.6);
+			transform: translateY(-2px);
+		}
+
 		.star-rating {
 			display: flex;
 			gap: 2px;
@@ -1395,7 +1424,9 @@
             <button class="filter-btn" data-filter="reggae">Reggae</button>
 			<button class="filter-btn" data-filter="folk">Folk</button>
         </div>
-
+		<!-- Toggle Songs Button -->
+		<button class="toggle-songs-btn" id="toggleSongsBtn" onclick="toggleSongGrid()">Show All Songs</button>
+		
         <!-- Song Grid -->
         <div class="song-grid" id="songGrid">
             <!-- Songs will be populated by JavaScript -->
@@ -1480,6 +1511,13 @@
 			renderPlaylist();
 			setupEventListeners();
 			handleSharedTrack();
+
+			// Check if user prefers to see all songs
+			const showSongs = localStorage.getItem('showAllSongs') === 'true';
+			if (showSongs) {
+				document.getElementById('songGrid').classList.add('active');
+				document.getElementById('toggleSongsBtn').textContent = 'Hide All Songs';
+			}
 			
 			// Try to load saved playlist after everything else is set up
 			setTimeout(() => {
@@ -1523,6 +1561,24 @@
 				stars.push(`<span class="star ${i <= currentRating ? 'filled' : ''}" data-rating="${i}">★</span>`);
 			}
 			return `<div class="star-rating" data-track-id="${trackId}">${stars.join('')}</div>`;
+		}
+
+		// Toggle song grid visibility
+		function toggleSongGrid() {
+			const songGrid = document.getElementById('songGrid');
+			const toggleBtn = document.getElementById('toggleSongsBtn');
+			
+			if (songGrid.classList.contains('active')) {
+				songGrid.classList.remove('active');
+				toggleBtn.textContent = 'Show All Songs';
+				localStorage.setItem('showAllSongs', 'false');
+				showNotification('Song grid hidden', 'info');
+			} else {
+				songGrid.classList.add('active');
+				toggleBtn.textContent = 'Hide All Songs';
+				localStorage.setItem('showAllSongs', 'true');
+				showNotification('Showing all songs', 'info');
+			}
 		}
 
 		function updateStarDisplay(container, rating) {
