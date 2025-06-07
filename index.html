@@ -1608,7 +1608,10 @@
 			const playlistData = {
 				order: playlistOrder,
 				currentIndex: currentSongIndex,
-				timestamp: Date.now()
+				timestamp: Date.now(),
+				// Add current playback position if a song is playing
+				currentTime: currentAudio ? currentAudio.currentTime : 0,
+				wasPlaying: isPlaying
 			};
 			localStorage.setItem('savedPlaylist', JSON.stringify(playlistData));
 		}
@@ -2524,11 +2527,23 @@
 				isPlaying = true;
 				document.getElementById('playBtn').innerHTML = '⏸️ Pause';
 				document.getElementById('currentArtwork').classList.add('spinning');
+				autoSavePlaylist(); // Save when playback starts
 			});
+			
 			currentAudio.addEventListener('pause', () => {
 				isPlaying = false;
 				document.getElementById('playBtn').innerHTML = '▶️ Play';
 				document.getElementById('currentArtwork').classList.remove('spinning');
+				autoSavePlaylist(); // Save when paused
+			});
+			
+			// Add periodic save during playback
+			currentAudio.addEventListener('timeupdate', () => {
+				updateProgress();
+				// Save every 5 seconds of playback
+				if (Math.floor(currentAudio.currentTime) % 5 === 0) {
+					autoSavePlaylist();
+				}
 			});
 			currentAudio.addEventListener('error', (e) => {
 				console.error('Audio loading error:', e);
@@ -2564,11 +2579,14 @@
 				return;
 			}
 			
-			currentAudio.play().catch(e => {
+			currentAudio.play().then(() => {
+				isPlaying = true;
+				// Remove autoSavePlaylist from here - it's too early
+				// autoSavePlaylist(); // REMOVE THIS LINE
+			}).catch(e => {
 				console.error('Playback error:', e);
 				showNotification('Playback error: ' + e.message, 'error');
 				
-				// If autoplay fails, just update UI to stopped state
 				isPlaying = false;
 				document.getElementById('playBtn').innerHTML = '▶️ Play';
 				document.getElementById('currentArtwork').classList.remove('spinning');
@@ -2879,24 +2897,30 @@
 		function loadSavedPlaylist() {
 			try {
 				const saved = localStorage.getItem('savedPlaylist');
-				console.log('Loading saved playlist:', saved); // DEBUG
-				
 				if (saved) {
 					const playlistData = JSON.parse(saved);
-					console.log('Parsed playlist data:', playlistData); // DEBUG
 					
 					const validSongs = playlistData.order.filter(index =>
 						index >= 0 && index < songs.length
 					);
 					
-					console.log('Valid songs after filter:', validSongs); // DEBUG
-					
 					if (validSongs.length > 0) {
 						playlistOrder = validSongs;
 						
+						// Restore the ACTUAL current song that was playing
 						if (validSongs.includes(playlistData.currentIndex)) {
 							currentSongIndex = playlistData.currentIndex;
 							loadCurrentSong();
+							
+							// Restore playback position
+							if (playlistData.currentTime && currentAudio) {
+								currentAudio.currentTime = playlistData.currentTime;
+							}
+							
+							// Auto-play if it was playing before
+							if (playlistData.wasPlaying && currentAudio) {
+								playAudio();
+							}
 						} else if (validSongs.length > 0) {
 							currentSongIndex = validSongs[0];
 							loadCurrentSong();
