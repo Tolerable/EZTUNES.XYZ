@@ -2402,12 +2402,25 @@
 		function loadCurrentSong() {
 			// Clean up previous audio completely
 			if (currentAudio) {
+				currentAudio.removeEventListener('ended', handleSongEnd);
+				currentAudio.removeEventListener('loadedmetadata', updateDuration);
+				currentAudio.removeEventListener('timeupdate', updateProgress);
 				currentAudio.pause();
 				currentAudio.currentTime = 0;
 				currentAudio = null;
 			}
 			
+			// Ensure we have a valid song index
+			if (currentSongIndex < 0 || currentSongIndex >= songs.length) {
+				console.error('Invalid song index:', currentSongIndex);
+				return;
+			}
+			
 			const song = songs[currentSongIndex];
+			if (!song) {
+				console.error('Song not found at index:', currentSongIndex);
+				return;
+			}
 			const album = musicData.albums.find(a => a.id === song.albumId);
 			
 			// Hide placeholder and show actual content
@@ -2485,12 +2498,22 @@
 		}
 
         // Play audio
-        function playAudio() {
-            currentAudio.play().catch(e => {
-                console.error('Playback error:', e);
-                showNotification('Playback error', 'error');
-            });
-        }
+		function playAudio() {
+			if (!currentAudio) {
+				console.error('No audio element to play');
+				return;
+			}
+			
+			currentAudio.play().catch(e => {
+				console.error('Playback error:', e);
+				showNotification('Playback error: ' + e.message, 'error');
+				
+				// If autoplay fails, just update UI to stopped state
+				isPlaying = false;
+				document.getElementById('playBtn').innerHTML = '▶️ Play';
+				document.getElementById('currentArtwork').classList.remove('spinning');
+			});
+		}
 
 		// Handle song end
 		function handleSongEnd() {
@@ -2506,18 +2529,15 @@
 					currentSongIndex = playlistOrder[currentPosition + 1];
 					loadCurrentSong();
 					renderPlaylist();
-					// Wait for the audio to be ready before playing
-					currentAudio.addEventListener('canplay', function() {
-						currentAudio.play();
-					}, { once: true });
-				} else if (repeatMode === 'all' && playlistOrder.length > 1) {
+					// Play immediately after loading
+					playAudio();
+				} else if (repeatMode === 'all' && playlistOrder.length > 0) {
 					// Loop back to the first song in the playlist
 					currentSongIndex = playlistOrder[0];
 					loadCurrentSong();
 					renderPlaylist();
-					currentAudio.addEventListener('canplay', function() {
-						currentAudio.play();
-					}, { once: true });
+					// Play immediately after loading
+					playAudio();
 				} else {
 					// End of playlist
 					isPlaying = false;
