@@ -1475,7 +1475,7 @@
 		let currentAlbum = null;
 		let currentSongIndex = 0;
 		let isPlaying = false;
-		let repeatMode = 'all';
+		let repeatMode = 'off';
 		let currentAudio = null;
 		let currentFilter = 'all';
 		let progressInterval;
@@ -1533,14 +1533,7 @@
 					document.getElementById('placeholderInfo').style.display = 'block';
 					document.getElementById('placeholderArtwork').style.display = 'block';
 				}
-			}, 100);
-			
-			// Set initial repeat button state
-			const repeatBtn = document.getElementById('repeatBtn');
-			repeatBtn.style.background = 'linear-gradient(45deg, #4ecdc4, #45b7d1) !important';
-			repeatBtn.style.border = '2px solid #4ecdc4 !important';
-			repeatBtn.classList.add('active');
-			repeatBtn.title = 'Repeat: All';			
+			}, 100);			
 		}
 
 		function safeImageSrc(imagePath, albumId) {
@@ -2517,33 +2510,26 @@
 
 		// Handle song end
 		function handleSongEnd() {
-			if (repeatMode === 'one') {
-				currentAudio.currentTime = 0;
+			// Find the current song's position in the playlist
+			const currentPosition = playlistOrder.indexOf(currentSongIndex);
+			
+			if (currentPosition !== -1 && currentPosition < playlistOrder.length - 1) {
+				// Move to the next song in the playlist order
+				currentSongIndex = playlistOrder[currentPosition + 1];
+				loadCurrentSong();
+				renderPlaylist();
+				playAudio();
+			} else if (repeatMode === 'all' && playlistOrder.length > 0) {
+				// Loop back to the first song in the playlist
+				currentSongIndex = playlistOrder[0];
+				loadCurrentSong();
+				renderPlaylist();
 				playAudio();
 			} else {
-				// Find the current song's position in the playlist
-				const currentPosition = playlistOrder.indexOf(currentSongIndex);
-				
-				if (currentPosition !== -1 && currentPosition < playlistOrder.length - 1) {
-					// Move to the next song in the playlist order
-					currentSongIndex = playlistOrder[currentPosition + 1];
-					loadCurrentSong();
-					renderPlaylist();
-					// Play immediately after loading
-					playAudio();
-				} else if (repeatMode === 'all' && playlistOrder.length > 0) {
-					// Loop back to the first song in the playlist
-					currentSongIndex = playlistOrder[0];
-					loadCurrentSong();
-					renderPlaylist();
-					// Play immediately after loading
-					playAudio();
-				} else {
-					// End of playlist
-					isPlaying = false;
-					document.getElementById('playBtn').innerHTML = '▶️ Play';
-					document.getElementById('currentArtwork').classList.remove('spinning');
-				}
+				// End of playlist - stop playing
+				isPlaying = false;
+				document.getElementById('playBtn').innerHTML = '▶️ Play';
+				document.getElementById('currentArtwork').classList.remove('spinning');
 			}
 		}
 
@@ -2638,8 +2624,8 @@
 
         // Toggle repeat mode
 		function toggleRepeat() {
-			// Only two modes: 'all' and 'one'
-			repeatMode = repeatMode === 'all' ? 'one' : 'all';
+			// Simple on/off toggle
+			repeatMode = repeatMode === 'off' ? 'all' : 'off';
 			
 			const btn = document.getElementById('repeatBtn');
 			
@@ -2648,23 +2634,19 @@
 			btn.style.background = '';
 			btn.style.border = '';
 			
-			switch(repeatMode) {
-				case 'all':
-					btn.innerHTML = '🔁';
-					btn.classList.add('active');
-					btn.style.background = 'linear-gradient(45deg, #4ecdc4, #45b7d1) !important';
-					btn.style.border = '2px solid #4ecdc4 !important';
-					btn.title = 'Repeat: All';
-					showNotification('Repeat all enabled', 'success');
-					break;
-				case 'one':
-					btn.innerHTML = '🔂';
-					btn.classList.add('active');
-					btn.style.background = 'linear-gradient(45deg, #ff6b6b, #ff8e8e) !important';
-					btn.style.border = '2px solid #ff6b6b !important';
-					btn.title = 'Repeat: One';
-					showNotification('Repeat one enabled', 'success');
-					break;
+			if (repeatMode === 'all') {
+				btn.innerHTML = '🔁';
+				btn.classList.add('active');
+				btn.style.background = 'linear-gradient(45deg, #4ecdc4, #45b7d1)';
+				btn.style.border = '2px solid #4ecdc4';
+				btn.title = 'Loop: ON';
+				showNotification('Loop enabled', 'success');
+			} else {
+				btn.innerHTML = '🔁';
+				btn.style.background = 'rgba(255, 255, 255, 0.1)';
+				btn.style.border = '1px solid rgba(255, 255, 255, 0.3)';
+				btn.title = 'Loop: OFF';
+				showNotification('Loop disabled', 'success');
 			}
 		}
 
