@@ -1426,7 +1426,6 @@
                 <h3>🎵 Current Playlist</h3>
                 <div class="playlist-controls">
                     <button class="playlist-btn" id="clearQueueBtn">Clear Playlist</button>
-                    <button class="playlist-btn" id="savePlaylistBtn">Save Playlist</button>
                 </div>
             </div>
             <div id="playlistContainer">
@@ -1591,6 +1590,23 @@
 		function safeAudioSrc(audioPath, albumId) {
 			const encodedAlbumId = encodeURIComponent(albumId);
 			return `https://www.eztunes.xyz/albums/${encodedAlbumId}/${audioPath}`;
+		}
+
+		function autoSavePlaylist() {
+			if (playlistOrder.length === 0) {
+				// Clear saved playlist if empty
+				localStorage.removeItem('savedPlaylist');
+				localStorage.removeItem('currentSongIndex');
+				return;
+			}
+			
+			// Save the current playlist state
+			const playlistData = {
+				order: playlistOrder,
+				currentIndex: currentSongIndex,
+				timestamp: Date.now()
+			};
+			localStorage.setItem('savedPlaylist', JSON.stringify(playlistData));
 		}
 
 		// Rating system
@@ -2856,53 +2872,23 @@
 			showNotification('Playlist cleared', 'success');
 		}
 
-		function autoSavePlaylist() {
-			if (playlistOrder.length > 0) {
-				const playlistData = {
-					songs: playlistOrder,
-					currentSong: currentSongIndex,
-					savedAt: new Date().toISOString(),
-					name: `Auto-saved ${new Date().toLocaleDateString()}`
-				};
-				localStorage.setItem('eztunesPlaylist', JSON.stringify(playlistData));
-			}
-		}
-
-        // Save playlist (mock function)
-		function savePlaylist() {
-			if (playlistOrder.length === 0) {
-				showNotification('No songs in playlist to save', 'info');
-				return;
-			}
-			
-			const playlistData = {
-				songs: playlistOrder,
-				currentSong: currentSongIndex,
-				savedAt: new Date().toISOString(),
-				name: `Playlist ${new Date().toLocaleDateString()}`
-			};
-			
-			localStorage.setItem('eztunesPlaylist', JSON.stringify(playlistData));
-			showNotification('Playlist saved successfully!', 'success');
-		}
-
 		function loadSavedPlaylist() {
 			try {
-				const savedData = localStorage.getItem('eztunesPlaylist');
-				if (savedData) {
-					const playlistData = JSON.parse(savedData);
+				const saved = localStorage.getItem('savedPlaylist');
+				if (saved) {  // CHANGE THIS - was 'savedData', should be 'saved'
+					const playlistData = JSON.parse(saved);  // CHANGE THIS - was 'savedData', should be 'saved'
 					
-					// Validate that the saved songs still exist
-					const validSongs = playlistData.songs.filter(index => 
+					// The saved format uses 'order' not 'songs'
+					const validSongs = playlistData.order.filter(index =>  // CHANGE from 'songs' to 'order'
 						index >= 0 && index < songs.length
 					);
 					
 					if (validSongs.length > 0) {
 						playlistOrder = validSongs;
 						
-						// Restore current song if it's still in the playlist
-						if (validSongs.includes(playlistData.currentSong)) {
-							currentSongIndex = playlistData.currentSong;
+						// Restore current song - using 'currentIndex' not 'currentSong'
+						if (validSongs.includes(playlistData.currentIndex)) {  // CHANGE from 'currentSong' to 'currentIndex'
+							currentSongIndex = playlistData.currentIndex;  // CHANGE from 'currentSong' to 'currentIndex'
 							loadCurrentSong();
 						} else if (validSongs.length > 0) {
 							currentSongIndex = validSongs[0];
