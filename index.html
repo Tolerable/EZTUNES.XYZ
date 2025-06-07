@@ -208,48 +208,51 @@
 			transform: translateY(-2px);
 		}
 
+		/* Star rating base styles */
 		.star-rating {
 			display: flex;
-			gap: 2px;
-			margin: 0.5rem 0;
+			gap: 5px;
+			margin-left: auto;
 		}
 
 		.star {
+			font-size: 1.3rem;
 			cursor: pointer;
 			color: rgba(255, 255, 255, 0.3);
-			font-size: 1.2rem;
-			transition: color 0.2s ease;
-			user-select: none;
+			transition: color 0.2s, transform 0.2s;
 		}
 
+		/* Filled stars */
 		.star.filled {
 			color: #FFD700;
 		}
 
-		/* Hover effect - light up current star and all before it */
-		.star-rating:hover .star {
-			color: rgba(255, 255, 255, 0.3);
+		/* On hover, light up the hovered star and all stars before it */
+		.star-rating .star:hover,
+		.star-rating .star:hover ~ .star {
+			color: #FFD700 !important;
 		}
 
-		.star-rating:hover .star:hover,
-		.star-rating:hover .star:hover ~ .star {
-			color: rgba(255, 255, 255, 0.3);
+		/* But then we need to undo it for stars AFTER the hovered one */
+		.star-rating {
+			direction: rtl;  /* This reverses the order for CSS selection */
 		}
 
-		.star-rating:hover .star:hover {
-			color: #FFD700;
+		.star-rating .star {
+			direction: ltr;  /* But keeps the stars displaying left-to-right */
 		}
 
-		.star-rating .star:hover ~ .star.temp-fill {
-			color: #FFD700;
-		}
-
+		/* Location-specific margins */
 		.track-item .star-rating {
 			margin-right: 1rem;
 		}
 
 		.song-info .star-rating {
 			margin-top: 0.5rem;
+		}
+
+		.albums-section {
+			margin: 3rem 0;
 		}
 
 		.albums-section {
@@ -1053,18 +1056,51 @@
             background: rgba(255, 255, 255, 0.2);
         }
         
-        .playlist-item {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-            margin: 0.5rem 0;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
+		.playlist-item {
+			background: rgba(255, 255, 255, 0.05);
+			border-radius: 10px;
+			padding: 15px 20px;
+			margin-bottom: 10px;
+			display: flex;
+			align-items: center;
+			gap: 20px;
+			transition: all 0.3s ease;
+			cursor: pointer;
+		}
+
+		.playlist-number {
+			font-size: 1.2rem;
+			opacity: 0.6;
+			min-width: 30px;
+		}
+
+		.playlist-artwork {
+			width: 60px;
+			height: 60px;
+			border-radius: 8px;
+			object-fit: cover;
+		}
+
+		.playlist-info {
+			flex: 1;
+			display: flex;
+			align-items: center;
+			gap: 20px;
+		}
+
+		.playlist-title {
+			font-size: 1.1rem;
+			font-weight: 500;
+			min-width: 200px;
+			max-width: 300px;
+		}
+
+		.playlist-meta {
+			font-size: 0.95rem;
+			opacity: 0.7;
+			min-width: 200px;
+		}
+
         
         .playlist-item:hover {
             background: rgba(255, 255, 255, 0.1);
@@ -1264,9 +1300,6 @@
 			border-top: 3px solid #4ecdc4;
 		}
 
-		.playlist-item {
-			cursor: grab;
-		}
         
         @media (max-width: 768px) {
 			.logo h1 {
