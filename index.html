@@ -2165,7 +2165,7 @@
 						<img src="${safeImageSrc(song.image, song.albumId)}" alt="${song.title}" class="playlist-thumbnail">
 						<div class="playlist-info">
 							<div class="playlist-title">${song.title}</div>
-							<div class="playlist-meta">${song.genre.charAt(0).toUpperCase() + song.genre.slice(1)}</div>
+							<div class="playlist-meta">${song.albumTitle} • ${song.genre.charAt(0).toUpperCase() + song.genre.slice(1)}</div>
 							${createStarRating(trackId, getRating(trackId))}
 						</div>
 						<div class="playlist-duration">${song.duration}</div>
