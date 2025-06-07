@@ -1548,8 +1548,10 @@
 				return;
 			}
 			
-			playlistOrder = []; // Start with empty playlist
-			currentSongIndex = -1;
+			// DON'T set these to empty/default - let loadSavedPlaylist handle it
+			// playlistOrder = []; // REMOVE THIS LINE
+			// currentSongIndex = -1; // REMOVE THIS LINE
+			
 			renderAlbums();
 			
 			// Check if user prefers to see all songs (ONLY ONCE)
@@ -1561,18 +1563,19 @@
 				renderSongs();
 			}
 			
-			renderPlaylist();
 			setupEventListeners();
-			handleSharedTrack();
 			
-			// Try to load saved playlist after everything else is set up
-			setTimeout(() => {
-				if (!loadSavedPlaylist()) {
-					// No saved playlist, show the default "Ready to Play" state
-					document.getElementById('placeholderInfo').style.display = 'block';
-					document.getElementById('placeholderArtwork').style.display = 'block';
-				}
-			}, 100);
+			// Load saved playlist BEFORE rendering and handling shared tracks
+			if (!loadSavedPlaylist()) {
+				// Only set defaults if no saved playlist exists
+				playlistOrder = [];
+				currentSongIndex = -1;
+				document.getElementById('placeholderInfo').style.display = 'block';
+				document.getElementById('placeholderArtwork').style.display = 'block';
+			}
+			
+			renderPlaylist();
+			handleSharedTrack();
 			
 			// Set initial repeat button state
 			const repeatBtn = document.getElementById('repeatBtn');
