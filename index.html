@@ -1341,6 +1341,7 @@
                 <button class="control-btn" id="nextBtn" title="Next track">⏭️</button>
                 <button class="control-btn" id="shuffleBtn" title="Shuffle playlist">🔀</button>
                 <button class="control-btn active" id="repeatBtn" title="Repeat: All" style="background: linear-gradient(45deg, #4ecdc4, #45b7d1); border: 2px solid #4ecdc4;">🔁</button>
+				<button class="control-btn" id="shareCurrentBtn" title="Share current track">🔗</button>
             </div>
             
             <div class="volume-control">
@@ -1717,7 +1718,7 @@
 			if (!musicData || !musicData.albums) return;
 			
 			// Define your custom album order here
-			const albumOrder = ['Unleashed', 'Ghosts', 'Sinners-Feast', 'Greatest Hits'];
+			const albumOrder = ['Unleashed', 'Ghosts', 'Sinners-Feast', 'Awakenings', 'Greatest Hits'];
 			
 			// Sort albums according to your custom order
 			const sortedAlbums = albumOrder.map(id => 
