@@ -2537,11 +2537,15 @@
 				autoSavePlaylist(); // Save when paused
 			});
 			
+			let lastSaveTime = 0;
+			
 			// Add periodic save during playback
 			currentAudio.addEventListener('timeupdate', () => {
 				updateProgress();
-				// Save every 5 seconds of playback
-				if (Math.floor(currentAudio.currentTime) % 5 === 0) {
+				// Save every 10 seconds of playback
+				const currentTimeFloored = Math.floor(currentAudio.currentTime);
+				if (currentTimeFloored > 0 && currentTimeFloored % 10 === 0 && currentTimeFloored !== lastSaveTime) {
+					lastSaveTime = currentTimeFloored;
 					autoSavePlaylist();
 				}
 			});
@@ -2579,13 +2583,15 @@
 				return;
 			}
 			
-			currentAudio.play().then(() => {
-				isPlaying = true;
-				// Remove autoSavePlaylist from here - it's too early
-				// autoSavePlaylist(); // REMOVE THIS LINE
-			}).catch(e => {
-				console.error('Playback error:', e);
-				showNotification('Playback error: ' + e.message, 'error');
+			currentAudio.play().catch(e => {
+				// Only show error if it's NOT an autoplay policy issue
+				if (e.name !== 'NotAllowedError') {
+					console.error('Playback error:', e);
+					showNotification('Playback error: ' + e.message, 'error');
+				} else {
+					// Silently handle autoplay prevention
+					console.log('Autoplay prevented by browser');
+				}
 				
 				isPlaying = false;
 				document.getElementById('playBtn').innerHTML = '▶️ Play';
@@ -2912,22 +2918,22 @@
 							currentSongIndex = playlistData.currentIndex;
 							loadCurrentSong();
 							
-							// Restore playback position
+							// Restore playback position (but don't auto-play)
 							if (playlistData.currentTime && currentAudio) {
 								currentAudio.currentTime = playlistData.currentTime;
 							}
 							
-							// Auto-play if it was playing before
-							if (playlistData.wasPlaying && currentAudio) {
-								playAudio();
-							}
+							// REMOVE THE AUTO-PLAY CODE
+							// Don't auto-play on page load
+							
 						} else if (validSongs.length > 0) {
 							currentSongIndex = validSongs[0];
 							loadCurrentSong();
 						}
 						
 						renderPlaylist();
-						showNotification('Saved playlist loaded', 'success');
+						// Remove or change this notification if you don't want it
+						// showNotification('Saved playlist loaded', 'success');
 						return true;
 					}
 				}
