@@ -1584,10 +1584,19 @@
 				filtersSection.style.display = 'flex';
 				toggleBtn.textContent = 'Hide All Songs';
 				
-				// Only render songs if the grid is empty
-				if (songGrid.innerHTML === '') {
-					renderSongs();
-				}
+				// Render ALL songs
+				renderSongs();
+				
+				// Re-attach the original filter listeners
+				document.querySelectorAll('.filter-btn').forEach(btn => {
+					btn.removeEventListener('click', filterAlbumSongs);
+					btn.addEventListener('click', (e) => {
+						document.querySelector('.filter-btn.active').classList.remove('active');
+						e.target.classList.add('active');
+						currentFilter = e.target.dataset.filter;
+						renderSongs();
+					});
+				});
 				
 				localStorage.setItem('showAllSongs', 'true');
 				showNotification('Showing all songs', 'info');
@@ -1848,6 +1857,84 @@
 			return `${totalMins}:${remainingSecs.toString().padStart(2, '0')}`;
 		}
 
+		function showAlbumSongs(albumId) {
+			const songGrid = document.getElementById('songGrid');
+			const filtersSection = document.getElementById('filtersSection');
+			const toggleBtn = document.getElementById('toggleSongsBtn');
+			
+			// Filter songs for this album only
+			const albumSongs = songs.filter(song => song.albumId === albumId);
+			
+			// Show the grid and filters
+			songGrid.style.display = 'grid';
+			filtersSection.style.display = 'flex';
+			
+			// Update button text
+			toggleBtn.textContent = 'Hide Song Cards';
+			toggleBtn.onclick = function() { hideAlbumSongs(); };
+			
+			// Render only this album's songs
+			songGrid.innerHTML = albumSongs.map((song) => {
+				const songIndex = songs.indexOf(song);
+				return `
+					<div class="song-card" data-genre="${song.genre}">
+						<img src="${safeImageSrc(song.image, song.albumId)}" alt="${song.title}" class="song-artwork" loading="lazy">
+						<div class="song-info">
+							<div class="song-title">${song.title}</div>
+							<div class="song-meta">
+								<span class="genre">${song.genre.charAt(0).toUpperCase() + song.genre.slice(1)}</span>
+								<span class="duration">${song.duration}</span>
+							</div>
+							${createStarRating(`${song.albumId}_${song.trackNumber}`, getRating(`${song.albumId}_${song.trackNumber}`))}
+							<div class="song-actions">
+								<button class="action-btn" onclick="playSong(${songIndex})">▶️ Play</button>
+								<button class="action-btn" onclick="addToQueue(${songIndex})">➕ Add</button>
+								<button class="share-btn" onclick="openShareModal(${songIndex})">🔗 Share</button>
+							</div>
+						</div>
+					</div>
+				`;
+			}).join('');
+			
+			// Re-attach filter event listeners for the album songs
+			document.querySelectorAll('.filter-btn').forEach(btn => {
+				btn.removeEventListener('click', filterAlbumSongs);
+				btn.addEventListener('click', filterAlbumSongs);
+			});
+		}
+
+		function hideAlbumSongs() {
+			const songGrid = document.getElementById('songGrid');
+			const filtersSection = document.getElementById('filtersSection');
+			const toggleBtn = document.getElementById('toggleSongsBtn');
+			
+			songGrid.style.display = 'none';
+			filtersSection.style.display = 'none';
+			
+			// Reset button to show all songs
+			toggleBtn.textContent = 'Show All Songs';
+			toggleBtn.onclick = function() { toggleSongGrid(); };
+		}
+
+		function filterAlbumSongs(e) {
+			const filter = e.target.dataset.filter;
+			const cards = document.querySelectorAll('.song-card');
+			
+			// Update active filter button
+			document.querySelector('.filter-btn.active').classList.remove('active');
+			e.target.classList.add('active');
+			
+			// Filter the displayed cards
+			cards.forEach(card => {
+				const genre = card.dataset.genre;
+				if (filter === 'all' || genre === filter) {
+					card.style.display = 'block';
+				} else {
+					card.style.display = 'none';
+				}
+			});
+		}
+
 		// Show album detail
 		function showAlbumDetail(albumId) {
 			const album = musicData.albums.find(a => a.id === albumId);
@@ -1880,6 +1967,7 @@
 			
 			// Populate track list
 			renderAlbumTracks(album);
+			showAlbumSongs(albumId);
 		}
 
 		// Hide album detail
@@ -1887,6 +1975,9 @@
 			document.getElementById('albumsGrid').style.display = 'grid';
 			document.getElementById('albumDetail').classList.remove('active');
 			currentAlbum = null;
+			
+			// Hide the song cards when going back to album view
+			hideAlbumSongs();
 		}
 
 		// Render album tracks
