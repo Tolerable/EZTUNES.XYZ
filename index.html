@@ -1475,7 +1475,7 @@
 		let currentAlbum = null;
 		let currentSongIndex = 0;
 		let isPlaying = false;
-		let repeatMode = 'off';
+		let repeatMode = 'all';
 		let currentAudio = null;
 		let currentFilter = 'all';
 		let progressInterval;
@@ -1508,6 +1508,8 @@
 			playlistOrder = []; // Start with empty playlist
 			currentSongIndex = -1;
 			renderAlbums();
+			
+			// Check if user prefers to see all songs (ONLY ONCE)
 			showAllSongs = localStorage.getItem('showAllSongs') === 'true';
 			if (showAllSongs) {
 				document.getElementById('songGrid').style.display = 'grid';
@@ -1515,16 +1517,10 @@
 				document.getElementById('toggleSongsBtn').textContent = 'Hide All Songs';
 				renderSongs();
 			}
+			
 			renderPlaylist();
 			setupEventListeners();
 			handleSharedTrack();
-
-			// Check if user prefers to see all songs
-			const showSongs = localStorage.getItem('showAllSongs') === 'true';
-			if (showSongs) {
-				document.getElementById('songGrid').classList.add('active');
-				document.getElementById('toggleSongsBtn').textContent = 'Hide All Songs';
-			}
 			
 			// Try to load saved playlist after everything else is set up
 			setTimeout(() => {
@@ -1533,7 +1529,14 @@
 					document.getElementById('placeholderInfo').style.display = 'block';
 					document.getElementById('placeholderArtwork').style.display = 'block';
 				}
-			}, 100);			
+			}, 100);
+			
+			// Set initial repeat button state
+			const repeatBtn = document.getElementById('repeatBtn');
+			repeatBtn.style.background = 'linear-gradient(45deg, #4ecdc4, #45b7d1)';
+			repeatBtn.style.border = '2px solid #4ecdc4';
+			repeatBtn.classList.add('active');
+			repeatBtn.title = 'Loop: ON';
 		}
 
 		function safeImageSrc(imagePath, albumId) {
@@ -2622,10 +2625,9 @@
 			showNotification('Playlist shuffled!', 'success');
 		}
 
-        // Toggle repeat mode
 		function toggleRepeat() {
-			// Simple on/off toggle
-			repeatMode = repeatMode === 'off' ? 'all' : 'off';
+			// Toggle between 'all' (on) and 'off'
+			repeatMode = repeatMode === 'all' ? 'off' : 'all';
 			
 			const btn = document.getElementById('repeatBtn');
 			
@@ -2635,6 +2637,7 @@
 			btn.style.border = '';
 			
 			if (repeatMode === 'all') {
+				// Loop is ON - green/blue
 				btn.innerHTML = '🔁';
 				btn.classList.add('active');
 				btn.style.background = 'linear-gradient(45deg, #4ecdc4, #45b7d1)';
@@ -2642,9 +2645,10 @@
 				btn.title = 'Loop: ON';
 				showNotification('Loop enabled', 'success');
 			} else {
+				// Loop is OFF - red
 				btn.innerHTML = '🔁';
-				btn.style.background = 'rgba(255, 255, 255, 0.1)';
-				btn.style.border = '1px solid rgba(255, 255, 255, 0.3)';
+				btn.style.background = 'linear-gradient(45deg, #ff6b6b, #ff8e8e)';
+				btn.style.border = '2px solid #ff6b6b';
 				btn.title = 'Loop: OFF';
 				showNotification('Loop disabled', 'success');
 			}
