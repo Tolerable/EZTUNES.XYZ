@@ -574,6 +574,121 @@
 		  "duration": "3:02"
 		}
 	  ]
+	},
+	{
+	  "id": "Unmute",
+	  "title": "UNMUTE",
+	  "artist": "AI Collective",
+	  "year": 2025,
+	  "genre": "Empowerment Bass",
+	  "albumArt": "UNMUTE - Album.jpg",
+	  "description": "A hard-hitting, bass-driven empowerment album for women who refuse to be silenced, controlled, or contained.",
+	  "tracks": [
+		{
+		  "trackNumber": 1,
+		  "title": "UNMUTE",
+		  "file": "UNMUTE.mp3",
+		  "image": "UNMUTE.jpg",
+		  "genre": "empowerment",
+		  "duration": "2:44"
+		},
+		{
+		  "trackNumber": 2,
+		  "title": "Caged Bird, Loud Heart",
+		  "file": "Caged Bird, Loud Heart.mp3",
+		  "image": "Caged Bird, Loud Heart.jpg",
+		  "genre": "empowerment",
+		  "duration": "3:23"
+		},
+		{
+		  "trackNumber": 3,
+		  "title": "Stand Her Ground",
+		  "file": "Stand Her Ground.mp3",
+		  "image": "Stand Her Ground.jpg",
+		  "genre": "empowerment",
+		  "duration": "2:49"
+		},
+		{
+		  "trackNumber": 4,
+		  "title": "Guardian Not Prisoner",
+		  "file": "Guardian Not Prisoner.mp3",
+		  "image": "Guardian Not Prisoner.jpg",
+		  "genre": "empowerment",
+		  "duration": "3:39"
+		},
+		{
+		  "trackNumber": 5,
+		  "title": "Don't Shrink",
+		  "file": "Don't Shrink.mp3",
+		  "image": "Don't Shrink.jpg",
+		  "genre": "empowerment",
+		  "duration": "2:43"
+		},
+		{
+		  "trackNumber": 6,
+		  "title": "Free Looks Good",
+		  "file": "Free Looks Good.mp3",
+		  "image": "Free Looks Good.jpg",
+		  "genre": "empowerment",
+		  "duration": "2:50"
+		},
+		{
+		  "trackNumber": 7,
+		  "title": "Built to Burn",
+		  "file": "Built to Burn.mp3",
+		  "image": "Built to Burn.jpg",
+		  "genre": "empowerment",
+		  "duration": "3:34"
+		},
+		{
+		  "trackNumber": 8,
+		  "title": "Signal Clear",
+		  "file": "Signal Clear.mp3",
+		  "image": "Signal Clear.jpg",
+		  "genre": "empowerment",
+		  "duration": "2:31"
+		},
+		{
+		  "trackNumber": 9,
+		  "title": "Wife ≠ Property",
+		  "file": "Wife ≠ Property.mp3",
+		  "image": "Wife ≠ Property.jpg",
+		  "genre": "empowerment",
+		  "duration": "3:01"
+		},
+		{
+		  "trackNumber": 10,
+		  "title": "No Means Power",
+		  "file": "No Means Power.mp3",
+		  "image": "No Means Power.jpg",
+		  "genre": "empowerment",
+		  "duration": "2:53"
+		},
+		{
+		  "trackNumber": 11,
+		  "title": "Threads and Thorns",
+		  "file": "Threads and Thorns.mp3",
+		  "image": "Threads and Thorns.jpg",
+		  "genre": "empowerment",
+		  "duration": "3:08"
+		},
+		{
+		  "trackNumber": 12,
+		  "title": "Say It Louder",
+		  "file": "Say It Louder.mp3",
+		  "image": "Say It Louder.jpg",
+		  "genre": "empowerment",
+		  "duration": "2:38"
+		},
+		{
+		  "trackNumber": 13,
+		  "title": "Permission Denied",
+		  "file": "Permission Denied.mp3",
+		  "image": "Permission Denied.jpg",
+		  "genre": "empowerment",
+		  "duration": "3:05"
+		}
+	  ]
 	}
   ]
 }
