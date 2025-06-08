@@ -3362,6 +3362,19 @@
 			
 			document.getElementById('shareUrl').value = shareUrl;
 			
+			// Add Discord formatted text button
+			const shareContent = document.querySelector('.share-content');
+			if (!document.getElementById('discordCopyBtn')) {
+				const discordBtn = document.createElement('button');
+				discordBtn.id = 'discordCopyBtn';
+				discordBtn.className = 'copy-btn';
+				discordBtn.style.marginTop = '1rem';
+				discordBtn.style.background = 'linear-gradient(45deg, #7289da, #5865f2)';
+				discordBtn.textContent = 'Copy Discord Format';
+				discordBtn.onclick = () => copyDiscordFormat(song, shareUrl);
+				shareContent.insertBefore(discordBtn, document.querySelector('.social-shares'));
+			}
+			
 			const text = `🎵 Now playing: "${song.title}" from the album "${song.albumTitle}" on EzTunes.XYZ - Free AI-Generated Music! Listen now:`;
 			
 			document.getElementById('twitterShare').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(shareUrl)}`;
@@ -3370,6 +3383,33 @@
 			document.getElementById('redditShare').href = `https://reddit.com/submit?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(text)}`;
 			
 			document.getElementById('shareModal').classList.add('active');
+		}
+
+		function copyDiscordFormat(song, shareUrl) {
+			const discordText = `\`\`\`md
+		# 🎵 Now Playing on EzTunes.XYZ
+
+		[${song.title}]
+		> Album: ${song.albumTitle}
+		> Genre: ${song.genre}
+		> Duration: ${song.duration}
+
+		< Listen now: >
+		\`\`\`
+		<${shareUrl}>`;
+			
+			navigator.clipboard.writeText(discordText).then(() => {
+				showNotification('Discord format copied!', 'success');
+			}).catch(() => {
+				// Fallback
+				const textArea = document.createElement('textarea');
+				textArea.value = discordText;
+				document.body.appendChild(textArea);
+				textArea.select();
+				document.execCommand('copy');
+				document.body.removeChild(textArea);
+				showNotification('Discord format copied!', 'success');
+			});
 		}
 
 		function closeShareModal() {
