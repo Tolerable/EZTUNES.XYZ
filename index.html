@@ -3401,7 +3401,9 @@
 		🎸 **Genre:** ${song.genre.charAt(0).toUpperCase() + song.genre.slice(1)}
 		⏱️ **Duration:** ${song.duration}
 
-		🔊 **Listen now:** <${shareUrl}>`;
+		🔊 **Listen now:** <${shareUrl}>
+
+		Free AI-Generated Music Available at <https://www.eztunes.xyz/>`;
 			
 			navigator.clipboard.writeText(discordText).then(() => {
 				showNotification('Discord format copied!', 'success');
