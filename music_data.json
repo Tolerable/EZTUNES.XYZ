@@ -807,7 +807,7 @@
 	},
 	{
 	  "id": "Afterlight",
-	  "title": "AFTERLIGHT",
+	  "title": "Afterlight",
 	  "artist": "AI Collective",
 	  "year": 2025,
 	  "genre": "Electronic",
@@ -820,7 +820,116 @@
 		  "file": "Afterlight.mp3",
 		  "image": "Afterlight.jpg",
 		  "genre": "electronic",
-		  "duration": "3:28"
+		  "duration": "3:28",
+		  "description": "Hints of what came before, but focused on what’s ahead. Not a happy ending — a better beginning."
+		},
+		{
+		  "trackNumber": 2,
+		  "title": "Real Ones Stay",
+		  "file": "Real Ones Stay.mp3",
+		  "image": "Real Ones Stay.jpg",
+		  "genre": "electronic",
+		  "duration": "3:14",
+		  "description": "Loyalty is louder than words — she finally sees that. Not promises — presence."
+		},
+		{
+		  "trackNumber": 3,
+		  "title": "Gas in the Tank",
+		  "file": "Gas in the Tank.mp3",
+		  "image": "Gas in the Tank.jpg",
+		  "genre": "electronic",
+		  "duration": "3:22",
+		  "description": "Still tired, still bruised, but the engine’s running. No time to stop — there’s too much life left to live."
+		},
+		{
+		  "trackNumber": 4,
+		  "title": "Skyline Kids",
+		  "file": "Skyline Kids.mp3",
+		  "image": "Skyline Kids.jpg",
+		  "genre": "electronic",
+		  "duration": "2:41",
+		  "description": "Eyes to the future, pride, quiet fears, strong hopes. They’ll go farther than we did — that’s the point."
+		},
+		{
+		  "trackNumber": 5,
+		  "title": "No Blueprint",
+		  "file": "No Blueprint.mp3",
+		  "image": "No Blueprint.jpg",
+		  "genre": "electronic",
+		  "duration": "2:59",
+		  "description": "There’s no map for what comes next — we build it anyway. The future’s DIY — and that’s beautiful."
+		},
+		{
+		  "trackNumber": 6,
+		  "title": "Messy Forever",
+		  "file": "Messy Forever.mp3",
+		  "image": "Messy Forever.jpg",
+		  "genre": "electronic",
+		  "duration": "2:34",
+		  "description": "Every fight, every laugh, every weird Tuesday — it’s ours. Love doesn’t look clean — it looks lived-in."
+		},
+		{
+		  "trackNumber": 7,
+		  "title": "Open Door Days",
+		  "file": "Open Door Days.mp3",
+		  "image": "Open Door Days.jpg",
+		  "genre": "electronic",
+		  "duration": "3:18",
+		  "description": "Breakfast smells, loud music, open hearts. Peace isn’t silence — it’s freedom to be loud together."
+		},
+		{
+		  "trackNumber": 8,
+		  "title": "Barefoot Proof",
+		  "file": "Barefoot Proof.mp3",
+		  "image": "Barefoot Proof.jpg",
+		  "genre": "electronic",
+		  "duration": "4:13",
+		  "description": "No heels, no mask — she walks her own earth. Sometimes healing looks like dancing barefoot."
+		},
+		{
+		  "trackNumber": 9,
+		  "title": "Blood & Hope",
+		  "file": "Blood and Hope.mp3",
+		  "image": "Blood and Hope.jpg",
+		  "genre": "electronic",
+		  "duration": "3:17",
+		  "description": "The things we pass down, the ones we end. This is how you change a legacy."
+		},
+		{
+		  "trackNumber": 10,
+		  "title": "Midnight Groceries",
+		  "file": "Midnight Groceries.mp3",
+		  "image": "Midnight Groceries.jpg",
+		  "genre": "electronic",
+		  "duration": "3:06",
+		  "description": "Late runs for milk, inside jokes, background peace. It’s not the milestones — it’s the mundane magic."
+		},
+		{
+		  "trackNumber": 11,
+		  "title": "Firewatcher",
+		  "file": "Firewatcher.mp3",
+		  "image": "Firewatcher.jpg",
+		  "genre": "electronic",
+		  "duration": "4:02",
+		  "description": "Love as observation, not ownership. I’m not here to fix her — just to witness her shine."
+		},
+		{
+		  "trackNumber": 12,
+		  "title": "Roots Before Rockets",
+		  "file": "Roots Before Rockets.mp3",
+		  "image": "Roots Before Rockets.jpg",
+		  "genre": "electronic",
+		  "duration": "3:09",
+		  "description": "You don’t fly until your feet know the ground. Make home strong. Then launch."
+		},
+		{
+		  "trackNumber": 13,
+		  "title": "See it Through",
+		  "file": "See it Through.mp3",
+		  "image": "See it Through.jpg",
+		  "genre": "electronic",
+		  "duration": "3:16",
+		  "description": "It’s not about starting over — it’s about finishing strong. This time, no one's backing out. We see it through."
 		}
 	  ]
 	}
