@@ -688,6 +688,48 @@
 			background: rgba(255, 255, 255, 0.2);
 		}
 
+		.playlist-controls-mini {
+			display: flex;
+			gap: 0.3rem;
+			opacity: 0;
+			transition: opacity 0.3s ease;
+			margin-right: 0.5rem;
+		}
+
+		.playlist-item:hover .playlist-controls-mini {
+			opacity: 1;
+		}
+
+		.playlist-control-btn {
+			background: rgba(255, 255, 255, 0.1);
+			border: none;
+			border-radius: 50%;
+			width: 24px;
+			height: 24px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: white;
+			cursor: pointer;
+			transition: all 0.2s ease;
+			font-size: 0.8rem;
+		}
+
+		.playlist-control-btn:hover {
+			background: rgba(255, 255, 255, 0.2);
+			transform: scale(1.1);
+		}
+
+		.playlist-control-btn.remove:hover {
+			background: rgba(255, 107, 107, 0.5);
+		}
+
+		.playlist-item.drag-outside {
+			opacity: 0.3;
+			border: 2px dashed #ff6b6b;
+			background: rgba(255, 107, 107, 0.1);
+		}
+
 		@media (max-width: 768px) {
 			.album-header {
 				flex-direction: column;
@@ -1586,6 +1628,68 @@
 			repeatBtn.title = 'Loop: ON';
 		}
 
+		function removeFromPlaylist(position) {
+			if (position < 0 || position >= playlistOrder.length) return;
+			
+			const removedSongIndex = playlistOrder[position];
+			const song = songs[removedSongIndex];
+			
+			// If removing the currently playing song
+			if (removedSongIndex === currentSongIndex) {
+				// Stop playback
+				if (currentAudio) {
+					currentAudio.pause();
+					currentAudio.currentTime = 0;
+					currentAudio = null;
+				}
+				
+				// Remove the song
+				playlistOrder.splice(position, 1);
+				
+				// If there are still songs in the playlist
+				if (playlistOrder.length > 0) {
+					// Play the next song (or previous if it was the last)
+					const newPosition = Math.min(position, playlistOrder.length - 1);
+					currentSongIndex = playlistOrder[newPosition];
+					loadCurrentSong();
+					if (isPlaying) {
+						playAudio();
+					}
+				} else {
+					// Playlist is now empty
+					currentSongIndex = -1;
+					isPlaying = false;
+					document.getElementById('playBtn').innerHTML = '▶️ Play';
+					document.getElementById('placeholderInfo').style.display = 'block';
+					document.getElementById('placeholderArtwork').style.display = 'block';
+					document.getElementById('currentSongInfo').style.display = 'none';
+					document.getElementById('currentArtwork').style.display = 'none';
+					document.getElementById('albumCoverSection').style.display = 'none';
+				}
+			} else {
+				// Just remove the song
+				playlistOrder.splice(position, 1);
+			}
+			
+			renderPlaylist();
+			autoSavePlaylist();
+			showNotification(`Removed "${song.title}" from playlist`, 'success');
+		}
+
+		function movePlaylistItem(position, direction) {
+			const newPosition = position + direction;
+			
+			// Check bounds
+			if (newPosition < 0 || newPosition >= playlistOrder.length) return;
+			
+			// Swap the items
+			[playlistOrder[position], playlistOrder[newPosition]] = 
+			[playlistOrder[newPosition], playlistOrder[position]];
+			
+			renderPlaylist();
+			autoSavePlaylist();
+		}
+
 		function safeImageSrc(imagePath, albumId) {
 			const encodedAlbumId = encodeURIComponent(albumId);
 			return `https://www.eztunes.xyz/albums/${encodedAlbumId}/${imagePath}`;
@@ -2224,6 +2328,11 @@
 							<div class="playlist-meta">${song.albumTitle} • ${song.genre.charAt(0).toUpperCase() + song.genre.slice(1)}</div>
 							${createStarRating(trackId, getRating(trackId))}
 						</div>
+						<div class="playlist-controls-mini">
+							<button class="playlist-control-btn" onclick="movePlaylistItem(${position}, -1)" title="Move up" ${position === 0 ? 'disabled style="opacity: 0.3; cursor: not-allowed;"' : ''}>↑</button>
+							<button class="playlist-control-btn remove" onclick="removeFromPlaylist(${position})" title="Remove">×</button>
+							<button class="playlist-control-btn" onclick="movePlaylistItem(${position}, 1)" title="Move down" ${position === playlistOrder.length - 1 ? 'disabled style="opacity: 0.3; cursor: not-allowed;"' : ''}>↓</button>
+						</div>
 						<div class="playlist-duration">${song.duration}</div>
 					</div>
 				`;
@@ -2239,9 +2348,9 @@
 			return track.path || track.title;
 		}
 
-		// New function to handle all playlist events
 		function addPlaylistEventListeners() {
 			const playlistItems = document.querySelectorAll('.playlist-item');
+			let isDraggingOutside = false;
 			
 			playlistItems.forEach((item, index) => {
 				// Mouse down - record time
@@ -2257,13 +2366,14 @@
 					draggedIndex = index;
 					item.classList.add('dragging');
 					e.dataTransfer.effectAllowed = 'move';
+					isDraggingOutside = false;
 				});
 				
 				// Click - only fires if not dragging
 				item.addEventListener('click', (e) => {
 					const clickDuration = Date.now() - mouseDownTime;
-					// If it was a quick click (not a drag attempt)
-					if (!isDragging && clickDuration < 200) {
+					// If it was a quick click (not a drag attempt) and not on a button
+					if (!isDragging && clickDuration < 200 && !e.target.closest('.playlist-control-btn')) {
 						const songIndex = parseInt(item.dataset.songIndex);
 						const position = parseInt(item.dataset.position);
 						playFromPlaylist(songIndex, position);
@@ -2273,7 +2383,15 @@
 				// Rest of drag events
 				item.addEventListener('dragend', (e) => {
 					item.classList.remove('dragging');
+					item.classList.remove('drag-outside');
+					
+					// If dropped outside the playlist container
+					if (isDraggingOutside) {
+						removeFromPlaylist(draggedIndex);
+					}
+					
 					isDragging = false;
+					isDraggingOutside = false;
 				});
 				
 				item.addEventListener('dragover', (e) => {
@@ -2290,7 +2408,7 @@
 					e.preventDefault();
 					item.classList.remove('drag-over');
 					
-					if (draggedElement !== item) {
+					if (draggedElement !== item && !isDraggingOutside) {
 						const allItems = [...document.querySelectorAll('.playlist-item')];
 						const draggedOverIndex = allItems.indexOf(item);
 						
@@ -2300,8 +2418,39 @@
 						
 						// Re-render playlist
 						renderPlaylist();
+						autoSavePlaylist();
 					}
 				});
+			});
+			
+			// Add document-level drag events to detect dragging outside
+			document.addEventListener('dragover', (e) => {
+				if (isDragging && !e.target.closest('.playlist-item') && !e.target.closest('#playlistContainer')) {
+					e.preventDefault();
+					e.dataTransfer.dropEffect = 'none';
+					isDraggingOutside = true;
+					if (draggedElement) {
+						draggedElement.classList.add('drag-outside');
+					}
+				}
+			});
+			
+			document.addEventListener('dragleave', (e) => {
+				if (isDragging && e.target === document.documentElement) {
+					isDraggingOutside = true;
+					if (draggedElement) {
+						draggedElement.classList.add('drag-outside');
+					}
+				}
+			});
+			
+			document.addEventListener('dragenter', (e) => {
+				if (isDragging && (e.target.closest('.playlist-item') || e.target.closest('#playlistContainer'))) {
+					isDraggingOutside = false;
+					if (draggedElement) {
+						draggedElement.classList.remove('drag-outside');
+					}
+				}
 			});
 		}
 
