@@ -804,6 +804,25 @@
 		  "duration": "3:18"
 		}
 	  ]
+	},
+	{
+	  "id": "Afterlight",
+	  "title": "AFTERLIGHT",
+	  "artist": "AI Collective",
+	  "year": 2025,
+	  "genre": "Electronic",
+	  "albumArt": "Afterlight - Album.jpg",
+	  "description": "A hopeful, grounded album about life beyond survival—building love, family, and future from the wreckage of the past.",
+	  "tracks": [
+		{
+		  "trackNumber": 1,
+		  "title": "Afterlight",
+		  "file": "Afterlight.mp3",
+		  "image": "Afterlight.jpg",
+		  "genre": "electronic",
+		  "duration": "3:28"
+		}
+	  ]
 	}
   ]
 }
