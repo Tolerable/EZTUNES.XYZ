@@ -1682,6 +1682,80 @@
             opacity: 0.8;
             font-family: 'Courier New', monospace;
         }
+
+		/* Custom confirmation modal */
+		.confirm-modal {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.8);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			z-index: 1002;
+			opacity: 0;
+			visibility: hidden;
+			transition: all 0.3s ease;
+		}
+
+		.confirm-modal.active {
+			opacity: 1;
+			visibility: visible;
+		}
+
+		.confirm-modal-content {
+			background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #667eea 100%);
+			border-radius: 15px;
+			padding: 2rem;
+			max-width: 400px;
+			width: 90%;
+			border: 2px solid rgba(255, 255, 255, 0.2);
+			backdrop-filter: blur(10px);
+			text-align: center;
+		}
+
+		.confirm-modal h3 {
+			margin-bottom: 1rem;
+			color: #ff6b6b;
+		}
+
+		.confirm-modal p {
+			margin-bottom: 1.5rem;
+			opacity: 0.9;
+		}
+
+		.confirm-modal-actions {
+			display: flex;
+			gap: 1rem;
+			justify-content: center;
+		}
+
+		/* Active playlist indicator in player */
+		.active-playlist-indicator {
+			text-align: center;
+			margin-bottom: 1rem;
+			padding: 0.5rem;
+			background: rgba(78, 205, 196, 0.1);
+			border: 1px solid rgba(78, 205, 196, 0.3);
+			border-radius: 8px;
+		}
+
+		.playlist-name-display {
+			font-weight: bold;
+			color: #4ecdc4;
+			margin-bottom: 0.2rem;
+		}
+
+		.playlist-status {
+			font-size: 0.8rem;
+			opacity: 0.8;
+		}
+
+		.playlist-status.modified {
+			color: #ff6b6b;
+		}
         
         .song-grid {
             display: grid;
@@ -2081,6 +2155,8 @@
 		let showAllSongs = false;
 		let savedPlaylists = {};
 		let currentView = 'queue';
+		let activePlaylistName = null;
+		let playlistModified = false;
 
 		// Artist data
 		const artistData = {
@@ -2162,12 +2238,24 @@
 			currentView = 'queue';
 			updateNavigation();
 			closeSidebar();
+			
+			// Scroll to playlist section
+			document.querySelector('.playlist-section').scrollIntoView({ 
+				behavior: 'smooth', 
+				block: 'start' 
+			});
 		}
 
 		function showAlbumsView() {
 			currentView = 'albums';
 			updateNavigation();
 			closeSidebar();
+			
+			// Scroll to albums section
+			document.querySelector('.albums-section').scrollIntoView({ 
+				behavior: 'smooth', 
+				block: 'start' 
+			});
 		}
 
 		function updateNavigation() {
@@ -2528,6 +2616,14 @@
 				
 				// Render ALL songs
 				renderSongs();
+				
+				// SCROLL TO THE SONGS SECTION
+				setTimeout(() => {
+					songGrid.scrollIntoView({ 
+						behavior: 'smooth', 
+						block: 'start' 
+					});
+				}, 100);
 				
 				// Re-attach the original filter listeners
 				document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -4127,6 +4223,18 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- Custom Confirmation Modal -->
+	<div class="confirm-modal" id="confirmModal">
+		<div class="confirm-modal-content">
+			<h3 id="confirmTitle">Confirm Action</h3>
+			<p id="confirmMessage">Are you sure?</p>
+			<div class="confirm-modal-actions">
+				<button class="modal-btn secondary" onclick="closeConfirmModal()">Cancel</button>
+				<button class="modal-btn" id="confirmButton" onclick="confirmAction()">Confirm</button>
+			</div>
+		</div>
+	</div>	
 	
 </body>
 </html>			
