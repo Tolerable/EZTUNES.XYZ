@@ -2512,6 +2512,24 @@
 			}).join('');
 		}
 
+		function editPlaylist(playlistName) {
+			const playlist = savedPlaylists[playlistName];
+			if (!playlist) return;
+			
+			// If current queue has unsaved changes, offer to save first
+			if (activePlaylistName && playlistModified) {
+				pendingPlaylistAction = () => doEditPlaylist(playlistName);
+				showConfirmModal(
+					'Unsaved Changes',
+					`You have unsaved changes to "${activePlaylistName}". Load "${playlistName}" anyway? Your changes will be lost.`,
+					'Load Anyway'
+				);
+				return;
+			}
+			
+			doEditPlaylist(playlistName);
+		}
+
 		function loadPlaylist(playlistName) {
 			const playlist = savedPlaylists[playlistName];
 			if (!playlist) return;
