@@ -1558,7 +1558,7 @@
                 <button class="control-btn" id="nextBtn" title="Next track">⏭️</button>
                 <button class="control-btn" id="shuffleBtn" title="Shuffle playlist">🔀</button>
                 <button class="control-btn active" id="repeatBtn" title="Repeat: All" style="background: linear-gradient(45deg, #4ecdc4, #45b7d1); border: 2px solid #4ecdc4;">🔁</button>
-				<button class="control-btn" id="shareCurrentBtn" title="Share current track">🔗</button>
+				<button class="control-btn" id="shareCurrentBtn" title="Share current track" onclick="shareCurrentTrack()">🔗</button>
             </div>
             
             <div class="volume-control">
@@ -3362,6 +3362,15 @@
 
 		function closeShareModal() {
 			document.getElementById('shareModal').classList.remove('active');
+		}
+
+		function shareCurrentTrack() {
+			if (currentSongIndex < 0 || currentSongIndex >= songs.length) {
+				showNotification('No track currently playing', 'info');
+				return;
+			}
+			
+			openShareModal(currentSongIndex);
 		}
 
 		function copyShareLink() {
