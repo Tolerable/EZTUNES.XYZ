@@ -3340,7 +3340,7 @@
 					
 					return `
 						<div class="track-item ${isCurrentSong ? 'playing' : ''}" 
-							 onclick="playTrackFromAlbum(${globalIndex})">
+							 onclick="addToQueue(${globalIndex})">
 							<div class="track-number">${track.trackNumber}</div>
 							<img src="${safeImageSrc(track.image, album.id)}" 
 								 alt="${track.title}" 
@@ -3350,12 +3350,10 @@
 								<div class="track-title-text">${track.title}</div>
 								<div class="track-genre">${track.genre.charAt(0).toUpperCase() + track.genre.slice(1)}</div>
 							</div>
+							<button class="track-btn" onclick="event.stopPropagation(); playTrackFromAlbum(${globalIndex})">🎧 LISTEN</button>
 							${createStarRating(`${album.id}_${track.trackNumber}`, getRating(`${album.id}_${track.trackNumber}`))}
 							<div class="track-duration">${track.duration}</div>
-							<div class="track-actions">
-								<button class="track-btn" onclick="event.stopPropagation(); addToQueue(${globalIndex})">Add</button>
-								<button class="share-btn" onclick="event.stopPropagation(); openShareModal(${globalIndex})">🔗 Share</button>
-							</div>
+							<button class="share-btn" onclick="event.stopPropagation(); openShareModal(${globalIndex})">🔗 Share</button>
 						</div>
 					`;
 				}).join('')}
