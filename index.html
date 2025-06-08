@@ -3386,17 +3386,18 @@
 		}
 
 		function copyDiscordFormat(song, shareUrl) {
-			const discordText = `\`\`\`md
-		# 🎵 Now Playing on EzTunes.XYZ
+			const discordText = `**🎵 Now Playing on EzTunes.XYZ**
 
-		[${song.title}]
-		> Album: ${song.albumTitle}
-		> Genre: ${song.genre}
-		> Duration: ${song.duration}
+		**${song.title}**
+		*from ${song.albumTitle}*
 
-		< Listen now: >
-		\`\`\`
-		<${shareUrl}>`;
+		📀 **Album:** ${song.albumTitle}
+		🎸 **Genre:** ${song.genre}
+		⏱️ **Duration:** ${song.duration}
+
+		🔊 **Listen now:** <${shareUrl}>
+
+		🎨 **Album Art:** ${window.location.origin}${safeImageSrc(song.image, song.albumId).replace('https://www.eztunes.xyz', '')}`;
 			
 			navigator.clipboard.writeText(discordText).then(() => {
 				showNotification('Discord format copied!', 'success');
