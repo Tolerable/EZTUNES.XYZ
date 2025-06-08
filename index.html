@@ -227,19 +227,13 @@
 			color: #FFD700;
 		}
 
-		/* On hover, light up the hovered star and all stars before it */
-		.star-rating .star:hover,
-		.star-rating .star:hover ~ .star {
+		/* Star hover effect */
+		.star-rating:hover .star {
+			color: rgba(255, 255, 255, 0.3);
+		}
+
+		.star-rating .star:hover {
 			color: #FFD700 !important;
-		}
-
-		/* But then we need to undo it for stars AFTER the hovered one */
-		.star-rating {
-			direction: rtl;  /* This reverses the order for CSS selection */
-		}
-
-		.star-rating .star {
-			direction: ltr;  /* But keeps the stars displaying left-to-right */
 		}
 
 		/* Location-specific margins */
@@ -2427,7 +2421,7 @@
 			document.addEventListener('dragover', (e) => {
 				if (isDragging && !e.target.closest('.playlist-item') && !e.target.closest('#playlistContainer')) {
 					e.preventDefault();
-					e.dataTransfer.dropEffect = 'none';
+					e.dataTransfer.dropEffect = 'move';
 					isDraggingOutside = true;
 					if (draggedElement) {
 						draggedElement.classList.add('drag-outside');
