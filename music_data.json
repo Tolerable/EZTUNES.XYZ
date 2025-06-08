@@ -428,14 +428,6 @@
 		},
 		{
 		  "trackNumber": 10,
-		  "title": "PH Lockout",
-		  "file": "PH Lockout.mp3",
-		  "image": "PH Lockout.jpg",
-		  "genre": "rock",
-		  "duration": "1:55"
-		},
-		{
-		  "trackNumber": 11,
 		  "title": "Rent Time Blues",
 		  "file": "Rent Time Blues.mp3",
 		  "image": "Rent Time Blues.jpg",
@@ -443,7 +435,7 @@
 		  "duration": "3:22"
 		},
 		{
-		  "trackNumber": 12,
+		  "trackNumber": 11,
 		  "title": "Sweetleaf Bondage",
 		  "file": "Sweetleaf Bondage.mp3",
 		  "image": "Sweetleaf Bondage.jpg",
@@ -451,7 +443,7 @@
 		  "duration": "3:56"
 		},
 		{
-		  "trackNumber": 13,
+		  "trackNumber": 12,
 		  "title": "The God Seed",
 		  "file": "The God Seed.mp3",
 		  "image": "The God Seed.jpg",
