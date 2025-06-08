@@ -3398,7 +3398,7 @@
 		*from ${song.albumTitle}*
 
 		📀 **Album:** ${song.albumTitle}
-		🎸 **Genre:** ${song.genreDisplay}
+		🎸 **Genre:** ${song.genre.charAt(0).toUpperCase() + song.genre.slice(1)}
 		⏱️ **Duration:** ${song.duration}
 
 		🔊 **Listen now:** <${shareUrl}>`;
