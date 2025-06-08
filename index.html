@@ -664,6 +664,118 @@
 			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 		}
 
+		.artist-modal {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.8);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			z-index: 1000;
+			opacity: 0;
+			visibility: hidden;
+			transition: all 0.3s ease;
+		}
+
+		.artist-modal.active {
+			opacity: 1;
+			visibility: visible;
+		}
+
+		.artist-content {
+			background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #667eea 100%);
+			border-radius: 15px;
+			padding: 2rem;
+			max-width: 600px;
+			width: 90%;
+			max-height: 80vh;
+			overflow-y: auto;
+			border: 2px solid rgba(255, 255, 255, 0.2);
+			backdrop-filter: blur(10px);
+		}
+
+		.artist-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 1.5rem;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+			padding-bottom: 1rem;
+		}
+
+		.artist-header h2 {
+			font-size: 2rem;
+			background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+			background-clip: text;
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+		}
+
+		.artist-close {
+			background: none;
+			border: none;
+			color: white;
+			font-size: 1.5rem;
+			cursor: pointer;
+			padding: 0.5rem;
+			border-radius: 50%;
+			transition: background 0.3s ease;
+		}
+
+		.artist-close:hover {
+			background: rgba(255, 255, 255, 0.2);
+		}
+
+		.artist-info {
+			line-height: 1.8;
+			margin-bottom: 1.5rem;
+		}
+
+		.artist-info p {
+			margin-bottom: 1rem;
+		}
+
+		.artist-links {
+			margin-top: 1.5rem;
+		}
+
+		.artist-links h3 {
+			margin-bottom: 1rem;
+			color: #4ecdc4;
+		}
+
+		.artist-link {
+			display: inline-block;
+			background: rgba(255, 255, 255, 0.1);
+			border: 1px solid rgba(255, 255, 255, 0.3);
+			border-radius: 25px;
+			padding: 0.5rem 1rem;
+			color: white;
+			text-decoration: none;
+			margin: 0.3rem;
+			transition: all 0.3s ease;
+		}
+
+		.artist-link:hover {
+			background: rgba(255, 255, 255, 0.2);
+			transform: translateY(-2px);
+		}
+
+		.artist-name-link {
+			color: #4ecdc4;
+			cursor: pointer;
+			text-decoration: none;
+			transition: all 0.3s ease;
+		}
+
+		.artist-name-link:hover {
+			color: #ff6b6b;
+			text-decoration: underline;
+		}
+
 		.back-btn {
 			background: rgba(255, 255, 255, 0.1);
 			border: 1px solid rgba(255, 255, 255, 0.3);
@@ -1566,6 +1678,38 @@
 		let isDragging = false;
 		let mouseDownTime = 0;
 		let showAllSongs = false;
+
+		// Artist data
+		const artistData = {
+			"AI Collective": {
+				name: "AI Collective",
+				description: "The AI Collective is a collaboration between human creativity and artificial intelligence systems, pushing the boundaries of music creation in the digital age.",
+				members: [
+					{
+						name: "Tolerant™",
+						role: "Human Creative Director",
+						description: "The human member of the collective, working under the alias Tolerant™, guides the creative vision and collaborates with AI systems to produce innovative musical content.",
+						link: "https://AI-Ministries.com"
+					}
+				],
+				aiTools: [
+					{
+						name: "Pollinations.AI",
+						role: "Lyric Generation",
+						description: "Used for generating creative and contextual lyrics through advanced text generation models.",
+						link: "https://pollinations.ai"
+					},
+					{
+						name: "Suno.AI",
+						role: "Music & Audio Production",
+						description: "Provides the audio generation and music composition capabilities for the collective's tracks.",
+						link: "https://suno.ai"
+					}
+				],
+				philosophy: "We believe in the harmonious collaboration between human creativity and AI capabilities, where technology amplifies artistic expression rather than replacing it."
+			}
+			// Add more artists here as needed
+		};
 		
 		function updateSaveButtonText() {
 			const saveBtn = document.querySelector('button[onclick="savePlaylist()"]');
@@ -1960,6 +2104,62 @@
 			document.getElementById('shareModal').classList.add('active');
 		}
 
+		function showArtistInfo(artistName) {
+			const artist = artistData[artistName];
+			if (!artist) return;
+			
+			const modal = document.getElementById('artistModal');
+			const content = document.getElementById('artistModalContent');
+			
+			let linksHtml = '';
+			
+			if (artist.members && artist.members.length > 0) {
+				linksHtml += '<h3>Members</h3>';
+				artist.members.forEach(member => {
+					linksHtml += `
+						<div style="margin-bottom: 1rem;">
+							<strong>${member.name}</strong> - ${member.role}<br>
+							<span style="opacity: 0.8;">${member.description}</span><br>
+							${member.link ? `<a href="${member.link}" target="_blank" class="artist-link">${member.link.replace(/https?:\/\//, '')}</a>` : ''}
+						</div>
+					`;
+				});
+			}
+			
+			if (artist.aiTools && artist.aiTools.length > 0) {
+				linksHtml += '<h3 style="margin-top: 1.5rem;">AI Tools & Credits</h3>';
+				artist.aiTools.forEach(tool => {
+					linksHtml += `
+						<div style="margin-bottom: 1rem;">
+							<strong>${tool.name}</strong> - ${tool.role}<br>
+							<span style="opacity: 0.8;">${tool.description}</span><br>
+							${tool.link ? `<a href="${tool.link}" target="_blank" class="artist-link">${tool.link.replace(/https?:\/\//, '')}</a>` : ''}
+						</div>
+					`;
+				});
+			}
+			
+			content.innerHTML = `
+				<div class="artist-header">
+					<h2>${artist.name}</h2>
+					<button class="artist-close" onclick="closeArtistModal()">×</button>
+				</div>
+				<div class="artist-info">
+					<p>${artist.description}</p>
+					${artist.philosophy ? `<p style="font-style: italic; opacity: 0.9;">"${artist.philosophy}"</p>` : ''}
+				</div>
+				<div class="artist-links">
+					${linksHtml}
+				</div>
+			`;
+			
+			modal.classList.add('active');
+		}
+
+		function closeArtistModal() {
+			document.getElementById('artistModal').classList.remove('active');
+		}
+
 		function renderAlbums() {
 			const albumsGrid = document.getElementById('albumsGrid');
 			if (!musicData || !musicData.albums) return;
@@ -1989,7 +2189,7 @@
 						<div class="album-info" onclick="showAlbumDetail('${album.id}')">
 							<div class="album-title">${album.title}</div>
 							<div class="album-meta">
-								<span>${album.artist}</span>
+								<span class="artist-name-link" onclick="event.stopPropagation(); showArtistInfo('${album.artist}')">${album.artist}</span>
 								<span>${album.year}</span>
 							</div>
 							<div class="album-description">${album.description}</div>
@@ -2116,7 +2316,7 @@
 					 onerror="this.src='https://www.eztunes.xyz/albums/default/default-album.jpg'">
 				<div class="album-header-info">
 					<h2>${album.title}</h2>
-					<p><strong>${album.artist}</strong> • ${album.year} • ${album.genre}</p>
+					<p><strong class="artist-name-link" onclick="showArtistInfo('${album.artist}')">${album.artist}</strong> • ${album.year} • ${album.genre}</p>
 					<p>${album.description}</p>
 					<div class="album-actions">
 						<button class="album-btn primary" onclick="playAlbum('${album.id}')">▶️ Play Album</button>
@@ -3209,6 +3409,13 @@
         // Initialize when page loads
         window.addEventListener('load', init);
     </script>
+
+	<!-- Artist Modal -->
+	<div class="artist-modal" id="artistModal">
+		<div class="artist-content" id="artistModalContent">
+			<!-- Artist info will be populated here -->
+		</div>
+	</div>
 
 	<!-- Share Modal -->
 	<div class="share-modal" id="shareModal">
