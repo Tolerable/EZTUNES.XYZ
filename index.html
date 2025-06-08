@@ -840,12 +840,7 @@
 			font-size: 0.75rem;
 			padding: 0.3rem 0.8rem;
 			margin-right: 0.5rem;
-			opacity: 0;
-			transition: opacity 0.3s ease;
-		}
-
-		.playlist-item:hover .playlist-share {
-			opacity: 1;
+			opacity: 1; /* Always visible */
 		}
 
 		@media (max-width: 768px) {
@@ -3386,7 +3381,8 @@
 		}
 
 		function copyDiscordFormat(song, shareUrl) {
-			const discordText = `**🎵 Now Playing on EzTunes.XYZ**
+			const discordText = `‎
+		**🎵 Now Playing on EzTunes.XYZ**
 
 		**${song.title}**
 		*from ${song.albumTitle}*
@@ -3395,9 +3391,7 @@
 		🎸 **Genre:** ${song.genre}
 		⏱️ **Duration:** ${song.duration}
 
-		🔊 **Listen now:** <${shareUrl}>
-
-		🎨 **Album Art:** ${window.location.origin}${safeImageSrc(song.image, song.albumId).replace('https://www.eztunes.xyz', '')}`;
+		🔊 **Listen now:** <${shareUrl}>`;
 			
 			navigator.clipboard.writeText(discordText).then(() => {
 				showNotification('Discord format copied!', 'success');
