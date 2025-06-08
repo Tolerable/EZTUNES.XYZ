@@ -3376,25 +3376,16 @@
 			
 			document.getElementById('shareUrl').value = shareUrl;
 			
-			// Add Discord formatted text button
-			const shareContent = document.querySelector('.share-content');
-			if (!document.getElementById('discordCopyBtn')) {
-				const discordBtn = document.createElement('button');
-				discordBtn.id = 'discordCopyBtn';
-				discordBtn.className = 'copy-btn';
-				discordBtn.style.marginTop = '1rem';
-				discordBtn.style.background = 'linear-gradient(45deg, #7289da, #5865f2)';
-				discordBtn.textContent = 'Copy Discord Format';
-				discordBtn.onclick = () => copyDiscordFormat(song, shareUrl);
-				shareContent.insertBefore(discordBtn, document.querySelector('.social-shares'));
-			}
-			
 			const text = `🎵 Now playing: "${song.title}" from the album "${song.albumTitle}" on EzTunes.XYZ - Free AI-Generated Music! Listen now:`;
 			
 			document.getElementById('twitterShare').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(shareUrl)}`;
 			document.getElementById('facebookShare').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
 			document.getElementById('whatsappShare').href = `https://wa.me/?text=${encodeURIComponent(text + ' ' + shareUrl)}`;
 			document.getElementById('redditShare').href = `https://reddit.com/submit?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(text)}`;
+			document.getElementById('discordCopyBtn').onclick = (e) => {
+				e.preventDefault();
+				copyDiscordFormat(song, shareUrl);
+			};
 			
 			document.getElementById('shareModal').classList.add('active');
 		}
@@ -3511,7 +3502,7 @@
 				<a href="#" id="facebookShare" target="_blank" class="social-btn facebook">👍 Facebook</a>
 				<a href="#" id="whatsappShare" target="_blank" class="social-btn whatsapp">💬 WhatsApp</a>
 				<a href="#" id="redditShare" target="_blank" class="social-btn reddit">🔴 Reddit</a>
-				<button id="discordCopyBtn" class="social-btn discord" onclick="copyDiscordFormat(null, null)">💬 Discord</button>
+				<a href="#" id="discordCopyBtn" class="social-btn discord">💬 Discord</a>
 			</div>
 		</div>
 	</div>
