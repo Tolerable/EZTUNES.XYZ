@@ -878,6 +878,47 @@
 				grid-template-columns: 1fr;
 			}
 		}
+
+		/* Save changes button that appears when playlist is modified */
+		.save-changes-btn {
+			background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+			border: none;
+			border-radius: 20px;
+			padding: 0.8rem 1.5rem;
+			color: white;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			font-weight: bold;
+			margin: 1rem 0;
+			width: 100%;
+			opacity: 0;
+			visibility: hidden;
+			transform: translateY(-10px);
+		}
+
+		.save-changes-btn.show {
+			opacity: 1;
+			visibility: visible;
+			transform: translateY(0);
+		}
+
+		.save-changes-btn:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+		}
+
+		/* Make the active playlist indicator more prominent when modified */
+		.active-playlist-indicator.modified {
+			background: rgba(255, 107, 107, 0.2);
+			border-color: rgba(255, 107, 107, 0.5);
+			animation: pulse 2s infinite;
+		}
+
+		@keyframes pulse {
+			0% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.4); }
+			70% { box-shadow: 0 0 0 10px rgba(255, 107, 107, 0); }
+			100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0); }
+		}
         
         @keyframes glow {
             from { filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3)); }
@@ -2057,6 +2098,9 @@
             <div id="playlistContainer">
                 <!-- Playlist items will be populated by JavaScript -->
             </div>
+			<button id="saveChangesBtn" class="save-changes-btn" onclick="updateActivePlaylist()">
+				💾 Save Changes to "<span id="saveChangesPlaylistName"></span>"
+			</button>			
         </div>
 
 		<!-- Albums Section -->
@@ -2280,24 +2324,64 @@
 			const indicator = document.getElementById('activePlaylistIndicator');
 			const nameDisplay = document.getElementById('activePlaylistName');
 			const statusDisplay = document.getElementById('playlistStatus');
+			const saveBtn = document.getElementById('saveChangesBtn');
+			const saveBtnName = document.getElementById('saveChangesPlaylistName');
 			
 			if (activePlaylistName) {
 				nameDisplay.textContent = activePlaylistName;
-				statusDisplay.textContent = playlistModified ? 'Modified - click to update' : 'Saved playlist';
+				statusDisplay.textContent = playlistModified ? 'Modified - click to save changes' : 'Saved playlist';
 				statusDisplay.className = playlistModified ? 'playlist-status modified' : 'playlist-status';
-				indicator.style.display = 'block';
 				
-				// Make it clickable to update if modified
+				// Update indicator appearance
 				if (playlistModified) {
+					indicator.classList.add('modified');
 					indicator.style.cursor = 'pointer';
 					indicator.onclick = () => updateActivePlaylist();
+					
+					// Show save button
+					saveBtnName.textContent = activePlaylistName;
+					saveBtn.classList.add('show');
 				} else {
+					indicator.classList.remove('modified');
 					indicator.style.cursor = 'default';
 					indicator.onclick = null;
+					
+					// Hide save button
+					saveBtn.classList.remove('show');
 				}
+				
+				indicator.style.display = 'block';
 			} else {
 				indicator.style.display = 'none';
+				saveBtn.classList.remove('show');
 			}
+		}
+
+		function duplicatePlaylist(playlistName) {
+			const playlist = savedPlaylists[playlistName];
+			if (!playlist) return;
+			
+			let newName = `${playlistName} (Copy)`;
+			let counter = 2;
+			
+			// Find a unique name
+			while (savedPlaylists[newName]) {
+				newName = `${playlistName} (Copy ${counter})`;
+				counter++;
+			}
+			
+			// Create the duplicate
+			savedPlaylists[newName] = {
+				name: newName,
+				tracks: [...playlist.tracks],
+				created: new Date().toISOString(),
+				trackCount: playlist.trackCount,
+				duration: playlist.duration
+			};
+			
+			savePlaylists();
+			renderSavedPlaylists();
+			showNotification(`Created duplicate: "${newName}"`, 'success');
 		}
 
 		// Update the active playlist
@@ -2418,8 +2502,9 @@
 							<div class="playlist-name">${playlist.name}</div>
 							<div class="playlist-meta-mini">${playlist.trackCount} songs • ${playlist.duration}</div>
 						</div>
-						<div class="playlist-actions-mini">
+						<div class="playlist-actions-mini">  <!-- THIS is what I meant to change -->
 							<button class="playlist-mini-btn" onclick="event.stopPropagation(); editPlaylist('${playlist.name}')" title="Edit">✏️</button>
+							<button class="playlist-mini-btn" onclick="event.stopPropagation(); duplicatePlaylist('${playlist.name}')" title="Duplicate">📋</button>
 							<button class="playlist-mini-btn delete" onclick="event.stopPropagation(); deletePlaylist('${playlist.name}')" title="Delete">🗑️</button>
 						</div>
 					</div>
@@ -2514,8 +2599,59 @@
 		}
 
 		// Edit playlist (placeholder for future enhancement)
-		function editPlaylist(playlistName) {
-			showNotification('Playlist editing coming soon!', 'info');
+		function clearPlaylist() {
+			if (playlistOrder.length === 0) {
+				showNotification('Playlist is already empty', 'info');
+				return;
+			}
+			
+			// Stop current audio
+			if (currentAudio) {
+				currentAudio.pause();
+				currentAudio.currentTime = 0;
+				currentAudio = null;
+			}
+			
+			// Clear playlist
+			playlistOrder = [];
+			currentSongIndex = -1;
+			isPlaying = false;
+			
+			// Clear playlist state - ADD THESE LINES
+			activePlaylistName = null;
+			playlistModified = false;
+			
+			// Clear saved playlist using autoSavePlaylist
+			autoSavePlaylist();
+			
+			// Reset UI
+			document.getElementById('playBtn').innerHTML = '▶️ Play';
+			document.getElementById('currentArtwork').classList.remove('spinning');
+			document.getElementById('placeholderInfo').style.display = 'block';
+			document.getElementById('placeholderArtwork').style.display = 'block';
+			document.getElementById('currentSongInfo').style.display = 'none';
+			document.getElementById('currentArtwork').style.display = 'none';
+			document.getElementById('albumCoverSection').style.display = 'none';
+			
+			renderPlaylist();
+			updateActivePlaylistDisplay(); // ADD THIS LINE
+			showNotification('Playlist cleared', 'success');
+		}
+
+		function doEditPlaylist(playlistName) {
+			// Load the playlist for editing
+			doLoadPlaylist(playlistName);
+			
+			// Show helpful message
+			showNotification(`Editing "${playlistName}" - make your changes and click the red indicator to save`, 'info');
+			
+			// Scroll to playlist section so user can see their changes
+			setTimeout(() => {
+				document.querySelector('.playlist-section').scrollIntoView({ 
+					behavior: 'smooth', 
+					block: 'start' 
+				});
+			}, 100);
 		}
 
 		// Add enter key support for playlist creation
