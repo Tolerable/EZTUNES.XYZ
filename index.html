@@ -1985,7 +1985,10 @@
             <div class="now-playing">
                 <h2>🎧 Now Playing on EzTunes Radio</h2>
             </div>
-            
+			<div id="activePlaylistIndicator" class="active-playlist-indicator" style="display: none;">
+				<div class="playlist-name-display" id="activePlaylistName"></div>
+				<div class="playlist-status" id="playlistStatus">Saved playlist</div>
+			</div>            
 			<div class="current-song">
 				<div class="album-artwork-container">
 					<div id="albumCoverSection" class="album-cover-section" style="display: none;">
@@ -2157,7 +2160,8 @@
 		let currentView = 'queue';
 		let activePlaylistName = null;
 		let playlistModified = false;
-
+		let pendingPlaylistAction = null;
+		
 		// Artist data
 		const artistData = {
 			"AI Collective": {
@@ -2271,6 +2275,59 @@
 			}
 		}
 
+		// Update active playlist display
+		function updateActivePlaylistDisplay() {
+			const indicator = document.getElementById('activePlaylistIndicator');
+			const nameDisplay = document.getElementById('activePlaylistName');
+			const statusDisplay = document.getElementById('playlistStatus');
+			
+			if (activePlaylistName) {
+				nameDisplay.textContent = activePlaylistName;
+				statusDisplay.textContent = playlistModified ? 'Modified - click to update' : 'Saved playlist';
+				statusDisplay.className = playlistModified ? 'playlist-status modified' : 'playlist-status';
+				indicator.style.display = 'block';
+				
+				// Make it clickable to update if modified
+				if (playlistModified) {
+					indicator.style.cursor = 'pointer';
+					indicator.onclick = () => updateActivePlaylist();
+				} else {
+					indicator.style.cursor = 'default';
+					indicator.onclick = null;
+				}
+			} else {
+				indicator.style.display = 'none';
+			}
+		}
+
+		// Update the active playlist
+		function updateActivePlaylist() {
+			if (!activePlaylistName || !playlistModified) return;
+			
+			savedPlaylists[activePlaylistName] = {
+				name: activePlaylistName,
+				tracks: [...playlistOrder],
+				created: savedPlaylists[activePlaylistName].created,
+				modified: new Date().toISOString(),
+				trackCount: playlistOrder.length,
+				duration: calculatePlaylistDuration(playlistOrder)
+			};
+			
+			savePlaylists();
+			playlistModified = false;
+			updateActivePlaylistDisplay();
+			renderSavedPlaylists();
+			showNotification(`Updated playlist "${activePlaylistName}"`, 'success');
+		}
+
+		// Mark playlist as modified when songs are added/removed/reordered
+		function markPlaylistModified() {
+			if (activePlaylistName) {
+				playlistModified = true;
+				updateActivePlaylistDisplay();
+			}
+		}
+
 		// Playlist creation
 		function showCreatePlaylistModal() {
 			if (playlistOrder.length === 0) {
@@ -2370,17 +2427,28 @@
 			}).join('');
 		}
 
-		// Load a saved playlist
 		function loadPlaylist(playlistName) {
 			const playlist = savedPlaylists[playlistName];
 			if (!playlist) return;
 			
-			// Ask for confirmation if current queue has unsaved changes
-			if (playlistOrder.length > 0) {
-				if (!confirm(`Replace current queue with "${playlistName}"?`)) {
-					return;
-				}
+			// If current queue is empty, just load it
+			if (playlistOrder.length === 0) {
+				doLoadPlaylist(playlistName);
+				return;
 			}
+			
+			// Show custom confirmation
+			pendingPlaylistAction = () => doLoadPlaylist(playlistName);
+			showConfirmModal(
+				'Replace Current Queue?',
+				`Replace current queue with "${playlistName}"? Your current queue will be lost unless saved.`,
+				'Load Playlist'
+			);
+		}
+
+		function doLoadPlaylist(playlistName) {
+			const playlist = savedPlaylists[playlistName];
+			if (!playlist) return;
 			
 			// Stop current audio
 			if (currentAudio) {
@@ -2402,11 +2470,35 @@
 			// Load the playlist
 			playlistOrder = validTracks;
 			currentSongIndex = playlistOrder[0];
+			activePlaylistName = playlistName;
+			playlistModified = false;
 			
 			loadCurrentSong();
 			renderPlaylist();
+			updateActivePlaylistDisplay();
 			closeSidebar();
 			showNotification(`Loaded playlist "${playlistName}"`, 'success');
+		}
+
+		// Custom confirm modal functions
+		function showConfirmModal(title, message, confirmText = 'Confirm') {
+			document.getElementById('confirmTitle').textContent = title;
+			document.getElementById('confirmMessage').textContent = message;
+			document.getElementById('confirmButton').textContent = confirmText;
+			document.getElementById('confirmModal').classList.add('active');
+		}
+
+		function closeConfirmModal() {
+			document.getElementById('confirmModal').classList.remove('active');
+			pendingPlaylistAction = null;
+		}
+
+		function confirmAction() {
+			if (pendingPlaylistAction) {
+				pendingPlaylistAction();
+				pendingPlaylistAction = null;
+			}
+			closeConfirmModal();
 		}
 
 		// Delete a saved playlist
@@ -2537,6 +2629,7 @@
 			renderPlaylist();
 			autoSavePlaylist();
 			showNotification(`Removed "${song.title}" from playlist`, 'success');
+			markPlaylistModified();
 		}
 
 		function movePlaylistItem(position, direction) {
@@ -2706,6 +2799,8 @@
 						const [removed] = playlistOrder.splice(draggedIndex, 1);
 						playlistOrder.splice(draggedOverIndex, 0, removed);
 						
+						markPlaylistModified();
+										
 						// Re-render playlist
 						renderPlaylist();
 					}
@@ -3948,6 +4043,7 @@
 			renderPlaylist();
 			autoSavePlaylist(); // Auto-save when playlist changes
 			showNotification(`"${songs[index].title}" added to playlist`, 'success');
+			markPlaylistModified();
 		}
 
 		function clearPlaylist() {
@@ -3982,6 +4078,7 @@
 			
 			renderPlaylist();
 			showNotification('Playlist cleared', 'success');
+			markPlaylistModified();
 		}
 
 		function loadSavedPlaylist() {
