@@ -2062,9 +2062,6 @@
     <div class="container">
         <!-- Radio Player -->
         <div class="radio-player">
-            <div class="now-playing">
-                <h2>🎧 Now Playing on EzTunes Radio</h2>
-            </div>
 			<div id="activePlaylistIndicator" class="active-playlist-indicator" style="display: none;">
 				<div class="playlist-name-display" id="activePlaylistName"></div>
 				<div class="playlist-status" id="playlistStatus">Saved playlist</div>
@@ -2943,6 +2940,15 @@
 			repeatBtn.style.border = '2px solid #4ecdc4';
 			repeatBtn.classList.add('active');
 			repeatBtn.title = 'Loop: ON';
+			
+			// Load saved volume preference
+			const savedVolume = localStorage.getItem('eztunesVolume');
+			if (savedVolume) {
+				const volumeSlider = document.getElementById('volumeSlider');
+				volumeSlider.value = savedVolume;
+				updateVolume(); // This will apply the visual update
+			}
+	
 		}
 
 		function removeFromPlaylist(position) {
@@ -4318,6 +4324,9 @@
 			if (currentAudio) {
 				currentAudio.volume = volume / 100;
 			}
+			
+			// SAVE the volume preference
+			localStorage.setItem('eztunesVolume', volume);
 			
 			// Update volume icon
 			const icon = document.getElementById('volumeIcon');
