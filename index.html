@@ -257,8 +257,37 @@
 			justify-content: space-between;
 			align-items: center;
 			margin-bottom: 1rem;
+			padding-left: 60px; /* Move title right to clear sidebar button */
 		}
 
+		.viz-mode-select option:hover,
+		.viz-mode-select option:focus,
+		.viz-mode-select option:checked {
+			background: #4ecdc4 !important;
+			color: white !important;
+		}
+
+		.viz-mode-select:focus {
+			outline: 2px solid #4ecdc4;
+			outline-offset: 2px;
+		}
+
+		.visualizer-container.true-fullscreen {
+			position: fixed !important;
+			top: 0 !important;
+			left: 0 !important;
+			right: 0 !important;
+			bottom: 0 !important;
+			width: 100vw !important;
+			height: 100vh !important;
+			z-index: 9999 !important;
+			background: black !important;
+		}
+
+		.visualizer-container.true-fullscreen #visualizerCanvas {
+			height: calc(100vh - 60px) !important;
+		}
+		
 		.visualizer-title {
 			font-size: 1.2rem;
 			background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
@@ -2433,6 +2462,7 @@
 		let animationId = null;
 		let vizMode = 'bars';
 		let isVisualizerActive = false;
+		let fullscreenLevel = 0;
 		
 		// Artist data
 		const artistData = {
@@ -2762,21 +2792,31 @@
 			const radius = Math.min(centerX, centerY) - 50;
 			
 			for (let i = 0; i < dataArray.length; i++) {
-				const angle = (i / dataArray.length) * Math.PI * 2;
+				// Start from bottom (Math.PI) and go clockwise for better orientation
+				const angle = Math.PI + (i / dataArray.length) * Math.PI * 2;
 				const amp = dataArray[i] / 255;
-				const barHeight = amp * radius * 0.8;
+				const barHeight = amp * radius * 0.6;
 				
-				const x1 = centerX + Math.cos(angle) * radius;
-				const y1 = centerY + Math.sin(angle) * radius;
-				const x2 = centerX + Math.cos(angle) * (radius + barHeight);
-				const y2 = centerY + Math.sin(angle) * (radius + barHeight);
+				const x1 = centerX + Math.cos(angle) * (radius * 0.3); // Start from smaller inner circle
+				const y1 = centerY + Math.sin(angle) * (radius * 0.3);
+				const x2 = centerX + Math.cos(angle) * (radius * 0.3 + barHeight);
+				const y2 = centerY + Math.sin(angle) * (radius * 0.3 + barHeight);
 				
 				ctx.strokeStyle = `hsl(${i * 360 / dataArray.length}, 100%, ${50 + amp * 50}%)`;
-				ctx.lineWidth = 3;
+				ctx.lineWidth = 4;
 				ctx.beginPath();
 				ctx.moveTo(x1, y1);
 				ctx.lineTo(x2, y2);
 				ctx.stroke();
+				
+				// Add a small circle in the center for reference
+				if (i === 0) {
+					ctx.beginPath();
+					ctx.arc(centerX, centerY, radius * 0.1, 0, Math.PI * 2);
+					ctx.strokeStyle = 'rgba(78, 205, 196, 0.5)';
+					ctx.lineWidth = 2;
+					ctx.stroke();
+				}
 			}
 		}
 
@@ -2791,12 +2831,26 @@
 			const container = document.getElementById('visualizerContainer');
 			const btn = document.getElementById('vizFullscreenBtn');
 			
-			if (container.classList.contains('fullscreen')) {
-				container.classList.remove('fullscreen');
-				btn.textContent = '⛶';
-			} else {
-				container.classList.add('fullscreen');
-				btn.textContent = '⛶';
+			fullscreenLevel = (fullscreenLevel + 1) % 3;
+			
+			// Remove all fullscreen classes first
+			container.classList.remove('fullscreen', 'true-fullscreen');
+			
+			switch(fullscreenLevel) {
+				case 0: // Normal
+					btn.textContent = '⛶';
+					btn.title = 'Container Fullscreen';
+					break;
+				case 1: // Container fullscreen
+					container.classList.add('fullscreen');
+					btn.textContent = '⛶⛶';
+					btn.title = 'True Fullscreen';
+					break;
+				case 2: // True fullscreen
+					container.classList.add('true-fullscreen');
+					btn.textContent = '⛶⛶⛶';
+					btn.title = 'Exit Fullscreen';
+					break;
 			}
 		}
 
