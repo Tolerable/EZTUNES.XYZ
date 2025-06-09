@@ -2798,18 +2798,41 @@
 			markPlaylistModified();
 		}
 
-		function movePlaylistItem(position, direction) {
-			const newPosition = position + direction;
+		function movePlaylistItem(position, direction, event) {
+			console.log('Shift key detected:', event?.shiftKey); // Debug line
 			
-			// Check bounds
-			if (newPosition < 0 || newPosition >= playlistOrder.length) return;
+			let newPosition;
 			
-			// Swap the items
-			[playlistOrder[position], playlistOrder[newPosition]] = 
-			[playlistOrder[newPosition], playlistOrder[position]];
+			if (event && event.shiftKey) {
+				// SHIFT+click: move to top or bottom
+				if (direction === -1) {
+					newPosition = 0; // Move to top
+					console.log('Moving to top'); // Debug line
+				} else {
+					newPosition = playlistOrder.length - 1; // Move to bottom
+					console.log('Moving to bottom'); // Debug line
+				}
+			} else {
+				// Normal click: move one position
+				newPosition = position + direction;
+				console.log('Moving one position to:', newPosition); // Debug line
+			}
+			
+			// Check bounds for normal moves only
+			if (!event?.shiftKey && (newPosition < 0 || newPosition >= playlistOrder.length)) {
+				console.log('Move blocked by bounds');
+				return;
+			}
+			
+			console.log('Moving from position', position, 'to position', newPosition);
+			
+			// Move the item
+			const [removed] = playlistOrder.splice(position, 1);
+			playlistOrder.splice(newPosition, 0, removed);
 			
 			renderPlaylist();
 			autoSavePlaylist();
+			markPlaylistModified();
 		}
 
 		function safeImageSrc(imagePath, albumId) {
