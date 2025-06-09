@@ -302,6 +302,111 @@ body {
     background: rgba(255, 107, 107, 0.5);
 }
 
+/* ==== LYRICS ====== */
+/* Lyrics Container */
+.lyrics-container {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    width: 400px;
+    max-height: 500px;
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 15px;
+    padding: 1rem;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    z-index: 500;
+    display: none;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.lyrics-container.active {
+    display: block;
+    opacity: 1;
+    animation: slideIn 0.3s ease;
+}
+
+.lyrics-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.lyrics-title {
+    font-size: 1.2rem;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.lyrics-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.lyrics-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 0.5rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.lyrics-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.lyrics-btn.active {
+    background: rgba(78, 205, 196, 0.3);
+    border-color: #4ecdc4;
+}
+
+.lyrics-content {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.lyrics-text {
+    white-space: pre-line;
+    line-height: 1.8;
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.lyrics-text:empty::after {
+    content: "No lyrics available for this track";
+    opacity: 0.5;
+    font-style: italic;
+}
+
+.lyrics-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.lyrics-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+@media (max-width: 768px) {
+    .lyrics-container {
+        width: 95%;
+        right: 2.5%;
+        left: 2.5%;
+        bottom: 80px;
+    }
+}
+
 /* ===========================
    4. RADIO PLAYER
    =========================== */
