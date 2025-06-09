@@ -2263,31 +2263,99 @@
 			// Add more artists here as needed
 		};
 
-		// Default playlists using song indices (add this near the top with other globals)
 		const defaultPlaylists = {
 			"🌿 Cannabis Chronicles": {
-				// Using actual song indices from your albums
-				tracks: [9, 27, 31, 37, 38, 39, 44, 45, 47, 49, 50], // Metal tracks from Unleashed + cannabis themed tracks
+				tracks: [
+					// Format: { albumId: "AlbumName", trackNumber: X }
+					{ albumId: "Unleashed", trackNumber: 10 },  // Garage Grow
+					{ albumId: "Sinners-Feast", trackNumber: 2 },  // Six Plants on My Balcony
+					{ albumId: "Sinners-Feast", trackNumber: 6 },  // Weed Weavels
+					{ albumId: "Sinners-Feast", trackNumber: 12 }, // Watcher of the Buds
+					{ albumId: "Sinners-Feast", trackNumber: 13 }, // Weed Thief
+					{ albumId: "Greatest Hits", trackNumber: 1 },  // Buying Shitty Buds
+					{ albumId: "Greatest Hits", trackNumber: 2 },  // Discord Smoke Sesh
+					{ albumId: "Greatest Hits", trackNumber: 6 },  // Hash Hole Heaven
+					{ albumId: "Greatest Hits", trackNumber: 11 }, // Sweetleaf Bondage
+					{ albumId: "Greatest Hits", trackNumber: 12 }  // The God Seed
+				],
 				description: "A collection of tracks celebrating the green life"
 			},
 			"🤘 Metal Mayhem": {
-				tracks: [8, 9, 10, 11, 28, 32, 33, 34, 35, 36, 38], // All metal genre tracks
+				tracks: [
+					{ albumId: "Unleashed", trackNumber: 9 },     // 15 Minute Break
+					{ albumId: "Unleashed", trackNumber: 10 },    // Garage Grow
+					{ albumId: "Unleashed", trackNumber: 11 },    // Packing Power
+					{ albumId: "Unleashed", trackNumber: 12 },    // Parking Lot People
+					{ albumId: "Sinners-Feast", trackNumber: 3 }, // Spit On The Cat
+					{ albumId: "Sinners-Feast", trackNumber: 7 }, // Cut Yourself Out
+					{ albumId: "Sinners-Feast", trackNumber: 8 }, // Apocoplypse Rising
+					{ albumId: "Sinners-Feast", trackNumber: 9 }, // Trapped
+					{ albumId: "Sinners-Feast", trackNumber: 10 }, // Corrupted Controller
+					{ albumId: "Sinners-Feast", trackNumber: 11 }, // I Am So Evil
+					{ albumId: "Sinners-Feast", trackNumber: 13 }, // Weed Thief
+					{ albumId: "Greatest Hits", trackNumber: 4 },  // Forge of Fire
+					{ albumId: "Greatest Hits", trackNumber: 8 }   // Lung Bash
+				],
 				description: "Heavy, aggressive tracks that pack a punch"
 			},
 			"🎸 Rock Essentials": {
-				tracks: [4, 14, 20, 21, 25, 26, 27, 29, 30, 31, 51, 52, 53, 54], // Rock genre tracks
+				tracks: [
+					{ albumId: "Unleashed", trackNumber: 1 },     // Hard to Think
+					{ albumId: "Unleashed", trackNumber: 2 },     // Chicken Pigeon
+					{ albumId: "Unleashed", trackNumber: 3 },     // Complete
+					{ albumId: "Unleashed", trackNumber: 6 },     // Red Alert
+					{ albumId: "Unleashed", trackNumber: 7 },     // Waking Inside
+					{ albumId: "Unleashed", trackNumber: 8 },     // Freedom Tastes Fantastic
+					{ albumId: "Unleashed", trackNumber: 13 },    // Roadtrip
+					{ albumId: "Ghosts", trackNumber: 1 },        // Finding Her
+					{ albumId: "Ghosts", trackNumber: 3 },        // Was She Real
+					{ albumId: "Ghosts", trackNumber: 4 },        // Destiny Denied
+					{ albumId: "Ghosts", trackNumber: 5 },        // Faded Soul
+					{ albumId: "Ghosts", trackNumber: 6 },        // Shattered World
+					{ albumId: "Ghosts", trackNumber: 7 },        // Can They Ever
+					{ albumId: "Ghosts", trackNumber: 10 },       // Nothing Compares
+					{ albumId: "Ghosts", trackNumber: 12 }        // Sleepless Days
+				],
 				description: "Classic rock vibes from the AI Collective"
 			},
 			"💫 Electronic Dreams": {
-				tracks: [4, 14, 19, 20, 23, 45, 46, 47, 48, 49, 51, 52, 53], // Electronic tracks from multiple albums
+				tracks: [
+					{ albumId: "Unleashed", trackNumber: 5 },     // Lost in Love
+					{ albumId: "Ghosts", trackNumber: 2 },        // Vanished At Dawn's Light
+					{ albumId: "Ghosts", trackNumber: 8 },        // Endless Hope
+					{ albumId: "Ghosts", trackNumber: 9 },        // Taking Chances
+					{ albumId: "Ghosts", trackNumber: 13 },       // On The Edge
+					{ albumId: "Sinners-Feast", trackNumber: 1 }, // Hold On, Stand Strong
+					{ albumId: "Sinners-Feast", trackNumber: 2 }, // Six Plants on My Balcony
+					{ albumId: "Sinners-Feast", trackNumber: 4 }, // Suppertime Pizza
+					{ albumId: "Sinners-Feast", trackNumber: 5 }, // Sweater Dog
+					{ albumId: "Sinners-Feast", trackNumber: 6 }, // Weed Weavels
+					{ albumId: "Awakenings", trackNumber: 1 },    // Eyes Open Wide
+					{ albumId: "UNMUTE", trackNumber: 1 },        // UNMUTE
+					{ albumId: "Exit Wounds", trackNumber: 1 },   // Exit Wounds
+					{ albumId: "Afterlight", trackNumber: 1 }     // Afterlight
+				],
 				description: "Electronic soundscapes and digital emotions"
 			}
-
 		};
 
 		// Convert track indices for default playlists (simpler approach)
-		function createDefaultPlaylistIndices(trackIndices) {
-			return trackIndices.filter(index => index >= 0 && index < songs.length);
+		function createDefaultPlaylistIndices(trackRefs) {
+			const indices = [];
+			
+			trackRefs.forEach(ref => {
+				// Find the song index that matches this album and track number
+				const songIndex = songs.findIndex(song => 
+					song.albumId === ref.albumId && 
+					song.trackNumber === ref.trackNumber
+				);
+				
+				if (songIndex !== -1) {
+					indices.push(songIndex);
+				}
+			});
+			
+			return indices;
 		}
 
 		function loadSavedPlaylists() {
@@ -2323,6 +2391,7 @@
 				savedPlaylists = {};
 			}
 		}
+
 
 		function restoreDefaultPlaylists() {
 			if (!confirm('This will restore all default playlists. Any existing default playlists will be updated. Continue?')) {
