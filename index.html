@@ -4678,7 +4678,40 @@
 			document.getElementById('whatsappShare').href = `https://wa.me/?text=${encodeURIComponent(text + ' ' + shareUrl)}`;
 			document.getElementById('redditShare').href = `https://reddit.com/submit?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(text)}`;
 			
+			// ADD THIS - Set up Discord button for playlists
+			document.getElementById('discordCopyBtn').onclick = (e) => {
+				e.preventDefault();
+				copyDiscordPlaylistFormat(playlistName, playlist, shareUrl);
+			};
+			
 			document.getElementById('shareModal').classList.add('active');
+		}
+
+		// ADD THIS NEW FUNCTION for Discord playlist format
+		function copyDiscordPlaylistFormat(playlistName, playlist, shareUrl) {
+			const discordText = `‎
+		**🎵 EzTunes.XYZ Playlist**
+
+		**${playlistName}**
+		📀 **Tracks:** ${playlist.trackCount} songs
+		⏱️ **Duration:** ${playlist.duration}
+
+		🔊 **Listen now:** <${shareUrl}>
+
+		Free AI-Generated Music Available at <https://www.eztunes.xyz/>`;
+			
+			navigator.clipboard.writeText(discordText).then(() => {
+				showNotification('Discord format copied!', 'success');
+			}).catch(() => {
+				// Fallback
+				const textArea = document.createElement('textarea');
+				textArea.value = discordText;
+				document.body.appendChild(textArea);
+				textArea.select();
+				document.execCommand('copy');
+				document.body.removeChild(textArea);
+				showNotification('Discord format copied!', 'success');
+			});
 		}
 
 		// Update handleSharedTrack to handle playlists
