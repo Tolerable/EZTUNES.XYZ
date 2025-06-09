@@ -3046,7 +3046,7 @@
 				timestamp: Date.now(),
 				// Add current playback position if a song is playing
 				currentTime: currentAudio ? currentAudio.currentTime : 0,
-				wasPlaying: isPlaying
+				wasPlaying: isPlaying,
 				activePlaylistName: activePlaylistName
 			};
 			localStorage.setItem('savedPlaylist', JSON.stringify(playlistData));
