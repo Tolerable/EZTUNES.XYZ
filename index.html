@@ -2128,6 +2128,7 @@
             </div>
             
             <div class="radio-controls">
+				<button class="control-btn" id="visualizerToggle" title="Audio Visualizer">📊</button>
                 <button class="control-btn" id="prevBtn" title="Previous track">⏮️</button>
                 <button class="control-btn main-play" id="playBtn" title="Play/Pause">▶️ Play</button>
                 <button class="control-btn" id="nextBtn" title="Next track">⏭️</button>
@@ -2142,6 +2143,22 @@
                 <span id="volumeDisplay">70%</span>
             </div>
         </div>
+
+		<div class="visualizer-container" id="visualizerContainer">
+			<div class="visualizer-header">
+				<div class="visualizer-title">Audio Visualizer</div>
+				<div class="visualizer-controls">
+					<select class="viz-mode-select" id="vizModeSelect">
+						<option value="bars">Frequency Bars</option>
+						<option value="wave">Waveform</option>
+						<option value="circular">Circular</option>
+					</select>
+					<button class="viz-btn" id="vizFullscreenBtn" title="Fullscreen">⛶</button>
+					<button class="viz-btn" id="vizCloseBtn" title="Close">×</button>
+				</div>
+			</div>
+			<canvas id="visualizerCanvas"></canvas>
+		</div>
 
         <!-- Playlist Section -->
         <div class="playlist-section">
@@ -2261,6 +2278,12 @@
 		let activePlaylistName = null;
 		let playlistModified = false;
 		let pendingPlaylistAction = null;
+		let audioContext = null;
+		let analyser = null;
+		let dataArray = null;
+		let animationId = null;
+		let vizMode = 'bars';
+		let isVisualizerActive = false;
 		
 		// Artist data
 		const artistData = {
@@ -2432,6 +2455,181 @@
 			}
 		}
 
+		function initializeVisualizer() {
+			if (!currentAudio) return;
+			
+			if (!audioContext) {
+				audioContext = new (window.AudioContext || window.webkitAudioContext)();
+				analyser = audioContext.createAnalyser();
+				analyser.fftSize = 256;
+				
+				const bufferLength = analyser.frequencyBinCount;
+				dataArray = new Uint8Array(bufferLength);
+				
+				// Connect audio element to analyser
+				const source = audioContext.createMediaElementSource(currentAudio);
+				source.connect(analyser);
+				analyser.connect(audioContext.destination);
+			}
+			
+			// Resume audio context if suspended
+			if (audioContext.state === 'suspended') {
+				audioContext.resume();
+			}
+		}
+
+		function toggleVisualizer() {
+			const container = document.getElementById('visualizerContainer');
+			const toggleBtn = document.getElementById('visualizerToggle');
+			
+			isVisualizerActive = !isVisualizerActive;
+			
+			if (isVisualizerActive) {
+				if (!currentAudio) {
+					showNotification('Play a song first to see the visualizer', 'info');
+					isVisualizerActive = false;
+					return;
+				}
+				
+				initializeVisualizer();
+				container.classList.add('active');
+				toggleBtn.classList.add('active');
+				startVisualization();
+			} else {
+				container.classList.remove('active');
+				toggleBtn.classList.remove('active');
+				stopVisualization();
+			}
+		}
+
+		function startVisualization() {
+			const canvas = document.getElementById('visualizerCanvas');
+			const ctx = canvas.getContext('2d');
+			
+			function resizeCanvas() {
+				canvas.width = canvas.offsetWidth;
+				canvas.height = canvas.offsetHeight;
+			}
+			
+			resizeCanvas();
+			window.addEventListener('resize', resizeCanvas);
+			
+			function draw() {
+				animationId = requestAnimationFrame(draw);
+				
+				if (!analyser) return;
+				
+				analyser.getByteFrequencyData(dataArray);
+				
+				ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+				ctx.fillRect(0, 0, canvas.width, canvas.height);
+				
+				switch(vizMode) {
+					case 'bars':
+						drawBars(ctx, canvas);
+						break;
+					case 'wave':
+						drawWaveform(ctx, canvas);
+						break;
+					case 'circular':
+						drawCircular(ctx, canvas);
+						break;
+				}
+			}
+			
+			draw();
+		}
+
+		function drawBars(ctx, canvas) {
+			const barWidth = (canvas.width / dataArray.length) * 2.5;
+			let barHeight;
+			let x = 0;
+			
+			for (let i = 0; i < dataArray.length; i++) {
+				barHeight = (dataArray[i] / 255) * canvas.height * 0.8;
+				
+				// Create gradient for each bar
+				const gradient = ctx.createLinearGradient(0, canvas.height - barHeight, 0, canvas.height);
+				gradient.addColorStop(0, `hsl(${i * 360 / dataArray.length}, 100%, 50%)`);
+				gradient.addColorStop(1, `hsl(${i * 360 / dataArray.length}, 100%, 30%)`);
+				
+				ctx.fillStyle = gradient;
+				ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+				
+				x += barWidth + 1;
+			}
+		}
+
+		function drawWaveform(ctx, canvas) {
+			analyser.getByteTimeDomainData(dataArray);
+			
+			ctx.lineWidth = 2;
+			ctx.strokeStyle = '#4ecdc4';
+			ctx.beginPath();
+			
+			const sliceWidth = canvas.width / dataArray.length;
+			let x = 0;
+			
+			for (let i = 0; i < dataArray.length; i++) {
+				const v = dataArray[i] / 128.0;
+				const y = v * canvas.height / 2;
+				
+				if (i === 0) {
+					ctx.moveTo(x, y);
+				} else {
+					ctx.lineTo(x, y);
+				}
+				
+				x += sliceWidth;
+			}
+			
+			ctx.lineTo(canvas.width, canvas.height / 2);
+			ctx.stroke();
+		}
+
+		function drawCircular(ctx, canvas) {
+			const centerX = canvas.width / 2;
+			const centerY = canvas.height / 2;
+			const radius = Math.min(centerX, centerY) - 50;
+			
+			for (let i = 0; i < dataArray.length; i++) {
+				const angle = (i / dataArray.length) * Math.PI * 2;
+				const amp = dataArray[i] / 255;
+				const barHeight = amp * radius * 0.8;
+				
+				const x1 = centerX + Math.cos(angle) * radius;
+				const y1 = centerY + Math.sin(angle) * radius;
+				const x2 = centerX + Math.cos(angle) * (radius + barHeight);
+				const y2 = centerY + Math.sin(angle) * (radius + barHeight);
+				
+				ctx.strokeStyle = `hsl(${i * 360 / dataArray.length}, 100%, ${50 + amp * 50}%)`;
+				ctx.lineWidth = 3;
+				ctx.beginPath();
+				ctx.moveTo(x1, y1);
+				ctx.lineTo(x2, y2);
+				ctx.stroke();
+			}
+		}
+
+		function stopVisualization() {
+			if (animationId) {
+				cancelAnimationFrame(animationId);
+				animationId = null;
+			}
+		}
+
+		function toggleFullscreenViz() {
+			const container = document.getElementById('visualizerContainer');
+			const btn = document.getElementById('vizFullscreenBtn');
+			
+			if (container.classList.contains('fullscreen')) {
+				container.classList.remove('fullscreen');
+				btn.textContent = '⛶';
+			} else {
+				container.classList.add('fullscreen');
+				btn.textContent = '⛶';
+			}
+		}
 
 		function restoreDefaultPlaylists() {
 			if (!confirm('This will restore all default playlists. Any existing default playlists will be updated. Continue?')) {
@@ -3976,6 +4174,34 @@
 				}
 			});
 
+			document.addEventListener('DOMContentLoaded', function() {
+				// Visualizer toggle
+				document.getElementById('visualizerToggle').addEventListener('click', toggleVisualizer);
+				
+				// Close button
+				document.getElementById('vizCloseBtn').addEventListener('click', function() {
+					isVisualizerActive = false;
+					document.getElementById('visualizerContainer').classList.remove('active');
+					document.getElementById('visualizerToggle').classList.remove('active');
+					stopVisualization();
+				});
+				
+				// Fullscreen button
+				document.getElementById('vizFullscreenBtn').addEventListener('click', toggleFullscreenViz);
+				
+				// Mode selector
+				document.getElementById('vizModeSelect').addEventListener('change', function(e) {
+					vizMode = e.target.value;
+				});
+				
+				// ESC key to exit fullscreen
+				document.addEventListener('keydown', function(e) {
+					if (e.key === 'Escape' && document.getElementById('visualizerContainer').classList.contains('fullscreen')) {
+						toggleFullscreenViz();
+					}
+				});
+			});
+
 			// Close share modal when clicking outside
 			document.getElementById('shareModal').addEventListener('click', (e) => {
 				if (e.target.id === 'shareModal') {
@@ -4169,6 +4395,19 @@
 				showNotification('Error loading audio file', 'error');
 			});
 		}
+
+		const originalLoadCurrentSong = loadCurrentSong;
+		loadCurrentSong = function() {
+			originalLoadCurrentSong();
+			
+			// Reinitialize visualizer if it was active
+			if (isVisualizerActive && currentAudio) {
+				// Need to recreate the audio context connection for new audio element
+				audioContext = null;
+				analyser = null;
+				initializeVisualizer();
+			}
+		};
 
         // Toggle play/pause
 		function togglePlay() {
