@@ -180,7 +180,6 @@
 			margin-right: 0.2em;
 		}
 
-		/* Fix for header shifting when sidebar opens */
 		.header .container {
 			transition: none !important;
 		}
@@ -206,9 +205,159 @@
             animation: glow 2s ease-in-out infinite alternate;
         }
 
-		/* Add this to your <style> section */
 		.song-section {
 			transition: all 0.3s ease;
+		}
+
+		.visualizer-container {
+			position: fixed;
+			bottom: 100px;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 90%;
+			max-width: 800px;
+			height: 200px;
+			background: rgba(0, 0, 0, 0.8);
+			border-radius: 15px;
+			padding: 1rem;
+			backdrop-filter: blur(10px);
+			border: 2px solid rgba(255, 255, 255, 0.1);
+			z-index: 500;
+			display: none;
+			opacity: 0;
+			transition: all 0.3s ease;
+		}
+
+		.visualizer-container.active {
+			display: block;
+			opacity: 1;
+			animation: slideUp 0.3s ease;
+		}
+
+		.visualizer-container.fullscreen {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			width: 100%;
+			max-width: 100%;
+			height: 100%;
+			border-radius: 0;
+			transform: none;
+		}
+
+		@keyframes slideUp {
+			from { transform: translateX(-50%) translateY(100px); opacity: 0; }
+			to { transform: translateX(-50%) translateY(0); opacity: 1; }
+		}
+
+		.visualizer-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 1rem;
+		}
+
+		.visualizer-title {
+			font-size: 1.2rem;
+			background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+			background-clip: text;
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+		}
+
+		.visualizer-controls {
+			display: flex;
+			gap: 0.5rem;
+		}
+
+		.viz-btn {
+			background: rgba(255, 255, 255, 0.1);
+			border: 1px solid rgba(255, 255, 255, 0.3);
+			border-radius: 8px;
+			padding: 0.5rem;
+			color: white;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			font-size: 1.2rem;
+		}
+
+		.viz-btn:hover {
+			background: rgba(255, 255, 255, 0.2);
+			transform: scale(1.1);
+		}
+
+		.viz-btn.active {
+			background: rgba(78, 205, 196, 0.3);
+			border-color: #4ecdc4;
+		}
+
+		#visualizerCanvas {
+			width: 100%;
+			height: calc(100% - 60px);
+			border-radius: 10px;
+			background: rgba(0, 0, 0, 0.5);
+		}
+
+		/* Toggle button in main controls */
+		.visualizer-toggle {
+			background: linear-gradient(45deg, #667eea, #764ba2);
+			border: none;
+			border-radius: 50px;
+			padding: 0.8rem 1.5rem;
+			color: white;
+			font-size: 1rem;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			text-transform: uppercase;
+			font-weight: bold;
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+		}
+
+		.visualizer-toggle:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+		}
+
+		.visualizer-toggle.active {
+			background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+		}
+
+		/* Mode selector - STYLED TO MATCH YOUR THEME */
+		.viz-mode-select {
+			background: linear-gradient(45deg, #667eea, #764ba2);
+			border: 1px solid rgba(255, 255, 255, 0.3);
+			border-radius: 25px;
+			padding: 0.5rem 1rem;
+			color: white;
+			cursor: pointer;
+			outline: none;
+			font-weight: bold;
+			text-transform: uppercase;
+			font-size: 0.9rem;
+		}
+
+		.viz-mode-select option {
+			background: #2a5298;
+			color: white;
+			padding: 0.5rem;
+		}
+
+		/* Mobile responsive */
+		@media (max-width: 768px) {
+			.visualizer-container {
+				width: 95%;
+				height: 150px;
+				bottom: 80px;
+			}
+			
+			.visualizer-container.fullscreen {
+				width: 100%;
+				height: 100%;
+			}
 		}
 
 		.toggle-songs-btn {
@@ -2456,25 +2605,40 @@
 		}
 
 		function initializeVisualizer() {
-			if (!currentAudio) return;
-			
-			if (!audioContext) {
-				audioContext = new (window.AudioContext || window.webkitAudioContext)();
-				analyser = audioContext.createAnalyser();
-				analyser.fftSize = 256;
-				
-				const bufferLength = analyser.frequencyBinCount;
-				dataArray = new Uint8Array(bufferLength);
-				
-				// Connect audio element to analyser
-				const source = audioContext.createMediaElementSource(currentAudio);
-				source.connect(analyser);
-				analyser.connect(audioContext.destination);
+			if (!currentAudio) {
+				console.log('No audio element found');
+				return false;
 			}
 			
-			// Resume audio context if suspended
-			if (audioContext.state === 'suspended') {
-				audioContext.resume();
+			try {
+				if (!audioContext) {
+					audioContext = new (window.AudioContext || window.webkitAudioContext)();
+					analyser = audioContext.createAnalyser();
+					analyser.fftSize = 256;
+					
+					const bufferLength = analyser.frequencyBinCount;
+					dataArray = new Uint8Array(bufferLength);
+				}
+				
+				// Check if we need to create a new source
+				if (!currentAudio.audioSource) {
+					const source = audioContext.createMediaElementSource(currentAudio);
+					source.connect(analyser);
+					analyser.connect(audioContext.destination);
+					currentAudio.audioSource = true; // Mark that we've connected this audio element
+				}
+				
+				// Resume audio context if suspended
+				if (audioContext.state === 'suspended') {
+					audioContext.resume().then(() => {
+						console.log('Audio context resumed');
+					});
+				}
+				
+				return true;
+			} catch (error) {
+				console.error('Error initializing visualizer:', error);
+				return false;
 			}
 		}
 
@@ -2491,7 +2655,12 @@
 					return;
 				}
 				
-				initializeVisualizer();
+				if (!initializeVisualizer()) {
+					showNotification('Could not initialize visualizer', 'error');
+					isVisualizerActive = false;
+					return;
+				}
+				
 				container.classList.add('active');
 				toggleBtn.classList.add('active');
 				startVisualization();
@@ -3156,6 +3325,8 @@
 			
 			updateActivePlaylistDisplay();
 			renderAlbums();
+			
+			document.getElementById('visualizerContainer').classList.remove('active');
 			
 			// Check if user prefers to see all songs
 			showAllSongs = localStorage.getItem('showAllSongs') === 'true';
