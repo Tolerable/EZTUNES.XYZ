@@ -3517,9 +3517,9 @@
 						</div>
 						<button class="share-btn playlist-share" onclick="event.stopPropagation(); openShareModal(${songIndex})">SHARE</button>
 						<div class="playlist-controls-mini">
-							<button class="playlist-control-btn" onclick="movePlaylistItem(${position}, -1)" title="Move up" ${position === 0 ? 'disabled style="opacity: 0.3; cursor: not-allowed;"' : ''}>↑</button>
+							<button class="playlist-control-btn" onclick="movePlaylistItem(${position}, -1, event)" title="Move up (Shift+click = move to top)" ${position === 0 ? 'disabled style="opacity: 0.3; cursor: not-allowed;"' : ''}>↑</button>
 							<button class="playlist-control-btn remove" onclick="removeFromPlaylist(${position})" title="Remove">×</button>
-							<button class="playlist-control-btn" onclick="movePlaylistItem(${position}, 1)" title="Move down" ${position === playlistOrder.length - 1 ? 'disabled style="opacity: 0.3; cursor: not-allowed;"' : ''}>↓</button>
+							<button class="playlist-control-btn" onclick="movePlaylistItem(${position}, 1, event)" title="Move down (Shift+click = move to bottom)" ${position === playlistOrder.length - 1 ? 'disabled style="opacity: 0.3; cursor: not-allowed;"' : ''}>↓</button>
 						</div>
 						<div class="playlist-duration">${song.duration}</div>
 					</div>
