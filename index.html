@@ -1966,7 +1966,49 @@
 			border-top: 3px solid #4ecdc4;
 		}
 
-        
+		.control-btn, .action-btn, .filter-btn, .playlist-btn, .album-btn, .track-btn, .share-btn, .toggle-songs-btn, .back-btn, .sidebar-toggle {
+			position: relative;
+			cursor: pointer;
+		}
+
+		/* Make sure the entire button is clickable */
+		.control-btn *, .action-btn *, .filter-btn *, .playlist-btn *, .album-btn *, .track-btn *, .share-btn * {
+			pointer-events: none;
+		}
+
+		/* Ensure button text/icons don't interfere with clicking */
+		button {
+			user-select: none;
+		}
+
+		.control-btn, .action-btn, .share-btn, .album-btn, .playlist-btn {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 0.5rem;
+			min-height: 44px; /* Minimum touch target size */
+			position: relative;
+			overflow: hidden;
+		}
+
+		/* Create an invisible overlay for consistent click area */
+		.control-btn::before, .action-btn::before, .share-btn::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			z-index: 1;
+		}
+
+		/* Ensure content is above the overlay but doesn't capture clicks */
+		.control-btn > *, .action-btn > *, .share-btn > * {
+			position: relative;
+			z-index: 2;
+			pointer-events: none;
+		}
+       
         @media (max-width: 768px) {
 			.logo h1 {
 				font-size: 2rem;
@@ -2129,7 +2171,7 @@
             
             <div class="radio-controls">
                 <button class="control-btn" id="prevBtn" title="Previous track">⏮️</button>
-                <button class="control-btn main-play" id="playBtn" title="Play/Pause">▶️ Play</button>
+                <button class="control-btn main-play" id="playBtn" title="Play/Pause"><span>▶️ Play</span></button>
                 <button class="control-btn" id="nextBtn" title="Next track">⏭️</button>
                 <button class="control-btn" id="shuffleBtn" title="Shuffle playlist">🔀</button>
                 <button class="control-btn active" id="repeatBtn" title="Repeat: All" style="background: linear-gradient(45deg, #4ecdc4, #45b7d1); border: 2px solid #4ecdc4;">🔁</button>
@@ -4140,14 +4182,14 @@
 			currentAudio.addEventListener('timeupdate', updateProgress);
 			currentAudio.addEventListener('play', () => {
 				isPlaying = true;
-				document.getElementById('playBtn').innerHTML = '⏸️ Pause';
+				document.getElementById('playBtn').innerHTML = '<span>⏸️ Pause</span>';
 				document.getElementById('currentArtwork').classList.add('spinning');
 				autoSavePlaylist(); // Save when playback starts
 			});
 			
 			currentAudio.addEventListener('pause', () => {
 				isPlaying = false;
-				document.getElementById('playBtn').innerHTML = '▶️ Play';
+				document.getElementById('playBtn').innerHTML = '<span>▶️ Play</span>';
 				document.getElementById('currentArtwork').classList.remove('spinning');
 				autoSavePlaylist(); // Save when paused
 			});
