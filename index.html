@@ -260,8 +260,13 @@
 			padding-left: 60px; /* Move title right to clear sidebar button */
 		}
 
-		.viz-mode-select option:hover,
-		.viz-mode-select option:focus,
+		.viz-mode-select option {
+			background: #2a5298;
+			color: white;
+			padding: 0.5rem;
+		}
+
+		/* Only style the selected option */
 		.viz-mode-select option:checked {
 			background: #4ecdc4 !important;
 			color: white !important;
