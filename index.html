@@ -4316,10 +4316,7 @@
 		function updateVolume() {
 			const volumeSlider = document.getElementById('volumeSlider');
 			const volume = volumeSlider.value;
-			
-			// Force the slider to visually update
-			volumeSlider.style.background = `linear-gradient(to right, #4ecdc4 0%, #4ecdc4 ${volume}%, rgba(255, 255, 255, 0.2) ${volume}%, rgba(255, 255, 255, 0.2) 100%)`;
-			
+
 			document.getElementById('volumeDisplay').textContent = volume + '%';
 			if (currentAudio) {
 				currentAudio.volume = volume / 100;
