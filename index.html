@@ -2529,6 +2529,11 @@
 			}
 		}
 
+		function sharePlaylistFromElement(element) {
+			const playlistName = element.dataset.playlistName;
+			sharePlaylist(playlistName);
+		}
+
 		function updateActivePlaylistDisplay() {
 			const indicator = document.getElementById('activePlaylistIndicator');
 			const saveBtn = document.getElementById('saveChangesBtn');
@@ -2542,7 +2547,7 @@
 						<div class="playlist-status" id="playlistStatus">${playlistModified ? 'Modified - click to save changes' : 'Saved playlist'}</div>
 					</div>
 					<div class="playlist-indicator-right">
-						<button class="share-btn" style="font-size: 0.8rem; padding: 0.3rem 0.8rem;" onclick="sharePlaylist('${activePlaylistName}')">🔗 Share</button>
+						<button class="share-btn" style="font-size: 0.8rem; padding: 0.3rem 0.8rem;" data-playlist-name="${activePlaylistName}" onclick="sharePlaylistFromElement(this)">🔗 Share</button>
 					</div>
 				`;
 				
@@ -2716,7 +2721,7 @@
 				const thumbnail = firstTrack ? safeImageSrc(firstTrack.image, firstTrack.albumId) : 'https://www.eztunes.xyz/albums/default/default-album.jpg';
 				
 				return `
-					<div class="saved-playlist-item" onclick="loadPlaylist('${playlist.name}')">
+					<div class="saved-playlist-item" data-playlist-name="${playlist.name}" onclick="loadPlaylistFromElement(this)">
 						<img src="${thumbnail}" alt="${playlist.name}" class="playlist-thumbnail-mini">
 						<div class="playlist-info-mini">
 							<div class="playlist-name">
@@ -2725,14 +2730,34 @@
 							</div>
 							<div class="playlist-meta-mini">${playlist.trackCount} songs • ${playlist.duration}</div>
 						</div>
-						<div class="playlist-actions-mini">  <!-- THIS is what I meant to change -->
-							<button class="playlist-mini-btn" onclick="event.stopPropagation(); editPlaylist('${playlist.name}')" title="Edit">✏️</button>
-							<button class="playlist-mini-btn" onclick="event.stopPropagation(); duplicatePlaylist('${playlist.name}')" title="Duplicate">📋</button>
-							<button class="playlist-mini-btn delete" onclick="event.stopPropagation(); deletePlaylist('${playlist.name}')" title="Delete">🗑️</button>
+						<div class="playlist-actions-mini">
+							<button class="playlist-mini-btn" onclick="event.stopPropagation(); editPlaylistFromElement(this)" data-playlist-name="${playlist.name}" title="Edit">✏️</button>
+							<button class="playlist-mini-btn" onclick="event.stopPropagation(); duplicatePlaylistFromElement(this)" data-playlist-name="${playlist.name}" title="Duplicate">📋</button>
+							<button class="playlist-mini-btn delete" onclick="event.stopPropagation(); deletePlaylistFromElement(this)" data-playlist-name="${playlist.name}" title="Delete">🗑️</button>
 						</div>
 					</div>
 				`;
 			}).join('');
+		}
+
+		function loadPlaylistFromElement(element) {
+			const playlistName = element.dataset.playlistName;
+			loadPlaylist(playlistName);
+		}
+
+		function editPlaylistFromElement(element) {
+			const playlistName = element.dataset.playlistName;
+			editPlaylist(playlistName);
+		}
+
+		function duplicatePlaylistFromElement(element) {
+			const playlistName = element.dataset.playlistName;
+			duplicatePlaylist(playlistName);
+		}
+
+		function deletePlaylistFromElement(element) {
+			const playlistName = element.dataset.playlistName;
+			deletePlaylist(playlistName);
 		}
 
 		function editPlaylist(playlistName) {
