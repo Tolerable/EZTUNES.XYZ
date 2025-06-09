@@ -1451,7 +1451,7 @@
 
 		.saved-playlist-item {
 			display: flex;
-			align-items: center;
+			align-items: flex-start;
 			gap: 0.8rem;
 			padding: 0.8rem;
 			margin: 0.3rem 0;
@@ -1473,11 +1473,13 @@
 			border-radius: 6px;
 			object-fit: cover;
 			border: 1px solid rgba(255, 255, 255, 0.2);
+			flex-shrink: 0; /* Prevent thumbnail from shrinking */
 		}
 
 		.playlist-info-mini {
 			flex: 1;
 			min-width: 0;
+			padding-bottom: 24px;
 		}
 
 		.playlist-name {
@@ -1487,6 +1489,8 @@
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
+			display: block; /* Ensure it takes full width */
+			padding-right: 0; /* Remove any right padding */
 		}
 
 		.playlist-meta-mini {
@@ -1495,6 +1499,9 @@
 		}
 
 		.playlist-actions-mini {
+			position: absolute;
+			bottom: 8px;
+			right: 8px;
 			display: flex;
 			gap: 0.3rem;
 			opacity: 0;
