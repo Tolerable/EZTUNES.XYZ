@@ -1804,23 +1804,30 @@
 
 		/* Active playlist indicator in player */
 		.active-playlist-indicator {
-			text-align: center;
-			margin-bottom: 1rem;
-			padding: 0.5rem;
+			position: fixed;
+			bottom: 1rem;
+			left: 1rem;
+			right: 1rem;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 0.5rem 1rem;
 			background: rgba(78, 205, 196, 0.1);
 			border: 1px solid rgba(78, 205, 196, 0.3);
 			border-radius: 8px;
-		}
-
-		.playlist-name-display {
-			font-weight: bold;
-			color: #4ecdc4;
-			margin-bottom: 0.2rem;
+			z-index: 10;
 		}
 
 		.playlist-status {
 			font-size: 0.8rem;
 			opacity: 0.8;
+		}
+
+		/* Right side - share button */
+		.playlist-indicator-right {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
 		}
 
 		.playlist-status.modified {
@@ -2505,45 +2512,48 @@
 			}
 		}
 
-		// Update active playlist display
 		function updateActivePlaylistDisplay() {
 			const indicator = document.getElementById('activePlaylistIndicator');
-			const nameDisplay = document.getElementById('activePlaylistName');
-			const statusDisplay = document.getElementById('playlistStatus');
 			const saveBtn = document.getElementById('saveChangesBtn');
 			const saveBtnName = document.getElementById('saveChangesPlaylistName');
 			
 			if (activePlaylistName) {
-				nameDisplay.textContent = activePlaylistName;
-				statusDisplay.textContent = playlistModified ? 'Modified - click to save changes' : 'Saved playlist';
-				statusDisplay.className = playlistModified ? 'playlist-status modified' : 'playlist-status';
-				
-				// Add a share button to the indicator
+				// Update the indicator HTML for bottom corner layout
 				indicator.innerHTML = `
-					<div class="playlist-name-display" id="activePlaylistName">${activePlaylistName}</div>
-					<div class="playlist-status" id="playlistStatus">${playlistModified ? 'Modified - click to save changes' : 'Saved playlist'}</div>
-					<button class="share-btn" style="margin-top: 0.5rem; font-size: 0.8rem; padding: 0.3rem 0.8rem;" onclick="sharePlaylist('${activePlaylistName}')">🔗 Share Playlist</button>
+					<div class="playlist-indicator-left">
+						<div class="playlist-name-display" id="activePlaylistName">${activePlaylistName}</div>
+						<div class="playlist-status" id="playlistStatus">${playlistModified ? 'Modified - click to save changes' : 'Saved playlist'}</div>
+					</div>
+					<div class="playlist-indicator-right">
+						<button class="share-btn" style="font-size: 0.8rem; padding: 0.3rem 0.8rem;" onclick="sharePlaylist('${activePlaylistName}')">🔗 Share</button>
+					</div>
 				`;
+				
+				// Get the newly created elements
+				const statusDisplay = document.getElementById('playlistStatus');
 				
 				// Update indicator appearance
 				if (playlistModified) {
 					indicator.classList.add('modified');
-					indicator.style.cursor = 'pointer';
-					indicator.onclick = () => updateActivePlaylist();
+					statusDisplay.classList.add('modified');
+					// Make the left side clickable to save
+					indicator.querySelector('.playlist-indicator-left').style.cursor = 'pointer';
+					indicator.querySelector('.playlist-indicator-left').onclick = () => updateActivePlaylist();
 					
 					// Show save button
 					saveBtnName.textContent = activePlaylistName;
 					saveBtn.classList.add('show');
 				} else {
 					indicator.classList.remove('modified');
-					indicator.style.cursor = 'default';
-					indicator.onclick = null;
+					statusDisplay.classList.remove('modified');
+					indicator.querySelector('.playlist-indicator-left').style.cursor = 'default';
+					indicator.querySelector('.playlist-indicator-left').onclick = null;
 					
 					// Hide save button
 					saveBtn.classList.remove('show');
 				}
 				
-				indicator.style.display = 'block';
+				indicator.style.display = 'flex';
 			} else {
 				indicator.style.display = 'none';
 				saveBtn.classList.remove('show');
