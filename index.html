@@ -4345,34 +4345,26 @@
 				}
 			});
 
-			document.addEventListener('DOMContentLoaded', function() {
-				// Visualizer toggle
-				document.getElementById('visualizerToggle').addEventListener('click', toggleVisualizer);
-				
-				// Close button
-				document.getElementById('vizCloseBtn').addEventListener('click', function() {
-					isVisualizerActive = false;
-					document.getElementById('visualizerContainer').classList.remove('active');
-					document.getElementById('visualizerToggle').classList.remove('active');
-					stopVisualization();
-				});
-				
-				// Fullscreen button
-				document.getElementById('vizFullscreenBtn').addEventListener('click', toggleFullscreenViz);
-				
-				// Mode selector
-				document.getElementById('vizModeSelect').addEventListener('change', function(e) {
-					vizMode = e.target.value;
-				});
-				
-				// ESC key to exit fullscreen
-				document.addEventListener('keydown', function(e) {
-					if (e.key === 'Escape' && document.getElementById('visualizerContainer').classList.contains('fullscreen')) {
-						toggleFullscreenViz();
-					}
-				});
-			});
 
+			// Visualizer toggle
+			document.getElementById('visualizerToggle').addEventListener('click', toggleVisualizer);
+			
+			// Close button
+			document.getElementById('vizCloseBtn').addEventListener('click', function() {
+				isVisualizerActive = false;
+				document.getElementById('visualizerContainer').classList.remove('active');
+				document.getElementById('visualizerToggle').classList.remove('active');
+				stopVisualization();
+			});
+			
+			// Fullscreen button
+			document.getElementById('vizFullscreenBtn').addEventListener('click', toggleFullscreenViz);
+			
+			// Mode selector
+			document.getElementById('vizModeSelect').addEventListener('change', function(e) {
+				vizMode = e.target.value;
+			});
+	
 			// Close share modal when clicking outside
 			document.getElementById('shareModal').addEventListener('click', (e) => {
 				if (e.target.id === 'shareModal') {
@@ -4453,25 +4445,31 @@
         }
 
         // Keyboard shortcuts
-        function handleKeyPress(e) {
-            if (e.target.tagName === 'INPUT') return;
-            
-            switch(e.code) {
-                case 'Space':
-                    e.preventDefault();
-                    togglePlay();
-                    break;
-                case 'ArrowLeft':
-                    previousSong();
-                    break;
-                case 'ArrowRight':
-                    nextSong();
-                    break;
-                case 'KeyM':
-                    toggleMute();
-                    break;
-            }
-        }
+		function handleKeyPress(e) {
+			if (e.target.tagName === 'INPUT') return;
+			
+			switch(e.code) {
+				case 'Space':
+					e.preventDefault();
+					togglePlay();
+					break;
+				case 'ArrowLeft':
+					previousSong();
+					break;
+				case 'ArrowRight':
+					nextSong();
+					break;
+				case 'KeyM':
+					toggleMute();
+					break;
+				case 'Escape':
+					// ADD THIS CASE
+					if (document.getElementById('visualizerContainer').classList.contains('fullscreen')) {
+						toggleFullscreenViz();
+					}
+					break;
+			}
+		}
 
         // Load current song
 		function loadCurrentSong() {
