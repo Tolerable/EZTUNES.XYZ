@@ -457,7 +457,15 @@
 		  "image": "Recording Studio [LOST TAPES].jpg",
 		  "genre": "rock",
 		  "duration": "1:37"
-		}		
+		},
+		{
+		  "trackNumber": 14,
+		  "title": "Power of the 'Tism",
+		  "file": "Power of the Tism.mp3",
+		  "image": "Power of the Tism.jpg",
+		  "genre": "rock",
+		  "duration": "1:37"
+		}
 	  ]
 	},
 	{
