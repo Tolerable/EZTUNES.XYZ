@@ -2010,6 +2010,9 @@
 			<button class="create-playlist-btn" onclick="showCreatePlaylistModal()">
 				➕ Create New Playlist
 			</button>
+			<button class="create-playlist-btn" onclick="restoreDefaultPlaylists()" style="background: linear-gradient(45deg, #ff6b6b, #ee5a24); margin-bottom: 0.5rem;">
+				🔄 Restore Defaults
+			</button>
 			<div id="savedPlaylistsList">
 				<!-- Saved playlists will be populated here -->
 			</div>
@@ -2260,15 +2263,98 @@
 			// Add more artists here as needed
 		};
 
-		// Load saved playlists from localStorage
+		// Default playlists using song indices (add this near the top with other globals)
+		const defaultPlaylists = {
+			"🌿 Cannabis Chronicles": {
+				// Using actual song indices from your albums
+				tracks: [8, 9, 10, 11, 12, 24, 25, 26, 27, 28, 43, 57, 69], // Metal tracks from Unleashed + cannabis themed tracks
+				description: "A collection of tracks celebrating the green life"
+			},
+			"🤘 Metal Mayhem": {
+				tracks: [8, 9, 10, 11, 29, 33, 34, 35, 36, 37, 43, 40, 44], // All metal genre tracks
+				description: "Heavy, aggressive tracks that pack a punch"
+			},
+			"🎸 Rock Essentials": {
+				tracks: [0, 1, 2, 5, 6, 7, 12, 13, 15, 16, 17, 18, 22, 24], // Rock genre tracks
+				description: "Classic rock vibes from the AI Collective"
+			},
+			"💫 Electronic Dreams": {
+				tracks: [4, 14, 19, 20, 23, 45, 46, 47, 48, 49, 51, 52, 53], // Electronic tracks from multiple albums
+				description: "Electronic soundscapes and digital emotions"
+			},
+			"😢 Emotional Journey": {
+				tracks: [13, 14, 15, 16, 17, 18, 24, 47, 48, 71, 72, 83], // Emotional themed tracks
+				description: "Deep, emotional tracks for contemplative moments"
+			},
+			"💪 Empowerment Anthems": {
+				tracks: [58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 78], // UNMUTE album tracks
+				description: "Powerful tracks about finding your voice and strength"
+			}
+		};
+
+		// Convert track indices for default playlists (simpler approach)
+		function createDefaultPlaylistIndices(trackIndices) {
+			return trackIndices.filter(index => index >= 0 && index < songs.length);
+		}
+
 		function loadSavedPlaylists() {
 			try {
 				const saved = localStorage.getItem('eztunesPlaylists');
 				savedPlaylists = saved ? JSON.parse(saved) : {};
+				
+				// Check if this is first time visiting (no saved playlists)
+				const isFirstTime = localStorage.getItem('eztunesFirstTime') === null;
+				
+				if (isFirstTime && Object.keys(savedPlaylists).length === 0) {
+					// Create default playlists on first visit
+					Object.entries(defaultPlaylists).forEach(([name, playlist]) => {
+						const trackIndices = createDefaultPlaylistIndices(playlist.tracks);
+						if (trackIndices.length > 0) {
+							savedPlaylists[name] = {
+								name: name,
+								tracks: trackIndices,
+								created: new Date().toISOString(),
+								trackCount: trackIndices.length,
+								duration: calculatePlaylistDuration(trackIndices),
+								isDefault: true
+							};
+						}
+					});
+					
+					savePlaylists();
+					localStorage.setItem('eztunesFirstTime', 'false');
+					showNotification('Welcome! We\'ve created some starter playlists for you 🎵', 'success');
+				}
 			} catch (error) {
 				console.error('Error loading saved playlists:', error);
 				savedPlaylists = {};
 			}
+		}
+
+		function restoreDefaultPlaylists() {
+			if (!confirm('This will restore all default playlists. Any existing default playlists will be updated. Continue?')) {
+				return;
+			}
+			
+			// Add/update default playlists
+			Object.entries(defaultPlaylists).forEach(([name, playlist]) => {
+				const trackIndices = createDefaultPlaylistIndices(playlist.tracks);
+				if (trackIndices.length > 0) {
+					savedPlaylists[name] = {
+						name: name,
+						tracks: trackIndices,
+						created: savedPlaylists[name]?.created || new Date().toISOString(),
+						modified: new Date().toISOString(),
+						trackCount: trackIndices.length,
+						duration: calculatePlaylistDuration(trackIndices),
+						isDefault: true
+					};
+				}
+			});
+			
+			savePlaylists();
+			renderSavedPlaylists();
+			showNotification('Default playlists restored! 🎵', 'success');
 		}
 
 		// Save playlists to localStorage
@@ -2521,7 +2607,10 @@
 					<div class="saved-playlist-item" onclick="loadPlaylist('${playlist.name}')">
 						<img src="${thumbnail}" alt="${playlist.name}" class="playlist-thumbnail-mini">
 						<div class="playlist-info-mini">
-							<div class="playlist-name">${playlist.name}</div>
+							<div class="playlist-name">
+								${playlist.name}
+								${playlist.isDefault ? '<span style="opacity: 0.6; font-size: 0.7rem;"> (Default)</span>' : ''}
+							</div>
 							<div class="playlist-meta-mini">${playlist.trackCount} songs • ${playlist.duration}</div>
 						</div>
 						<div class="playlist-actions-mini">  <!-- THIS is what I meant to change -->
