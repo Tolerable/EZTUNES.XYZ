@@ -449,7 +449,7 @@
 		};
 
 		const defaultPlaylists = {
-			"<span class='leaf-icon'></span> Cannabis Chronicles": {
+			"<span class='leaf'></span> Cannabis Chronicles": {
 				tracks: [
 					// Format: { albumId: "AlbumName", trackNumber: X }
 					{ albumId: "Unleashed", trackNumber: 10 },  // Garage Grow
@@ -2955,7 +2955,6 @@
 			
 			renderPlaylist();
 			showNotification('Playlist cleared', 'success');
-			markPlaylistModified();
 		}
 
 		function loadSavedPlaylist() {
