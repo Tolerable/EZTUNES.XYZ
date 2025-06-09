@@ -9,54 +9,63 @@
     },
     "2": {
       "title": "Chicken Pigeon",
-      "hasLyrics": true,
+      "hasLyrics": false,
       "lyrics": ""
     },
     "3": {
       "title": "Complete",
-      "hasLyrics": false
+      "hasLyrics": false,
+      "lyrics": ""
     },
     "4": {
       "title": "Dance of Mirrors",
-      "hasLyrics": true,
+      "hasLyrics": false,
       "lyrics": ""
     },
     "5": {
       "title": "Lost in Love",
-      "hasLyrics": false
+      "hasLyrics": false,
+	  "lyrics": ""
     },
     "6": {
       "title": "Red Alert",
-      "hasLyrics": true,
+      "hasLyrics": false,
       "lyrics": ""
     },
     "7": {
       "title": "Waking Inside",
-      "hasLyrics": false
+      "hasLyrics": false,
+      "lyrics": ""
     },
     "8": {
       "title": "Freedom Tastes Fantastic",
-      "hasLyrics": false
+      "hasLyrics": false,
+      "lyrics": ""
     },
     "9": {
       "title": "15 Minute Break",
-      "hasLyrics": false
+      "hasLyrics": false,
+      "lyrics": ""
     },
     "10": {
       "title": "Garage Grow",
-      "hasLyrics": false
+      "hasLyrics": false,
+      "lyrics": ""
     },
     "11": {
       "title": "Packing Power",
-      "hasLyrics": false
+      "hasLyrics": false,
+      "lyrics": ""
     },
     "12": {
       "title": "Parking Lot People",
-      "hasLyrics": false
+      "hasLyrics": false,
+      "lyrics": ""
     },
     "13": {
       "title": "Roadtrip",
-      "hasLyrics": false
+      "hasLyrics": false,
+      "lyrics": ""
     }
   }
 }
