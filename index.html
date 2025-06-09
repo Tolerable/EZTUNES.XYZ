@@ -168,6 +168,18 @@
             padding: 0 20px;
         }
 
+		.leaf-icon {
+			display: inline-block;
+			width: 1.2em;
+			height: 1.2em;
+			background-image: url('/img/leaf01.png');
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position: center;
+			vertical-align: middle;
+			margin-right: 0.2em;
+		}
+
 		/* Fix for header shifting when sidebar opens */
 		.header .container {
 			transition: none !important;
@@ -2283,7 +2295,7 @@
 		};
 
 		const defaultPlaylists = {
-			"🌿 Cannabis Chronicles": {
+			"<span class="leaf-icon"></span> Cannabis Chronicles": {
 				tracks: [
 					// Format: { albumId: "AlbumName", trackNumber: X }
 					{ albumId: "Unleashed", trackNumber: 10 },  // Garage Grow
