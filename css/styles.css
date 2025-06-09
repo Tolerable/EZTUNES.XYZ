@@ -70,16 +70,15 @@ body {
     margin-bottom: 2rem;
 }
 
-.leaf-icon {
+.leaf {
+    width: 24px;
+    height: 24px;
     display: inline-block;
-    width: 1.2em;
-    height: 1.2em;
     background-image: url('/img/leaf01.png');
     background-size: contain;
     background-repeat: no-repeat;
-    background-position: center;
     vertical-align: middle;
-    margin-right: 0.2em;
+    margin: 0 5px;
 }
 
 /* ===========================
