@@ -2374,38 +2374,52 @@
 			return indices;
 		}
 
-		function loadSavedPlaylists() {
-			try {
-				const saved = localStorage.getItem('eztunesPlaylists');
-				savedPlaylists = saved ? JSON.parse(saved) : {};
-				
-				// Check if this is first time visiting (no saved playlists)
-				const isFirstTime = localStorage.getItem('eztunesFirstTime') === null;
-				
-				if (isFirstTime && Object.keys(savedPlaylists).length === 0) {
-					// Create default playlists on first visit
-					Object.entries(defaultPlaylists).forEach(([name, playlist]) => {
-						const trackIndices = createDefaultPlaylistIndices(playlist.tracks);
-						if (trackIndices.length > 0) {
-							savedPlaylists[name] = {
-								name: name,
-								tracks: trackIndices,
-								created: new Date().toISOString(),
-								trackCount: trackIndices.length,
-								duration: calculatePlaylistDuration(trackIndices),
-								isDefault: true
-							};
-						}
-					});
-					
-					savePlaylists();
-					localStorage.setItem('eztunesFirstTime', 'false');
-					showNotification('Welcome! We\'ve created some starter playlists for you 🎵', 'success');
-				}
-			} catch (error) {
-				console.error('Error loading saved playlists:', error);
-				savedPlaylists = {};
-			}
+		function loadSavedPlaylist() {
+		   try {
+			   const saved = localStorage.getItem('savedPlaylist');
+			   if (saved) {
+				   const playlistData = JSON.parse(saved);
+				   
+				   // RESTORE the active playlist name
+				   activePlaylistName = playlistData.activePlaylistName || null;
+				   
+				   // Load the playlist even if it's empty
+				   playlistOrder = playlistData.order || [];
+				   
+				   // Only set up current song if playlist has items
+				   if (playlistOrder.length > 0) {
+					   const validSongs = playlistOrder.filter(index =>
+						   index >= 0 && index < songs.length
+					   );
+					   
+					   if (validSongs.length > 0) {
+						   playlistOrder = validSongs;
+						   
+						   // Restore the current song if valid
+						   if (validSongs.includes(playlistData.currentIndex)) {
+							   currentSongIndex = playlistData.currentIndex;
+							   loadCurrentSong();
+							   
+							   // Restore playback position
+							   if (playlistData.currentTime && currentAudio) {
+								   currentAudio.currentTime = playlistData.currentTime;
+							   }
+						   } else if (validSongs.length > 0) {
+							   currentSongIndex = validSongs[0];
+							   loadCurrentSong();
+						   }
+					   }
+				   }
+				   
+				   renderPlaylist();
+				   // Update the display after loading
+				   updateActivePlaylistDisplay();
+				   return true;
+			   }
+		   } catch (error) {
+			   console.error('Error loading saved playlist:', error);
+		   }
+		   return false;
 		}
 
 
@@ -2897,6 +2911,7 @@
 				currentSongIndex = -1;
 			}
 			
+			updateActivePlaylistDisplay();
 			renderAlbums();
 			
 			// Check if user prefers to see all songs
@@ -3039,6 +3054,7 @@
 				// Add current playback position if a song is playing
 				currentTime: currentAudio ? currentAudio.currentTime : 0,
 				wasPlaying: isPlaying
+				activePlaylistName: activePlaylistName
 			};
 			localStorage.setItem('savedPlaylist', JSON.stringify(playlistData));
 		}
