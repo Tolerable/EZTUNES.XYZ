@@ -1812,10 +1812,18 @@
 			justify-content: space-between;
 			align-items: center;
 			padding: 0.5rem 1rem;
-			background: rgba(78, 205, 196, 0.1);
-			border: 1px solid rgba(78, 205, 196, 0.3);
-			border-radius: 8px;
 			z-index: 10;
+			pointer-event
+		}
+
+		/* Make the actual content clickable */
+		.active-playlist-indicator > * {
+			pointer-events: auto;
+		}
+
+		/* Move it higher so it doesn't overlap the volume control */
+		.active-playlist-indicator {
+			bottom: 4rem; /* Move it up above the volume control */
 		}
 
 		.playlist-status {
