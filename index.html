@@ -167,6 +167,17 @@
             margin: 0 auto;
             padding: 0 20px;
         }
+
+		/* Fix for header shifting when sidebar opens */
+		.header .container {
+			transition: none !important;
+		}
+
+		.content-shifted .header .container {
+			margin-left: auto !important;
+			margin-right: auto !important;
+			transform: none !important;
+		}
         
         .logo {
             text-align: center;
