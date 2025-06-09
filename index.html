@@ -2489,7 +2489,6 @@
 		let vizMode = 'bars';
 		let isVisualizerActive = false;
 		let fullscreenLevel = 0;
-		let lyricsCache = {};
 		
 		// Artist data
 		const artistData = {
@@ -2894,98 +2893,6 @@
 					btn.textContent = '✕';
 					btn.title = 'Exit Fullscreen (or press ESC)';
 					break;
-			}
-		}
-
-		// Load lyrics for an album
-		async function loadAlbumLyrics(albumId) {
-			if (lyricsCache[albumId]) {
-				return lyricsCache[albumId];
-			}
-			
-			try {
-				const response = await fetch(`lyrics/${albumId}.json`);
-				if (response.ok) {
-					const lyricsData = await response.json();
-					lyricsCache[albumId] = lyricsData;
-					return lyricsData;
-				}
-			} catch (error) {
-				console.log(`No lyrics file found for album: ${albumId}`);
-			}
-			
-			return null;
-		}
-
-		// Check if track has lyrics
-		async function trackHasLyrics(albumId, trackNumber) {
-			const albumLyrics = await loadAlbumLyrics(albumId);
-			return albumLyrics && 
-				   albumLyrics.tracks && 
-				   albumLyrics.tracks[trackNumber] && 
-				   albumLyrics.tracks[trackNumber].hasLyrics;
-		}
-
-		// Get lyrics for a specific track
-		async function getTrackLyrics(albumId, trackNumber) {
-			const albumLyrics = await loadAlbumLyrics(albumId);
-			if (albumLyrics && albumLyrics.tracks && albumLyrics.tracks[trackNumber]) {
-				return albumLyrics.tracks[trackNumber].lyrics || null;
-			}
-			return null;
-		}
-
-		// Show lyrics modal
-		async function showLyricsModal(songIndex) {
-			const song = songs[songIndex];
-			if (!song) return;
-			
-			// Check if lyrics exist
-			const hasLyrics = await trackHasLyrics(song.albumId, song.trackNumber);
-			if (!hasLyrics) {
-				showNotification('No lyrics available for this track', 'info');
-				return;
-			}
-			
-			// Get lyrics
-			const lyrics = await getTrackLyrics(song.albumId, song.trackNumber);
-			if (!lyrics) {
-				showNotification('Could not load lyrics', 'error');
-				return;
-			}
-			
-			// Update modal content
-			document.getElementById('lyricsTrackInfo').innerHTML = `
-				<div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-					<img src="${safeImageSrc(song.image, song.albumId)}" 
-						 alt="${song.title}" 
-						 style="width: 60px; height: 60px; border-radius: 8px; object-fit: cover;">
-					<div>
-						<div style="font-weight: bold; font-size: 1.1rem;">${song.title}</div>
-						<div style="opacity: 0.8;">${song.albumTitle} • Track ${song.trackNumber}</div>
-					</div>
-				</div>
-			`;
-			
-			// Format lyrics with proper line breaks
-			const formattedLyrics = lyrics.replace(/\n/g, '<br>');
-			document.getElementById('lyricsContent').innerHTML = formattedLyrics;
-			
-			// Show modal
-			document.getElementById('lyricsModal').classList.add('active');
-		}
-
-		// Close lyrics modal
-		function closeLyricsModal() {
-			document.getElementById('lyricsModal').classList.remove('active');
-		}
-
-		// Show lyrics for currently playing track
-		function showCurrentLyrics() {
-			if (currentSongIndex >= 0 && currentSongIndex < songs.length) {
-				showLyricsModal(currentSongIndex);
-			} else {
-				showNotification('No track currently playing', 'info');
 			}
 		}
 
@@ -4164,40 +4071,36 @@
 			hideAlbumSongs();
 		}
 
-		// Render album tracks with Lyrics
-		function renderAlbumTracksWithLyrics(album) {
+		// Render album tracks
+		function renderAlbumTracks(album) {
 			const tracksContainer = document.getElementById('albumTracks');
 			
-			Promise.all(album.tracks.map(async (track, index) => {
-				const globalIndex = songs.findIndex(s => s.albumId === album.id && s.trackIndex === index);
-				const isCurrentSong = globalIndex === currentSongIndex;
-				const hasLyrics = await trackHasLyrics(album.id, track.trackNumber);
-				
-				return `
-					<div class="track-item ${isCurrentSong ? 'playing' : ''}" 
-						 onclick="addToQueue(${globalIndex})">
-						<div class="track-number">${track.trackNumber}</div>
-						<img src="${safeImageSrc(track.image, album.id)}" 
-							 alt="${track.title}" 
-							 class="track-thumbnail"
-							 onerror="this.src='https://www.eztunes.xyz/albums/default/default-track.jpg'">
-						<div class="track-info">
-							<div class="track-title-text">${track.title}</div>
-							<div class="track-genre">${track.genre.charAt(0).toUpperCase() + track.genre.slice(1)}</div>
+			tracksContainer.innerHTML = `
+				<h3>Tracks</h3>
+				${album.tracks.map((track, index) => {
+					const globalIndex = songs.findIndex(s => s.albumId === album.id && s.trackIndex === index);
+					const isCurrentSong = globalIndex === currentSongIndex;
+					
+					return `
+						<div class="track-item ${isCurrentSong ? 'playing' : ''}" 
+							 onclick="addToQueue(${globalIndex})">
+							<div class="track-number">${track.trackNumber}</div>
+							<img src="${safeImageSrc(track.image, album.id)}" 
+								 alt="${track.title}" 
+								 class="track-thumbnail"
+								 onerror="this.src='https://www.eztunes.xyz/albums/default/default-track.jpg'">
+							<div class="track-info">
+								<div class="track-title-text">${track.title}</div>
+								<div class="track-genre">${track.genre.charAt(0).toUpperCase() + track.genre.slice(1)}</div>
+							</div>
+							<button class="track-btn" onclick="event.stopPropagation(); playTrackFromAlbum(${globalIndex})">🎧 LISTEN</button>
+							${createStarRating(`${album.id}_${track.trackNumber}`, getRating(`${album.id}_${track.trackNumber}`))}
+							<div class="track-duration">${track.duration}</div>
+							<button class="share-btn" onclick="event.stopPropagation(); openShareModal(${globalIndex})">🔗 Share</button>
 						</div>
-						<button class="track-btn" onclick="event.stopPropagation(); playTrackFromAlbum(${globalIndex})">🎧 LISTEN</button>
-						${hasLyrics ? `<button class="lyrics-btn" onclick="event.stopPropagation(); showLyricsModal(${globalIndex})" title="View Lyrics">📝 LYRICS</button>` : ''}
-						${createStarRating(`${album.id}_${track.trackNumber}`, getRating(`${album.id}_${track.trackNumber}`))}
-						<div class="track-duration">${track.duration}</div>
-						<button class="share-btn" onclick="event.stopPropagation(); openShareModal(${globalIndex})">🔗 Share</button>
-					</div>
-				`;
-			})).then(trackItems => {
-				tracksContainer.innerHTML = `
-					<h3>Tracks</h3>
-					${trackItems.join('')}
-				`;
-			});
+					`;
+				}).join('')}
+			`;
 		}
 		
 		// Play album
@@ -4306,8 +4209,8 @@
             }).join('');
         }
 
-        // Render playlist with Lyrics
-		function renderPlaylistWithLyrics() {
+        // Render playlist
+		function renderPlaylist() {
 			const container = document.getElementById('playlistContainer');
 			if (!container) return;
 			
@@ -4321,12 +4224,11 @@
 				return;
 			}
 			
-			// Use Promise.all to check lyrics availability for all tracks
-			Promise.all(playlistOrder.map(async (songIndex, position) => {
+			// Keep the original playlist order, just highlight the current song
+			container.innerHTML = playlistOrder.map((songIndex, position) => {
 				const song = songs[songIndex];
 				const isCurrentSong = songIndex === currentSongIndex;
 				const trackId = `${song.albumId}_${song.trackNumber}`;
-				const hasLyrics = await trackHasLyrics(song.albumId, song.trackNumber);
 				
 				return `
 					<div class="playlist-item ${isCurrentSong ? 'playing' : ''}" 
@@ -4349,7 +4251,6 @@
 							<div class="playlist-meta">${song.albumTitle} • ${song.genre.charAt(0).toUpperCase() + song.genre.slice(1)}</div>
 							${createStarRating(trackId, getRating(trackId))}
 						</div>
-						${hasLyrics ? `<button class="lyrics-btn" onclick="event.stopPropagation(); showLyricsModal(${songIndex})" title="View Lyrics">📝</button>` : ''}
 						<button class="share-btn playlist-share" onclick="event.stopPropagation(); openShareModal(${songIndex})">SHARE</button>
 						<div class="playlist-controls-mini">
 							<button class="playlist-control-btn" onclick="movePlaylistItem(${position}, -1, event)" title="Move up (Shift+click = move to top)" ${position === 0 ? 'disabled style="opacity: 0.3; cursor: not-allowed;"' : ''}>↑</button>
@@ -4359,11 +4260,12 @@
 						<div class="playlist-duration">${song.duration}</div>
 					</div>
 				`;
-			})).then(htmlItems => {
-				container.innerHTML = htmlItems.join('');
-				addPlaylistEventListeners();
-				updateSaveButtonText();
-			});
+			}).join('');
+			
+			// Add event listeners
+			addPlaylistEventListeners();
+			
+			updateSaveButtonText();
 		}
 
 		function getTrackPath(track) {
@@ -4500,19 +4402,6 @@
 
         // Setup event listeners
         function setupEventListeners() {
-		
-			function addLyricsEventListeners() {
-				// Add lyrics button click handler
-				document.getElementById('lyricsBtn')?.addEventListener('click', showCurrentLyrics);
-				
-				// Close modal when clicking outside
-				document.getElementById('lyricsModal')?.addEventListener('click', (e) => {
-					if (e.target.id === 'lyricsModal') {
-						closeLyricsModal();
-					}
-				});
-			}
-		
 			// Close sidebar on escape key
 			document.addEventListener('keydown', (e) => {
 				if (e.key === 'Escape') {
