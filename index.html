@@ -584,39 +584,18 @@
 			return indices;
 		}
 
-		// Load lyrics for a specific album
-		async function loadAlbumLyrics(albumId) {
-			if (albumLyrics[albumId]) {
-				return albumLyrics[albumId]; // Already loaded
-			}
-			
-			try {
-				const response = await fetch(`/lyrics/${albumId}.json?v=${Date.now()}`);
-				if (response.ok) {
-					const lyricsData = await response.json();
-					albumLyrics[albumId] = lyricsData;
-					return lyricsData;
-				}
-			} catch (error) {
-				console.log(`No lyrics found for album: ${albumId}`);
-			}
-			return null;
-		}
+
 
 		// Get lyrics for a specific track
 		async function getCurrentTrackLyrics() {
 			const song = songs[currentSongIndex];
-			console.log('Getting lyrics for song:', song);
 			if (!song) return null;
 			
 			const lyricsData = await loadAlbumLyrics(song.albumId);
-			console.log('Lyrics data loaded:', lyricsData);
 			if (!lyricsData || !lyricsData.tracks) return null;
 			
-			console.log('Looking for track number:', song.trackNumber);
+			// Use trackNumber directly since it matches your JSON keys
 			const trackLyrics = lyricsData.tracks[song.trackNumber.toString()];
-			console.log('Found track lyrics:', trackLyrics);
-			
 			if (trackLyrics && trackLyrics.hasLyrics && trackLyrics.lyrics) {
 				return trackLyrics.lyrics;
 			}
@@ -896,7 +875,7 @@
 		// Load lyrics for a specific album
 		async function loadAlbumLyrics(albumId) {
 			if (albumLyrics[albumId]) {
-				return albumLyrics[albumId];
+				return albumLyrics[albumId]; // Already loaded
 			}
 			
 			try {
@@ -908,22 +887,6 @@
 				}
 			} catch (error) {
 				console.log(`No lyrics found for album: ${albumId}`);
-			}
-			return null;
-		}
-
-		// Get lyrics for the current track
-		async function getCurrentTrackLyrics() {
-			const song = songs[currentSongIndex];
-			if (!song) return null;
-			
-			const lyricsData = await loadAlbumLyrics(song.albumId);
-			if (!lyricsData || !lyricsData.tracks) return null;
-			
-			// Use trackNumber directly since it matches your JSON keys
-			const trackLyrics = lyricsData.tracks[song.trackNumber.toString()];
-			if (trackLyrics && trackLyrics.hasLyrics && trackLyrics.lyrics) {
-				return trackLyrics.lyrics;
 			}
 			return null;
 		}
