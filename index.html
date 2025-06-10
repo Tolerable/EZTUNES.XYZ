@@ -3159,6 +3159,9 @@
 				   // Load the playlist even if it's empty
 				   playlistOrder = playlistData.order || [];
 				   
+				   // IMPORTANT: Reset modification flag during initial load
+				   playlistModified = false;
+				   
 				   // Only set up current song if playlist has items
 				   if (playlistOrder.length > 0) {
 					   const validSongs = playlistOrder.filter(index =>
