@@ -53,23 +53,12 @@ body {
     margin-bottom: 2rem;
 }
 
-.logo h1 {
-    font-size: 3rem;
-    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
-    animation: glow 2s ease-in-out infinite alternate;
-}
-
-<style>
 .logo img {
     width: 1200px;
     height: 230px;
     object-fit: contain;
 }
-</style>
+
 
 .tagline {
     text-align: center;
