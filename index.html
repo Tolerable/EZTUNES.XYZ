@@ -895,9 +895,6 @@
 			return tmp.textContent || tmp.innerText || "";
 		}
 
-		// Then use it:
-		const playlistName = prompt('Save playlist as (leave blank to create new):', activePlaylistName ? stripHtml(activePlaylistName) : '');
-
 		// Load lyrics for a specific album
 		async function loadAlbumLyrics(albumId) {
 			if (albumLyrics[albumId]) {
