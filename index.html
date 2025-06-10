@@ -312,16 +312,14 @@
         <div class="playlist-section">
             <div class="playlist-header">
                 <h3>🎵 Current Playlist</h3>
-                <div class="playlist-controls">
-                    <button class="playlist-btn" id="clearQueueBtn">Clear Playlist</button>
-                </div>
+				<div class="playlist-controls">
+					<button class="playlist-btn" onclick="saveCurrentQueue()">💾 Save Queue</button>
+					<button class="playlist-btn" id="clearQueueBtn">Clear Playlist</button>
+				</div>
             </div>
             <div id="playlistContainer">
                 <!-- Playlist items will be populated by JavaScript -->
-            </div>
-			<button id="saveChangesBtn" class="save-changes-btn" onclick="updateActivePlaylist()">
-				💾 Save Changes to "<span id="saveChangesPlaylistName"></span>"
-			</button>			
+            </div>			
         </div>
 
 		<!-- Albums Section -->
@@ -862,6 +860,35 @@
 			}
 		}
 
+		function saveCurrentQueue() {
+			if (playlistOrder.length === 0) {
+				showNotification('Queue is empty - nothing to save', 'info');
+				return;
+			}
+			
+			// Ask which playlist to save to
+			const playlistName = prompt('Save queue as (leave blank to create new):', activePlaylistName || '');
+			
+			if (playlistName === null) return; // User cancelled
+			
+			const finalName = playlistName.trim() || prompt('Enter new playlist name:');
+			
+			if (finalName) {
+				savedPlaylists[finalName] = {
+					name: finalName,
+					tracks: [...playlistOrder],
+					created: savedPlaylists[finalName]?.created || new Date().toISOString(),
+					modified: new Date().toISOString(),
+					trackCount: playlistOrder.length,
+					duration: calculatePlaylistDuration(playlistOrder)
+				};
+				
+				savePlaylists();
+				renderSavedPlaylists();
+				showNotification(`Saved queue as "${finalName}"`, 'success');
+			}
+		}
+
 		// Load lyrics for a specific album
 		async function loadAlbumLyrics(albumId) {
 			if (albumLyrics[albumId]) {
@@ -1060,14 +1087,18 @@
 		function updateActivePlaylistDisplay() {
 			const indicator = document.getElementById('activePlaylistIndicator');
 			const saveBtn = document.getElementById('saveChangesBtn');
-			const saveBtnName = document.getElementById('saveChangesPlaylistName');
+			
+			// HIDE THE SAVE BUTTON COMPLETELY
+			if (saveBtn) {
+				saveBtn.style.display = 'none';
+			}
 			
 			if (activePlaylistName) {
 				// Update the indicator HTML for bottom corner layout
 				indicator.innerHTML = `
 					<div class="playlist-indicator-left">
 						<div class="playlist-name-display" id="activePlaylistName">${activePlaylistName}</div>
-						<div class="playlist-status" id="playlistStatus">${playlistModified ? 'Modified - click to save changes' : 'Saved playlist'}</div>
+						<div class="playlist-status" id="playlistStatus">${playlistModified ? 'Modified' : 'Saved playlist'}</div>
 					</div>
 					<div class="playlist-indicator-right">
 						<button class="share-btn" style="font-size: 0.8rem; padding: 0.3rem 0.8rem;" data-playlist-name="${activePlaylistName}" onclick="sharePlaylistFromElement(this)">🔗 Share</button>
@@ -1077,31 +1108,21 @@
 				// Get the newly created elements
 				const statusDisplay = document.getElementById('playlistStatus');
 				
-				// Update indicator appearance
+				// Update indicator appearance (but NO SAVE FUNCTIONALITY)
 				if (playlistModified) {
 					indicator.classList.add('modified');
 					statusDisplay.classList.add('modified');
-					// Make the left side clickable to save
-					indicator.querySelector('.playlist-indicator-left').style.cursor = 'pointer';
-					indicator.querySelector('.playlist-indicator-left').onclick = () => updateActivePlaylist();
-					
-					// Show save button
-					saveBtnName.innerHTML = activePlaylistName;
-					saveBtn.classList.add('show');
+					// NO CLICKABLE SAVE - just informational
+					indicator.querySelector('.playlist-indicator-left').style.cursor = 'default';
+					indicator.querySelector('.playlist-indicator-left').onclick = null;
 				} else {
 					indicator.classList.remove('modified');
 					statusDisplay.classList.remove('modified');
-					indicator.querySelector('.playlist-indicator-left').style.cursor = 'default';
-					indicator.querySelector('.playlist-indicator-left').onclick = null;
-					
-					// Hide save button
-					saveBtn.classList.remove('show');
 				}
 				
 				indicator.style.display = 'flex';
 			} else {
 				indicator.style.display = 'none';
-				saveBtn.classList.remove('show');
 			}
 		}
 
