@@ -346,15 +346,16 @@
 			
 			<!-- Album Detail View -->
 			<div class="album-detail" id="albumDetail">
-				<button class="back-btn" onclick="hideAlbumDetail()">← Back to Albums</button>
+				<div class="album-nav-controls">
+					<button class="back-btn" onclick="hideAlbumDetail()">← Back to Albums</button>
+					<div class="album-nav-buttons">
+						<button class="album-nav-btn" id="prevAlbumBtn" onclick="navigateAlbum(-1)">◀ Previous Album</button>
+						<button class="album-nav-btn" id="nextAlbumBtn" onclick="navigateAlbum(1)">Next Album ▶</button>
+					</div>
+				</div>
 				<div class="album-header" id="albumHeader">
 					<!-- Album header will be populated -->
 				</div>
-				<div class="track-list" id="albumTracks">
-					<!-- Tracks will be populated -->
-				</div>
-			</div>
-		</div>
 
 		<!-- Song Section -->
 		<div class="song-section">
@@ -2098,6 +2099,22 @@
 					card.style.display = 'none';
 				}
 			});
+		}
+
+		function navigateAlbum(direction) {
+			if (!currentAlbum) return;
+			
+			// Use your custom album order
+			const albumOrder = ['Unleashed', 'Ghosts', 'Sinners-Feast', 'Awakenings', 'UNMUTE', 'Exit Wounds', 'Afterlight', 'Greatest Hits'];
+			
+			const currentIndex = albumOrder.indexOf(currentAlbum.id);
+			let newIndex = currentIndex + direction;
+			
+			// Wrap around at ends
+			if (newIndex < 0) newIndex = albumOrder.length - 1;
+			if (newIndex >= albumOrder.length) newIndex = 0;
+			
+			showAlbumDetail(albumOrder[newIndex]);
 		}
 
 		// Show album detail
