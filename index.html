@@ -916,7 +916,7 @@
 			const lyricsData = await loadAlbumLyrics(song.albumId);
 			if (!lyricsData || !lyricsData.tracks) return null;
 			
-			const trackLyrics = lyricsData.tracks[song.trackNumber];
+			const trackLyrics = lyricsData.tracks[song.trackIndex + 1];
 			if (trackLyrics && trackLyrics.hasLyrics && trackLyrics.lyrics) {
 				return trackLyrics.lyrics;
 			}
@@ -1844,6 +1844,7 @@
 								albumTitle: album.title,
 								albumIndex: albumIndex,
 								trackIndex: trackIndex,
+								trackNumber: trackIndex + 1,  // ADD THIS LINE!
 								globalIndex: songs.length
 							});
 						});
