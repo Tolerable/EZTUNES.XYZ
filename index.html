@@ -876,18 +876,24 @@
 		// Load lyrics for a specific album
 		async function loadAlbumLyrics(albumId) {
 			if (albumLyrics[albumId]) {
-				return albumLyrics[albumId]; // Already loaded
+				return albumLyrics[albumId];
 			}
 			
 			try {
-				const response = await fetch(`/lyrics/${albumId}.json?v=${Date.now()}`);
+				const url = `/lyrics/${albumId}.json?v=${Date.now()}`;
+				console.log('Fetching lyrics from:', url);
+				const response = await fetch(url);
+				console.log('Response status:', response.status, 'OK:', response.ok);
+				
 				if (response.ok) {
 					const lyricsData = await response.json();
 					albumLyrics[albumId] = lyricsData;
 					return lyricsData;
+				} else {
+					console.log('Response not OK:', response.status, response.statusText);
 				}
 			} catch (error) {
-				console.log(`No lyrics found for album: ${albumId}`);
+				console.log(`Error loading lyrics for album ${albumId}:`, error);
 			}
 			return null;
 		}
