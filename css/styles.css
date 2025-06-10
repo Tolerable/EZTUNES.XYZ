@@ -1987,6 +1987,10 @@ body {
    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+#activePlaylistIndicator {
+    display: none !important;
+}
+
 /* Confirm Modal */
 .confirm-modal {
    position: fixed;
@@ -2088,17 +2092,6 @@ body {
 @keyframes spin {
    from { transform: rotate(0deg); }
    to { transform: rotate(360deg); }
-}
-
-@keyframes pulse {
-   0%, 100% { opacity: 0.5; }
-   50% { opacity: 1; }
-}
-
-@keyframes pulse {
-   0% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.4); }
-   70% { box-shadow: 0 0 0 10px rgba(255, 107, 107, 0); }
-   100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0); }
 }
 
 @keyframes dance {
