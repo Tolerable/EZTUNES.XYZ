@@ -606,13 +606,17 @@
 		// Get lyrics for a specific track
 		async function getCurrentTrackLyrics() {
 			const song = songs[currentSongIndex];
+			console.log('Getting lyrics for song:', song);
 			if (!song) return null;
 			
 			const lyricsData = await loadAlbumLyrics(song.albumId);
+			console.log('Lyrics data loaded:', lyricsData);
 			if (!lyricsData || !lyricsData.tracks) return null;
 			
-			// Find lyrics by track number
-			const trackLyrics = lyricsData.tracks[song.trackNumber];
+			console.log('Looking for track number:', song.trackNumber);
+			const trackLyrics = lyricsData.tracks[song.trackNumber.toString()];
+			console.log('Found track lyrics:', trackLyrics);
+			
 			if (trackLyrics && trackLyrics.hasLyrics && trackLyrics.lyrics) {
 				return trackLyrics.lyrics;
 			}
@@ -916,7 +920,8 @@
 			const lyricsData = await loadAlbumLyrics(song.albumId);
 			if (!lyricsData || !lyricsData.tracks) return null;
 			
-			const trackLyrics = lyricsData.tracks[song.trackIndex + 1];
+			// Use trackNumber directly since it matches your JSON keys
+			const trackLyrics = lyricsData.tracks[song.trackNumber.toString()];
 			if (trackLyrics && trackLyrics.hasLyrics && trackLyrics.lyrics) {
 				return trackLyrics.lyrics;
 			}
