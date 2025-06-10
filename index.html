@@ -1086,7 +1086,7 @@
 					indicator.querySelector('.playlist-indicator-left').onclick = () => updateActivePlaylist();
 					
 					// Show save button
-					saveBtnName.textContent = activePlaylistName;
+					saveBtnName.innerHTML = activePlaylistName;
 					saveBtn.classList.add('show');
 				} else {
 					indicator.classList.remove('modified');
