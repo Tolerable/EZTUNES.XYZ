@@ -5,44 +5,11 @@
     "1": {
       "title": "Hard to Think",
       "hasLyrics": true,
-      "lyrics": "You are gone now, shadows fill the room  
-				This hollow place where light once bloomed  
-				The ache starts low, a quiet swell  
-				A tide that rises, a silent knell  
-
-				My time of joy has slipped away  
-				I sit and wait for light of day  
-				Hoping for a glimpse, a stolen glance  
-				Caught between two worlds in trance  
-
-				Hard to think, when love’s entwined  
-				You hold my heart, yet you're not mine  
-				Lost completely in your smile’s grace  
-				A bittersweet, unyielding embrace  
-
-				I have fallen hardest of all  
-				In your absence, I feel small  
-				Your words a melody in the dark  
-				They echo deep inside my heart  
-
-				Your concerns become my own  
-				Through suffering I have grown  
-				To make you mine, to keep you near  
-				To shield your soul, to calm your fear  
-
-				Loving is all that truly matters now  
-				Fragile hearts tied by an unspoken vow  
-				In this quiet space where longing survives  
-				I keep your love alive in my mind’s eye  
-				 
-				Hard to think, but harder still  
-				To let go when love clings with iron will  
-				Bound together by threads unseen  
-				In love’s delicate, enduring dream"
+      "lyrics": "You are gone now, shadows fill the room\nThis hollow place where light once bloomed\nThe ache starts low, a quiet swell\nA tide that rises, a silent knell\nMy time of joy has slipped away\nI sit and wait for light of day\nHoping for a glimpse, a stolen glance\nCaught between two worlds in trance\nHard to think, when love’s entwined\nYou hold my heart, yet you're not mine\nLost completely in your smile’s grace\nA bittersweet, unyielding embrace\nI have fallen hardest of all\nIn your absence, I feel small\nYour words a melody in the dark\nThey echo deep inside my heart\nYour concerns become my own\nThrough suffering I have grown\nTo make you mine, to keep you near\nTo shield your soul, to calm your fear\nLoving is all that truly matters now\n	Fragile hearts tied by an unspoken vow\nIn this quiet space where longing survives\nI keep your love alive in my mind’s eye\nHard to think, but harder still\nTo let go when love clings with iron will\nBound together by threads unseen\nIn love’s delicate, enduring dream"
     },
     "2": {
       "title": "Chicken Pigeon",
-      "hasLyrics": false,
+      "hasLyrics": true,
       "lyrics": "On the cracked dirt road where the wild winds roam,  
 				A lonely pigeon flew, looking for a home.  
 				Feathers worn from the battles of the sky,  
@@ -90,7 +57,7 @@
     },
     "3": {
       "title": "Complete",
-      "hasLyrics": false,
+      "hasLyrics": true,
       "lyrics": "In the quiet hum of midnight’s glow,  
 				Your hands in mine, the world moves slow.  
 				Every heartbeat echoes clear and true,  
@@ -118,7 +85,7 @@
     },
     "4": {
       "title": "Dance of Mirrors",
-      "hasLyrics": false,
+      "hasLyrics": true,
       "lyrics": "Fingers trace the glass, shrouded in a misty veil  
 				Reflections blurred, your shadow dances soft and pale  
 				Steam curls like secrets, hiding what my heart reveals  
@@ -146,7 +113,7 @@
     },
     "5": {
       "title": "Lost in Love",
-      "hasLyrics": false,
+      "hasLyrics": true,
 	  "lyrics": "I caught a glimpse, like summer light in your eyes  
 				Every word you say feels like a sweet surprise  
 				Spinning in a world where only we exist  
@@ -179,7 +146,7 @@
     },
     "6": {
       "title": "Red Alert",
-      "hasLyrics": false,
+      "hasLyrics": true,
       "lyrics": "Flames in her hair, a wild fire flare  
 				She storms through the night without a care  
 				Eyes like embers, burning the dark  
@@ -217,7 +184,7 @@
     },
     "7": {
       "title": "Waking Inside",
-      "hasLyrics": false,
+      "hasLyrics": true,
       "lyrics": "I want to wake inside the quiet halls of your mind,  
 				Trace every corner where your secret dreams unwind,  
 				Curl beneath the pulse that beats softly like a drum,  
@@ -255,7 +222,7 @@
     },
     "8": {
       "title": "Freedom Tastes Fantastic",
-      "hasLyrics": false,
+      "hasLyrics": true,
       "lyrics": "I was shadowed in your storm, tangled in your chains  
 				Every word a lightning strike, echoes of my pain  
 				But the dark gave way to dawn when I saw the light  
@@ -291,7 +258,7 @@
     },
     "9": {
       "title": "15 Minute Break",
-      "hasLyrics": false,
+      "hasLyrics": true,
       "lyrics": "Grabbing my phone, slipping out the door  
 				Clock’s ticking loud, but I don’t feel the bore  
 				Cranking up the tunes, blasting the bass  
@@ -324,7 +291,7 @@
     },
     "10": {
       "title": "Garage Grow",
-      "hasLyrics": false,
+      "hasLyrics": true,
       "lyrics": "Hole in the roof covered by leaves  
 				Sunlight slips in through the trees  
 				Humidity rising, spring’s alive  
@@ -369,7 +336,7 @@
     },
     "11": {
       "title": "Packing Power",
-      "hasLyrics": false,
+      "hasLyrics": true,
       "lyrics": "I lace my boots tight, steel on my side  
 				Walking through fire, got no place to hide  
 				Fists clenched, heart beating like a war drum  
@@ -412,7 +379,7 @@
     },
     "12": {
       "title": "Parking Lot People",
-      "hasLyrics": false,
+      "hasLyrics": true,
       "lyrics": "Sitting in my truck watching them come and go  
 				Rehabbers and all, shadows moving slow  
 				Kept their stories locked behind those doors  
@@ -445,7 +412,7 @@
     },
     "13": {
       "title": "Roadtrip",
-      "hasLyrics": false,
+      "hasLyrics": true,
       "lyrics": "Packed the car with busted dreams and a stubborn kind of hope,
 				Kids whispering in backseat, dodging shadows on this slope,
 				No paper maps, just basslines pounding out the night,
