@@ -63,6 +63,14 @@ body {
     animation: glow 2s ease-in-out infinite alternate;
 }
 
+<style>
+.logo img {
+    width: 1200px;
+    height: 230px;
+    object-fit: contain;
+}
+</style>
+
 .tagline {
     text-align: center;
     font-size: 1.2rem;
