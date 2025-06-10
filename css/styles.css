@@ -90,6 +90,41 @@ body {
     margin: 0 5px;
 }
 
+/* ==== 
+	Album
+   ==== */
+.album-nav-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.album-nav-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.album-nav-btn {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: transform 0.2s;
+}
+
+.album-nav-btn:hover {
+    transform: scale(1.05);
+}
+
+.album-nav-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 /* ===========================
    3. SIDEBAR
    =========================== */
