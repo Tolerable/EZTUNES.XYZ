@@ -1135,7 +1135,7 @@ body {
     box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
 }
 
-/* Check the active playlist indicator for any lingering effects */
+/* Active Playlist Indicator - SINGLE DEFINITION */
 .active-playlist-indicator {
     position: fixed;
     bottom: 4rem;
@@ -1147,45 +1147,25 @@ body {
     padding: 0.5rem 1rem;
     z-index: 10;
     pointer-events: none;
-    /* Remove any background or glow that might be bleeding through */
     background: none;
     box-shadow: none;
-	border-radius: 10px;
-	overflow: hidden;	
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.active-playlist-indicator > * {
+    pointer-events: auto;
 }
 
 .active-playlist-indicator.modified {
     background: rgba(255, 107, 107, 0.2);
-    border-color: rgba(255, 107, 107, 0.5);
+    border: 1px solid rgba(255, 107, 107, 0.5);
+    /* NO ANIMATION - this was causing the pulsing glow */
 }
 
 .save-changes-btn:hover {
-   transform: translateY(-2px);
-   box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
-}
-
-/* Active Playlist Indicator */
-.active-playlist-indicator {
-   position: fixed;
-   bottom: 4rem;
-   left: 1rem;
-   right: 1rem;
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   padding: 0.5rem 1rem;
-   z-index: 10;
-   pointer-events: none;
-}
-
-.active-playlist-indicator > * {
-   pointer-events: auto;
-}
-
-.active-playlist-indicator.modified {
-   background: rgba(255, 107, 107, 0.2);
-   border-color: rgba(255, 107, 107, 0.5);
-   animation: pulse 2s infinite;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
 }
 
 .playlist-status {
