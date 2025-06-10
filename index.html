@@ -867,7 +867,7 @@
 			}
 			
 			// Ask which playlist to save to
-			const playlistName = prompt('Save queue as (leave blank to create new):', activePlaylistName || '');
+			const playlistName = prompt('Save playlist as (leave blank to create new):', activePlaylistName || '');
 			
 			if (playlistName === null) return; // User cancelled
 			
@@ -888,6 +888,15 @@
 				showNotification(`Saved queue as "${finalName}"`, 'success');
 			}
 		}
+
+		function stripHtml(html) {
+			const tmp = document.createElement("DIV");
+			tmp.innerHTML = html;
+			return tmp.textContent || tmp.innerText || "";
+		}
+
+		// Then use it:
+		const playlistName = prompt('Save playlist as (leave blank to create new):', activePlaylistName ? stripHtml(activePlaylistName) : '');
 
 		// Load lyrics for a specific album
 		async function loadAlbumLyrics(albumId) {
