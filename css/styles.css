@@ -90,41 +90,6 @@ body {
     margin: 0 5px;
 }
 
-/* ==== 
-	Album
-   ==== */
-.album-nav-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-}
-
-.album-nav-buttons {
-    display: flex;
-    gap: 1rem;
-}
-
-.album-nav-btn {
-    background: linear-gradient(45deg, #667eea, #764ba2);
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: transform 0.2s;
-}
-
-.album-nav-btn:hover {
-    transform: scale(1.05);
-}
-
-.album-nav-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
 /* ===========================
    3. SIDEBAR
    =========================== */
@@ -1157,13 +1122,41 @@ body {
     width: 100%;
     opacity: 0;
     visibility: hidden;
-   transform: translateY(-10px);
+    transform: translateY(-10px);
+    /* Remove any box-shadow or glow effects here */
+    box-shadow: none;
 }
 
 .save-changes-btn.show {
-   opacity: 1;
-   visibility: visible;
-   transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    /* Add shadow only when shown */
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+}
+
+/* Check the active playlist indicator for any lingering effects */
+.active-playlist-indicator {
+    position: fixed;
+    bottom: 4rem;
+    left: 1rem;
+    right: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    z-index: 10;
+    pointer-events: none;
+    /* Remove any background or glow that might be bleeding through */
+    background: none;
+    box-shadow: none;
+	border-radius: 10px;
+	overflow: hidden;	
+}
+
+.active-playlist-indicator.modified {
+    background: rgba(255, 107, 107, 0.2);
+    border-color: rgba(255, 107, 107, 0.5);
 }
 
 .save-changes-btn:hover {
@@ -1646,19 +1639,21 @@ body {
 }
 
 .back-btn {
-   background: linear-gradient(45deg, #667eea, #764ba2);
-   border: none;
+   background: rgba(255, 255, 255, 0.1);
+   border: 1px solid rgba(255, 255, 255, 0.3);
    border-radius: 20px;
    padding: 0.5rem 1rem;
    color: white;
    cursor: pointer;
    transition: all 0.3s ease;
+   margin-bottom: 1rem;
    display: inline-flex;
    align-items: center;
    gap: 0.5rem;
 }
+
 .back-btn:hover {
-   transform: translateX(-5px) scale(1.05);
+   background: rgba(255, 255, 255, 0.2);
 }
 
 /* ===========================
