@@ -591,17 +591,18 @@
 			const song = songs[currentSongIndex];
 			if (!song) return null;
 			
+			console.log('DEBUG - song.trackNumber:', song.trackNumber, 'type:', typeof song.trackNumber);
+			
 			const lyricsData = await loadAlbumLyrics(song.albumId);
 			if (!lyricsData || !lyricsData.tracks) return null;
 			
-			// Use trackNumber directly since it matches your JSON keys
 			const trackLyrics = lyricsData.tracks[song.trackNumber.toString()];
 			if (trackLyrics && trackLyrics.hasLyrics && trackLyrics.lyrics) {
 				return trackLyrics.lyrics;
 			}
 			return null;
 		}
-
+		
 		function loadSavedPlaylists() {
 			try {
 				const saved = localStorage.getItem('eztunesPlaylists');
