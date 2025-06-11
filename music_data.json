@@ -955,23 +955,23 @@
 		  "title": "Walk Good, Rastaman",
 		  "file": "Walk Good, Rastaman.mp3",
 		  "image": "Walk Good, Rastaman.jpg",
-		  "genre": "Roots Reggae",
+		  "genre": "Reggae",
 		  "duration": "3:45"
 		},
 		{
 		  "trackNumber": 2,
 		  "title": "Blunt Rollin' Rastafarian",
-		  "file": "Blunt Rollin' Rastafarian.mp3",
-		  "image": "Blunt Rollin' Rastafarian.jpg",
-		  "genre": "Roots Reggae",
+		  "file": "Blunt Rollin Rastafarian.mp3",
+		  "image": "Blunt Rollin Rastafarian.jpg",
+		  "genre": "Reggae",
 		  "duration": "4:02"
 		},
 		{
 		  "trackNumber": 3,
-		  "title": "Chant fi di Mother Herb",
-		  "file": "Chant fi di Mother Herb.mp3",
-		  "image": "Chant fi di Mother Herb.jpg",
-		  "genre": "Roots Reggae",
+		  "title": "Mother Herb Chant (Roots in the Soil)",
+		  "file": "Mother Herb Chant (Roots in the Soil).mp3",
+		  "image": "Mother Herb Chant (Roots in the Soil).jpg",
+		  "genre": "Reggae",
 		  "duration": "3:57"
 		},
 		{
@@ -979,7 +979,7 @@
 		  "title": "Roots Run Deep",
 		  "file": "Roots Run Deep.mp3",
 		  "image": "Roots Run Deep.jpg",
-		  "genre": "Roots Reggae",
+		  "genre": "Reggae",
 		  "duration": "4:12"
 		},
 		{
@@ -987,7 +987,7 @@
 		  "title": "Lion in Zion",
 		  "file": "Lion in Zion.mp3",
 		  "image": "Lion in Zion.jpg",
-		  "genre": "Steppers Reggae",
+		  "genre": "Reggae",
 		  "duration": "3:33"
 		},
 		{
@@ -995,7 +995,7 @@
 		  "title": "Irie Everyday",
 		  "file": "Irie Everyday.mp3",
 		  "image": "Irie Everyday.jpg",
-		  "genre": "Lovers Rock",
+		  "genre": "Reggae",
 		  "duration": "3:20"
 		},
 		{
@@ -1003,7 +1003,7 @@
 		  "title": "Babylon System",
 		  "file": "Babylon System.mp3",
 		  "image": "Babylon System.jpg",
-		  "genre": "Dub Reggae",
+		  "genre": "Reggae",
 		  "duration": "4:05"
 		},
 		{
@@ -1011,7 +1011,7 @@
 		  "title": "Nyabinghi Circle",
 		  "file": "Nyabinghi Circle.mp3",
 		  "image": "Nyabinghi Circle.jpg",
-		  "genre": "Nyabinghi",
+		  "genre": "Reggae",
 		  "duration": "4:23"
 		},
 		{
@@ -1019,7 +1019,7 @@
 		  "title": "Ganja Prayer",
 		  "file": "Ganja Prayer.mp3",
 		  "image": "Ganja Prayer.jpg",
-		  "genre": "Roots Reggae",
+		  "genre": "Reggae",
 		  "duration": "4:01"
 		},
 		{
@@ -1027,7 +1027,7 @@
 		  "title": "Harvest Time Come",
 		  "file": "Harvest Time Come.mp3",
 		  "image": "Harvest Time Come.jpg",
-		  "genre": "Rocksteady",
+		  "genre": "Reggae",
 		  "duration": "3:48"
 		},
 		{
@@ -1035,7 +1035,7 @@
 		  "title": "River Side Reasoning",
 		  "file": "River Side Reasoning.mp3",
 		  "image": "River Side Reasoning.jpg",
-		  "genre": "Acoustic Reggae",
+		  "genre": "Reggae",
 		  "duration": "3:38"
 		},
 		{
@@ -1043,7 +1043,7 @@
 		  "title": "Dubwise Meditation",
 		  "file": "Dubwise Meditation.mp3",
 		  "image": "Dubwise Meditation.jpg",
-		  "genre": "Dub",
+		  "genre": "Reggae",
 		  "duration": "4:42"
 		},
 		{
@@ -1051,7 +1051,7 @@
 		  "title": "One Love Highway",
 		  "file": "One Love Highway.mp3",
 		  "image": "One Love Highway.jpg",
-		  "genre": "Roots Reggae",
+		  "genre": "Reggae",
 		  "duration": "4:07"
 		}
 	  ]
