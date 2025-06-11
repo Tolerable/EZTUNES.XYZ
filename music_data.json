@@ -940,6 +940,121 @@
 		  "description": "It’s not about starting over — it’s about finishing strong. This time, no one's backing out. We see it through."
 		}
 	  ]
+	},
+	{
+	  "id": "Walk Good, Rastaman",
+	  "title": "Walk Good, Rastaman",
+	  "artist": "GanjaBuddy",
+	  "year": 2025,
+	  "genre": "Roots Reggae",
+	  "albumArt": "Walk Good, Rastaman - Album.jpg",
+	  "description": "A spiritual journey through Rastafari life: roots, faith, unity, herb, and the soulful rhythms of Jamaica.",
+	  "tracks": [
+		{
+		  "trackNumber": 1,
+		  "title": "Walk Good, Rastaman",
+		  "file": "Walk Good, Rastaman.mp3",
+		  "image": "Walk Good, Rastaman.jpg",
+		  "genre": "Roots Reggae",
+		  "duration": "3:45"
+		},
+		{
+		  "trackNumber": 2,
+		  "title": "Blunt Rollin' Rastafarian",
+		  "file": "Blunt Rollin' Rastafarian.mp3",
+		  "image": "Blunt Rollin' Rastafarian.jpg",
+		  "genre": "Roots Reggae",
+		  "duration": "4:02"
+		},
+		{
+		  "trackNumber": 3,
+		  "title": "Chant fi di Mother Herb",
+		  "file": "Chant fi di Mother Herb.mp3",
+		  "image": "Chant fi di Mother Herb.jpg",
+		  "genre": "Roots Reggae",
+		  "duration": "3:57"
+		},
+		{
+		  "trackNumber": 4,
+		  "title": "Roots Run Deep",
+		  "file": "Roots Run Deep.mp3",
+		  "image": "Roots Run Deep.jpg",
+		  "genre": "Roots Reggae",
+		  "duration": "4:12"
+		},
+		{
+		  "trackNumber": 5,
+		  "title": "Lion in Zion",
+		  "file": "Lion in Zion.mp3",
+		  "image": "Lion in Zion.jpg",
+		  "genre": "Steppers Reggae",
+		  "duration": "3:33"
+		},
+		{
+		  "trackNumber": 6,
+		  "title": "Irie Everyday",
+		  "file": "Irie Everyday.mp3",
+		  "image": "Irie Everyday.jpg",
+		  "genre": "Lovers Rock",
+		  "duration": "3:20"
+		},
+		{
+		  "trackNumber": 7,
+		  "title": "Babylon System",
+		  "file": "Babylon System.mp3",
+		  "image": "Babylon System.jpg",
+		  "genre": "Dub Reggae",
+		  "duration": "4:05"
+		},
+		{
+		  "trackNumber": 8,
+		  "title": "Nyabinghi Circle",
+		  "file": "Nyabinghi Circle.mp3",
+		  "image": "Nyabinghi Circle.jpg",
+		  "genre": "Nyabinghi",
+		  "duration": "4:23"
+		},
+		{
+		  "trackNumber": 9,
+		  "title": "Ganja Prayer",
+		  "file": "Ganja Prayer.mp3",
+		  "image": "Ganja Prayer.jpg",
+		  "genre": "Roots Reggae",
+		  "duration": "4:01"
+		},
+		{
+		  "trackNumber": 10,
+		  "title": "Harvest Time Come",
+		  "file": "Harvest Time Come.mp3",
+		  "image": "Harvest Time Come.jpg",
+		  "genre": "Rocksteady",
+		  "duration": "3:48"
+		},
+		{
+		  "trackNumber": 11,
+		  "title": "River Side Reasoning",
+		  "file": "River Side Reasoning.mp3",
+		  "image": "River Side Reasoning.jpg",
+		  "genre": "Acoustic Reggae",
+		  "duration": "3:38"
+		},
+		{
+		  "trackNumber": 12,
+		  "title": "Dubwise Meditation",
+		  "file": "Dubwise Meditation.mp3",
+		  "image": "Dubwise Meditation.jpg",
+		  "genre": "Dub",
+		  "duration": "4:42"
+		},
+		{
+		  "trackNumber": 13,
+		  "title": "One Love Highway",
+		  "file": "One Love Highway.mp3",
+		  "image": "One Love Highway.jpg",
+		  "genre": "Roots Reggae",
+		  "duration": "4:07"
+		}
+	  ]
 	}
   ]
 }
