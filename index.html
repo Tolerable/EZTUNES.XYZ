@@ -3451,12 +3451,12 @@
 				// Decode the album parameter to handle spaces and special characters
 				const decodedAlbumId = decodeURIComponent(albumParam);
 				
-				// Find the album with exact match
-				const album = musicData.albums.find(a => a.id === decodedAlbumId);
+				// Find the album with exact match (try both id and title)
+				const album = musicData.albums.find(a => a.id === decodedAlbumId || a.title === decodedAlbumId);
 				
 				if (album) {
 					setTimeout(() => {
-						showAlbumDetail(decodedAlbumId);
+						showAlbumDetail(album.id);  // Use album.id here, not decodedAlbumId
 						showNotification(`Viewing shared album: "${album.title}"`, 'success');
 					}, 500);
 				} else {
