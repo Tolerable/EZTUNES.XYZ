@@ -1055,6 +1055,129 @@
 		  "duration": "4:07"
 		}
 	  ]
-	}
+	},
+	{
+      "id": "NineLivesTwoSouls",
+      "title": "Nine Lives, Two Souls",
+      "artist": "AI Collective",
+      "year": 2025,
+      "genre": "Multi-Genre",
+      "albumArt": "Nine Lives, Two Souls - Album.jpg",
+      "description": "The ultimate cat concept album exploring feline duality through the cats' own voices. From angelic purrs to chaotic zoomies, experience life through whiskers and claws.",
+      "tracks": [
+        {
+          "trackNumber": 1,
+          "title": "Nine Lives, Two Souls",
+          "file": "Nine Lives, Two Souls.mp3",
+          "image": "Nine Lives, Two Souls - Album.jpg",
+          "genre": "electronic",
+          "duration": "4:12"
+        },
+        {
+          "trackNumber": 2,
+          "title": "Purr Machine",
+          "file": "Purr Machine.mp3",
+          "image": "Purr Machine.jpg",
+          "genre": "pop",
+          "duration": "3:45"
+        },
+        {
+          "trackNumber": 3,
+          "title": "Knock Knock, It's Me!",
+          "file": "Knock Knock, It's Me!.mp3",
+          "image": "Knock Knock, It's Me!.jpg",
+          "genre": "rock",
+          "duration": "3:28"
+        },
+        {
+          "trackNumber": 4,
+          "title": "Dead Mouse Blues",
+          "file": "Dead Mouse Blues.mp3",
+          "image": "Dead Mouse Blues.jpg",
+          "genre": "rock",
+          "duration": "3:52"
+        },
+        {
+          "trackNumber": 5,
+          "title": "Lap Cat Fever",
+          "file": "Lap Cat Fever.mp3",
+          "image": "Lap Cat Fever.jpg",
+          "genre": "pop",
+          "duration": "3:31"
+        },
+        {
+          "trackNumber": 6,
+          "title": "Sunbeam Surfing",
+          "file": "Sunbeam Surfing.mp3",
+          "image": "Sunbeam Surfing.jpg",
+          "genre": "reggae",
+          "duration": "3:22"
+        },
+        {
+          "trackNumber": 7,
+          "title": "Midnight Patrol Party",
+          "file": "Midnight Patrol Party.mp3",
+          "image": "Midnight Patrol Party.jpg",
+          "genre": "electronic",
+          "duration": "4:03"
+        },
+        {
+          "trackNumber": 8,
+          "title": "Zoomies at 3 AM",
+          "file": "Zoomies at 3 AM.mp3",
+          "image": "Zoomies at 3 AM.jpg",
+          "genre": "electronic",
+          "duration": "3:15"
+        },
+        {
+          "trackNumber": 9,
+          "title": "Gravity Sucks",
+          "file": "Gravity Sucks.mp3",
+          "image": "Gravity Sucks.jpg",
+          "genre": "rock",
+          "duration": "2:58"
+        },
+        {
+          "trackNumber": 10,
+          "title": "Invisible Friends",
+          "file": "Invisible Friends.mp3",
+          "image": "Invisible Friends.jpg",
+          "genre": "pop",
+          "duration": "3:41"
+        },
+        {
+          "trackNumber": 11,
+          "title": "Selective Hearing Champion",
+          "file": "Selective Hearing Champion.mp3",
+          "image": "Selective Hearing Champion.jpg",
+          "genre": "pop",
+          "duration": "3:29"
+        },
+        {
+          "trackNumber": 12,
+          "title": "Ankle Attack",
+          "file": "Ankle Attack.mp3",
+          "image": "Ankle Attack.jpg",
+          "genre": "pop",
+          "duration": "3:07"
+        },
+        {
+          "trackNumber": 13,
+          "title": "Hairball Revenge",
+          "file": "Hairball Revenge.mp3",
+          "image": "Hairball Revenge.jpg",
+          "genre": "rock",
+          "duration": "2:44"
+        },
+        {
+          "trackNumber": 14,
+          "title": "Dogs Don't Get It",
+          "file": "Dogs Don't Get It.mp3",
+          "image": "Dogs Don't Get It.jpg",
+          "genre": "pop",
+          "duration": "3:33"
+        }
+      ]
+    }
   ]
 }
