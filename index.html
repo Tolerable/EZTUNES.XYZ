@@ -3456,8 +3456,8 @@
 				
 				if (album) {
 					setTimeout(() => {
-						showAlbumDetail(album.id);  // Use album.id here, not decodedAlbumId
-						showNotification(`Viewing shared album: "${album.title}"`, 'success');
+						playAlbum(album.id);
+						showNotification(`Loading shared album: "${album.title}"`, 'success');
 					}, 500);
 				} else {
 					showNotification(`Album "${decodedAlbumId}" not found`, 'error');
