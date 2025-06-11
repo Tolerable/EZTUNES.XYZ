@@ -2046,7 +2046,7 @@
 								<span>${totalDuration}</span>
 							</div>
 							<div style="margin-top: 1rem;">
-								<button class="share-btn" onclick="event.stopPropagation(); shareAlbum('${album.id}')">🔗 Share Album</button>
+								<button class="share-btn" onclick="event.stopPropagation(); shareAlbum('${album.id.replace(/'/g, "\\'")}')">🔗 Share Album</button>
 							</div>
 						</div>
 					</div>
@@ -3452,7 +3452,7 @@
 				const decodedAlbumId = decodeURIComponent(albumParam);
 				
 				// Find the album with exact match (try both id and title)
-				const album = musicData.albums.find(a => a.id === decodedAlbumId;
+				const album = musicData.albums.find(a => a.id === decodedAlbumId || a.title === decodedAlbumId);
 				
 				if (album) {
 					setTimeout(() => {
