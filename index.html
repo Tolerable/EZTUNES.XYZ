@@ -3265,9 +3265,11 @@
 			document.getElementById('facebookShare').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
 			document.getElementById('whatsappShare').href = `https://wa.me/?text=${encodeURIComponent(text + ' ' + shareUrl)}`;
 			document.getElementById('redditShare').href = `https://reddit.com/submit?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(text)}`;
-			document.getElementById('discordCopyBtn').onclick = (e) => {
+			document.getElementById('discordCopyBtn').onclick = function(e) {
 				e.preventDefault();
+				e.stopPropagation();
 				copyDiscordFormat(song, shareUrl);
+				return false;
 			};
 			
 			document.getElementById('shareModal').classList.add('active');
@@ -3416,11 +3418,20 @@
 					}, 1000);
 				}
 			} else if (albumParam) {
-				// Show album detail view
-				setTimeout(() => {
-					showAlbumDetail(albumParam);
-					showNotification(`Viewing shared album`, 'success');
-				}, 500);
+				// Decode the album parameter to handle spaces and special characters
+				const decodedAlbumId = decodeURIComponent(albumParam);
+				
+				// Find the album with exact match
+				const album = musicData.albums.find(a => a.id === decodedAlbumId);
+				
+				if (album) {
+					setTimeout(() => {
+						showAlbumDetail(decodedAlbumId);
+						showNotification(`Viewing shared album: "${album.title}"`, 'success');
+					}, 500);
+				} else {
+					showNotification(`Album "${decodedAlbumId}" not found`, 'error');
+				}
 			} else if (playlistParam) {
 				// Handle shared playlist
 				setTimeout(() => {
