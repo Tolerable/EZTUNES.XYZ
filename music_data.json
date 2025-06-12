@@ -465,7 +465,15 @@
 		  "image": "Power of the Tism.jpg",
 		  "genre": "rock",
 		  "duration": "1:37"
-		}
+		},
+		{
+		  "trackNumber": 15,
+		  "title": "Zooming Shroomies",
+		  "file": "Zooming Shroomies.mp3",
+		  "image": "Zooming Shroomies.jpg",
+		  "genre": "pop",
+		  "duration": "2:08"
+		}		
 	  ]
 	},
 	{
