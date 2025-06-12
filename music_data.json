@@ -473,6 +473,14 @@
 		  "image": "Zooming Shroomies.jpg",
 		  "genre": "pop",
 		  "duration": "2:08"
+		},
+		{
+		  "trackNumber": 16,
+		  "title": "Inked",
+		  "file": "Inked.mp3",
+		  "image": "Inked.jpg",
+		  "genre": "pop",
+		  "duration": "3:24"
 		}		
 	  ]
 	},
