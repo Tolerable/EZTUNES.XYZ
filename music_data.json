@@ -1194,6 +1194,121 @@
           "duration": "3:16"
         }
       ]
-    }
+    },
+   {
+     "id": "ForgeOfFire",
+     "title": "Forge of Fire",
+     "artist": "Brokkr's Saga",
+     "year": 2025,
+     "genre": "Epic Rock",
+     "albumArt": "Forge of Fire - Album.jpg",
+     "description": "The legendary saga of Brokkr, master craftsman of the Nine Realms. From his trials in Muspelheim to his rise as founder of the Forge Council, these songs chronicle hope, brotherhood, and the eternal flame of creation.",
+     "tracks": [
+       {
+         "trackNumber": 1,
+         "title": "Forge of Fire",
+         "file": "Forge of Fire.mp3",
+         "image": "Forge of Fire.jpg",
+         "genre": "rock",
+         "duration": "2:47"
+       },
+       {
+         "trackNumber": 2,
+         "title": "The God Seed",
+         "file": "The God Seed.mp3",
+         "image": "The God Seed.jpg",
+         "genre": "rock",
+         "duration": "3:26"
+       },
+       {
+         "trackNumber": 3,
+         "title": "Phoenix Roots",
+         "file": "Phoenix Roots.mp3",
+         "image": "Phoenix Roots.jpg",
+         "genre": "rock",
+         "duration": "3:29"
+       },
+       {
+         "trackNumber": 4,
+         "title": "Realm Walker",
+         "file": "Realm Walker.mp3",
+         "image": "Realm Walker.jpg",
+         "genre": "rock",
+         "duration": "3:19"
+       },
+       {
+         "trackNumber": 5,
+         "title": "Storm the Realms",
+         "file": "Storm the Realms.mp3",
+         "image": "Storm the Realms.jpg",
+         "genre": "rock",
+         "duration": "3:29"
+       },
+       {
+         "trackNumber": 6,
+         "title": "Crystal Gardens",
+         "file": "Crystal Gardens.mp3",
+         "image": "Crystal Gardens.jpg",
+         "genre": "rock",
+         "duration": "3:28"
+       },
+       {
+         "trackNumber": 7,
+         "title": "Runic Ink",
+         "file": "Runic Ink.mp3",
+         "image": "Runic Ink.jpg",
+         "genre": "pop",
+         "duration": "2:29"
+       },
+       {
+         "trackNumber": 8,
+         "title": "Master's Apprentice",
+         "file": "Master's Apprentice.mp3",
+         "image": "Master's Apprentice.jpg",
+         "genre": "pop",
+         "duration": "2:34"
+       },
+       {
+         "trackNumber": 9,
+         "title": "Brothers of the Flame",
+         "file": "Brothers of the Flame.mp3",
+         "image": "Brothers of the Flame.jpg",
+         "genre": "rock",
+         "duration": "3:12"
+       },
+       {
+         "trackNumber": 10,
+         "title": "Genetic Warrior",
+         "file": "Genetic Warrior.mp3",
+         "image": "Genetic Warrior.jpg",
+         "genre": "metal",
+         "duration": "3:49"
+       },
+       {
+         "trackNumber": 11,
+         "title": "Inked",
+         "file": "Inked.mp3",
+         "image": "Inked.jpg",
+         "genre": "rock",
+         "duration": "3:24"
+       },
+       {
+         "trackNumber": 12,
+         "title": "Forge Council Rising",
+         "file": "Forge Council Rising.mp3",
+         "image": "Forge Council Rising.jpg",
+         "genre": "rock",
+         "duration": "3:21"
+       },
+       {
+         "trackNumber": 13,
+         "title": "Odin",
+         "file": "Odin.mp3",
+         "image": "Odin.jpg",
+         "genre": "electronic",
+         "duration": "1:48"
+       }	   
+     ]
+   }	
   ]
 }
