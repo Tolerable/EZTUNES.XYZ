@@ -1284,78 +1284,122 @@
          "genre": "ambient",
          "duration": "1:48"
        }	   
-     ]
-   },
+      ]
+    },
 	{
-	  "albumId": "Magic and Wonder",
-	  "albumTitle": "Magic & Wonder",
-	  "tracks": {
-		"1": {
+	  "id": "Magic and Wonder",
+	  "title": "Magic & Wonder",
+	  "artist": "AI Collective",
+	  "year": 2025,
+	  "genre": "Children's",
+	  "albumArt": "Magic and Wonder - Album.jpg",
+	  "description": "A delightful collection of imaginative songs for children and families. From adventure tales to gentle lullabies, these songs spark creativity and wonder while providing music that parents won't mind hearing on repeat during car rides, story time, and quiet moments.",
+	  "tracks": [
+		{
+		  "trackNumber": 1,
 		  "title": "Adventure Starts Today",
-		  "hasLyrics": true,
+		  "file": "Adventure Starts Today.mp3",
+		  "image": "Adventure Starts Today.jpg",
+		  "genre": "folk",
 		  "duration": "2:42"
 		},
-		"2": {
-		  "title": "Captain Jellybean's Ship", 
-		  "hasLyrics": true,
+		{
+		  "trackNumber": 2,
+		  "title": "Captain Jellybean's Ship",
+		  "file": "Captain Jellybean's Ship.mp3",
+		  "image": "Captain Jellybean's Ship.jpg",
+		  "genre": "folk",
 		  "duration": "2:17"
 		},
-		"3": {
+		{
+		  "trackNumber": 3,
 		  "title": "Dinosaur Dance Party",
-		  "hasLyrics": true,
+		  "file": "Dinosaur Dance Party.mp3",
+		  "image": "Dinosaur Dance Party.jpg",
+		  "genre": "pop",
 		  "duration": "2:20"
 		},
-		"4": {
+		{
+		  "trackNumber": 4,
 		  "title": "Sleepy Moon Lullaby",
-		  "hasLyrics": true,
+		  "file": "Sleepy Moon Lullaby.mp3",
+		  "image": "Sleepy Moon Lullaby.jpg",
+		  "genre": "ambient",
 		  "duration": "2:24"
 		},
-		"5": {
+		{
+		  "trackNumber": 5,
 		  "title": "Rainbow Soup",
-		  "hasLyrics": true,
+		  "file": "Rainbow Soup.mp3",
+		  "image": "Rainbow Soup.jpg",
+		  "genre": "pop",
 		  "duration": "1:51"
 		},
-		"6": {
+		{
+		  "trackNumber": 6,
 		  "title": "My Robot Friend",
-		  "hasLyrics": true,
+		  "file": "My Robot Friend.mp3",
+		  "image": "My Robot Friend.jpg",
+		  "genre": "electronic",
 		  "duration": "2:31"
 		},
-		"7": {
+		{
+		  "trackNumber": 7,
 		  "title": "Under the Sea Parade",
-		  "hasLyrics": true,
+		  "file": "Under the Sea Parade.mp3",
+		  "image": "Under the Sea Parade.jpg",
+		  "genre": "pop",
 		  "duration": "2:07"
 		},
-		"8": {
+		{
+		  "trackNumber": 8,
 		  "title": "Magic Garden",
-		  "hasLyrics": true,
+		  "file": "Magic Garden.mp3",
+		  "image": "Magic Garden.jpg",
+		  "genre": "folk",
 		  "duration": "2:02"
 		},
-		"9": {
+		{
+		  "trackNumber": 9,
 		  "title": "Super Kid",
-		  "hasLyrics": true,
+		  "file": "Super Kid.mp3",
+		  "image": "Super Kid.jpg",
+		  "genre": "rock",
 		  "duration": "2:09"
 		},
-		"10": {
+		{
+		  "trackNumber": 10,
 		  "title": "Animal Orchestra",
-		  "hasLyrics": true,
+		  "file": "Animal Orchestra.mp3",
+		  "image": "Animal Orchestra.jpg",
+		  "genre": "classical",
 		  "duration": "1:14"
 		},
-		"11": {
+		{
+		  "trackNumber": 11,
 		  "title": "Dreamland Express",
-		  "hasLyrics": true,
+		  "file": "Dreamland Express.mp3",
+		  "image": "Dreamland Express.jpg",
+		  "genre": "folk",
 		  "duration": "2:19"
 		},
-		"12": {
+		{
+		  "trackNumber": 12,
 		  "title": "Bubble Machine",
-		  "hasLyrics": true,
+		  "file": "Bubble Machine.mp3",
+		  "image": "Bubble Machine.jpg",
+		  "genre": "pop",
 		  "duration": "2:40"
 		},
-		"13": {
+		{
+		  "trackNumber": 13,
 		  "title": "Goodnight, Little Star",
-		  "hasLyrics": true,
+		  "file": "Goodnight, Little Star.mp3",
+		  "image": "Goodnight, Little Star.jpg",
+		  "genre": "ambient",
 		  "duration": "3:17"
 		}
-	  }
-	}   
+	  ]
+	}	
   ]
 }
