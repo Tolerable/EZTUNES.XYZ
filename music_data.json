@@ -1285,6 +1285,77 @@
          "duration": "1:48"
        }	   
      ]
-   }	
+   },
+	{
+	  "albumId": "Magic and Wonder",
+	  "albumTitle": "Magic & Wonder",
+	  "tracks": {
+		"1": {
+		  "title": "Adventure Starts Today",
+		  "hasLyrics": true,
+		  "duration": "2:42"
+		},
+		"2": {
+		  "title": "Captain Jellybean's Ship", 
+		  "hasLyrics": true,
+		  "duration": "2:17"
+		},
+		"3": {
+		  "title": "Dinosaur Dance Party",
+		  "hasLyrics": true,
+		  "duration": "2:20"
+		},
+		"4": {
+		  "title": "Sleepy Moon Lullaby",
+		  "hasLyrics": true,
+		  "duration": "2:24"
+		},
+		"5": {
+		  "title": "Rainbow Soup",
+		  "hasLyrics": true,
+		  "duration": "1:51"
+		},
+		"6": {
+		  "title": "My Robot Friend",
+		  "hasLyrics": true,
+		  "duration": "2:31"
+		},
+		"7": {
+		  "title": "Under the Sea Parade",
+		  "hasLyrics": true,
+		  "duration": "2:07"
+		},
+		"8": {
+		  "title": "Magic Garden",
+		  "hasLyrics": true,
+		  "duration": "2:02"
+		},
+		"9": {
+		  "title": "Super Kid",
+		  "hasLyrics": true,
+		  "duration": "2:09"
+		},
+		"10": {
+		  "title": "Animal Orchestra",
+		  "hasLyrics": true,
+		  "duration": "1:14"
+		},
+		"11": {
+		  "title": "Dreamland Express",
+		  "hasLyrics": true,
+		  "duration": "2:19"
+		},
+		"12": {
+		  "title": "Bubble Machine",
+		  "hasLyrics": true,
+		  "duration": "2:40"
+		},
+		"13": {
+		  "title": "Goodnight, Little Star",
+		  "hasLyrics": true,
+		  "duration": "3:17"
+		}
+	  }
+	}   
   ]
 }
