@@ -380,14 +380,6 @@
 		},
 		{
 		  "trackNumber": 4,
-		  "title": "Forge of Fire",
-		  "file": "Forge of Fire.mp3",
-		  "image": "Forge of Fire.jpg",
-		  "genre": "metal",
-		  "duration": "2:17"
-		},
-		{
-		  "trackNumber": 5,
 		  "title": "Gloop's World",
 		  "file": "Gloop's World.mp3",
 		  "image": "Gloop's World.jpg",
@@ -395,7 +387,7 @@
 		  "duration": "1:50"
 		},
 		{
-		  "trackNumber": 6,
+		  "trackNumber": 5,
 		  "title": "Hash Hole Heaven",
 		  "file": "Hash Hole Heaven.mp3",
 		  "image": "Hash Hole Heaven.jpg",
@@ -403,7 +395,7 @@
 		  "duration": "2:46"
 		},
 		{
-		  "trackNumber": 7,
+		  "trackNumber": 6,
 		  "title": "I Hate Music",
 		  "file": "I Hate Music.mp3",
 		  "image": "I Hate Music.jpg",
@@ -411,7 +403,7 @@
 		  "duration": "2:28"
 		},
 		{
-		  "trackNumber": 8,
+		  "trackNumber": 7,
 		  "title": "Lung Bash",
 		  "file": "Lung Bash.mp3",
 		  "image": "Lung Bash.jpg",
@@ -419,7 +411,7 @@
 		  "duration": "3:35"
 		},
 		{
-		  "trackNumber": 9,
+		  "trackNumber": 8,
 		  "title": "PH Lockout Blues",
 		  "file": "PH Lockout Blues.mp3",
 		  "image": "PH Lockout Blues.jpg",
@@ -427,7 +419,7 @@
 		  "duration": "3:27"
 		},
 		{
-		  "trackNumber": 10,
+		  "trackNumber": 9,
 		  "title": "Rent Time Blues",
 		  "file": "Rent Time Blues.mp3",
 		  "image": "Rent Time Blues.jpg",
@@ -435,7 +427,7 @@
 		  "duration": "3:22"
 		},
 		{
-		  "trackNumber": 11,
+		  "trackNumber": 10,
 		  "title": "Sweetleaf Bondage",
 		  "file": "Sweetleaf Bondage.mp3",
 		  "image": "Sweetleaf Bondage.jpg",
@@ -443,15 +435,7 @@
 		  "duration": "3:56"
 		},
 		{
-		  "trackNumber": 12,
-		  "title": "The God Seed",
-		  "file": "The God Seed.mp3",
-		  "image": "The God Seed.jpg",
-		  "genre": "rock",
-		  "duration": "3:26"
-		},
-		{
-		  "trackNumber": 13,
+		  "trackNumber": 11,
 		  "title": "Recording Studio [LOST TAPES]",
 		  "file": "Recording Studio [LOST TAPES].mp3",
 		  "image": "Recording Studio [LOST TAPES].jpg",
@@ -459,7 +443,7 @@
 		  "duration": "1:37"
 		},
 		{
-		  "trackNumber": 14,
+		  "trackNumber": 12,
 		  "title": "Power of the 'Tism",
 		  "file": "Power of the Tism.mp3",
 		  "image": "Power of the Tism.jpg",
@@ -467,21 +451,13 @@
 		  "duration": "1:37"
 		},
 		{
-		  "trackNumber": 15,
+		  "trackNumber": 13,
 		  "title": "Zooming Shroomies",
 		  "file": "Zooming Shroomies.mp3",
 		  "image": "Zooming Shroomies.jpg",
 		  "genre": "pop",
 		  "duration": "2:08"
 		},
-		{
-		  "trackNumber": 16,
-		  "title": "Inked",
-		  "file": "Inked.mp3",
-		  "image": "Inked.jpg",
-		  "genre": "pop",
-		  "duration": "3:24"
-		}		
 	  ]
 	},
 	{
