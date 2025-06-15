@@ -1400,6 +1400,121 @@
 		  "duration": "3:17"
 		}
 	  ]
+	},
+	{
+	  "id": "Time Capsule",
+	  "title": "Time Capsule",
+	  "artist": "AI Collective",
+	  "year": 2025,
+	  "genre": "Pop",
+	  "albumArt": "Time Capsule - Album.jpg",
+	  "description": "Step into a musical time machine! 'Time Capsule' whisks you through a century of catchy tunes, as each song celebrates the sound and spirit of a different decade. From jazz age jams to disco fever, grunge rebellion, and beyond, this album is a vibrant, nostalgic celebration of how music timelessly captures our collective story.",
+	  "tracks": [
+		{
+		  "trackNumber": 1,
+		  "title": "Time Capsule",
+		  "file": "Time Capsule.mp3",
+		  "image": "Time Capsule.jpg",
+		  "genre": "pop",
+		  "duration": "2:51"
+		},
+		{
+		  "trackNumber": 2,
+		  "title": "Roaring 20s Redux",
+		  "file": "Roaring 20s Redux.mp3",
+		  "image": "Roaring 20s Redux.jpg",
+		  "genre": "jazz",
+		  "duration": "4:03"
+		},
+		{
+		  "trackNumber": 3,
+		  "title": "Jumpin' Jive (Lucky 30s)",
+		  "file": "Jumpin' Jive (Lucky 30s).mp3",
+		  "image": "Jumpin' Jive (Lucky 30s).jpg",
+		  "genre": "jazz",
+		  "duration": "3:12"
+		},
+		{
+		  "trackNumber": 4,
+		  "title": "Victory Stomp (40s)",
+		  "file": "Victory Stomp (40s).mp3",
+		  "image": "Victory Stomp (40s).jpg",
+		  "genre": "big band",
+		  "duration": "2:44"
+		},
+		{
+		  "trackNumber": 5,
+		  "title": "Sock Hop Serenade (50s)",
+		  "file": "Sock Hop Serenade (50s).mp3",
+		  "image": "Sock Hop Serenade (50s).jpg",
+		  "genre": "rock",
+		  "duration": "3:19"
+		},
+		{
+		  "trackNumber": 6,
+		  "title": "Flower Groove (60s)",
+		  "file": "Flower Groove (60s).mp3",
+		  "image": "Flower Groove (60s).jpg",
+		  "genre": "folk",
+		  "duration": "3:14"
+		},
+		{
+		  "trackNumber": 7,
+		  "title": "Disco Inferno (70s Fever)",
+		  "file": "Disco Inferno (70s Fever).mp3",
+		  "image": "Disco Inferno (70s Fever).jpg",
+		  "genre": "disco",
+		  "duration": "3:10"
+		},
+		{
+		  "trackNumber": 8,
+		  "title": "Neon Nights (Electric 80s)",
+		  "file": "Neon Nights (Electric 80s).mp3",
+		  "image": "Neon Nights (Electric 80s).jpg",
+		  "genre": "electronic",
+		  "duration": "3:24"
+		},
+		{
+		  "trackNumber": 9,
+		  "title": "Grunge & Flannel (90s Nostalgia)",
+		  "file": "Grunge & Flannel (90s Nostalgia).mp3",
+		  "image": "Grunge & Flannel (90s Nostalgia).jpg",
+		  "genre": "rock",
+		  "duration": "2:43"
+		},
+		{
+		  "trackNumber": 10,
+		  "title": "Dot Com Dreams (Y2K Millennium)",
+		  "file": "Dot Com Dreams (Y2K Millennium).mp3",
+		  "image": "Dot Com Dreams (Y2K Millennium).jpg",
+		  "genre": "pop",
+		  "duration": "4:55"
+		},
+		{
+		  "trackNumber": 11,
+		  "title": "Viral Vibes (2010s)",
+		  "file": "Viral Vibes (2010s).mp3",
+		  "image": "Viral Vibes (2010s).jpg",
+		  "genre": "hip hop",
+		  "duration": "2:35"
+		},
+		{
+		  "trackNumber": 12,
+		  "title": "Homebody Anthem (2020s New Normal)",
+		  "file": "Homebody Anthem (2020s New Normal).mp3",
+		  "image": "Homebody Anthem (2020s New Normal).jpg",
+		  "genre": "folk",
+		  "duration": "3:19"
+		},
+		{
+		  "trackNumber": 13,
+		  "title": "Back to the Future (Outro)",
+		  "file": "Back to the Future (Outro).mp3",
+		  "image": "Back to the Future (Outro).jpg",
+		  "genre": "pop",
+		  "duration": "3:12"
+		}
+	  ]
 	}	
   ]
 }
