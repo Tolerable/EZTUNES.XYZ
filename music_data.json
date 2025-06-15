@@ -1515,6 +1515,161 @@
 		  "duration": "3:12"
 		}
 	  ]
+	},
+	{
+	  "id": "Daily-Grace-Collection",
+	  "title": "Daily Grace Collection",
+	  "artist": "AI Collective",
+	  "year": "2024",
+	  "genre": "Worship",
+	  "description": "A collection of peaceful worship songs with vocals, perfect for prayer and meditation",
+	  "albumArt": "DailyGrace.jpg",
+	  "tracks": [
+		{
+		  "trackNumber": 1,
+		  "title": "Rest in His Presence",
+		  "genre": "worship",
+		  "duration": "2:27",
+		  "image": "RestinHisPresence.jpg",
+		  "file": "RestinHisPresence.mp3"
+		},
+		{
+		  "trackNumber": 2,
+		  "title": "Morning Mercies",
+		  "genre": "worship",
+		  "duration": "3:10",
+		  "image": "MorningMercies.jpg",
+		  "file": "MorningMercies.mp3"
+		},
+		{
+		  "trackNumber": 3,
+		  "title": "Healing Waters",
+		  "genre": "worship",
+		  "duration": "3:56",
+		  "image": "HealingWaters.jpg",
+		  "file": "HealingWaters.mp3"
+		},
+		{
+		  "trackNumber": 4,
+		  "title": "Abide in Me",
+		  "genre": "worship",
+		  "duration": "3:27",
+		  "image": "AbideinMe.jpg",
+		  "file": "AbideinMe.mp3"
+		},
+		{
+		  "trackNumber": 5,
+		  "title": "Peace Be Still",
+		  "genre": "worship",
+		  "duration": "4:00",
+		  "image": "PeaceBeStill.jpg",
+		  "file": "PeaceBeStill.mp3"
+		},
+		{
+		  "trackNumber": 6,
+		  "title": "Come Away With Me",
+		  "genre": "worship",
+		  "duration": "3:05",
+		  "image": "ComeAwayWithMe.jpg",
+		  "file": "ComeAwayWithMe.mp3"
+		},
+		{
+		  "trackNumber": 7,
+		  "title": "Breathe on Me",
+		  "genre": "worship",
+		  "duration": "3:10",
+		  "image": "BreatheonMe.jpg",
+		  "file": "BreatheonMe.mp3"
+		},
+		{
+		  "trackNumber": 8,
+		  "title": "In the Quiet",
+		  "genre": "worship",
+		  "duration": "3:10",
+		  "image": "IntheQuiet.jpg",
+		  "file": "IntheQuiet.mp3"
+		},
+		{
+		  "trackNumber": 9,
+		  "title": "Everlasting Arms",
+		  "genre": "worship",
+		  "duration": "3:17",
+		  "image": "EverlastingArms.jpg",
+		  "file": "EverlastingArms.mp3"
+		},
+		{
+		  "trackNumber": 10,
+		  "title": "Light of My Path",
+		  "genre": "worship",
+		  "duration": "3:10",
+		  "image": "LightofMyPath.jpg",
+		  "file": "LightofMyPath.mp3"
+		},
+		{
+		  "trackNumber": 11,
+		  "title": "Still Waters",
+		  "genre": "worship",
+		  "duration": "3:15",
+		  "image": "StillWaters.jpg",
+		  "file": "StillWaters.mp3"
+		},
+		{
+		  "trackNumber": 12,
+		  "title": "Anchor for My Soul",
+		  "genre": "worship",
+		  "duration": "3:10",
+		  "image": "AnchorforMySoul.jpg",
+		  "file": "AnchorforMySoul.mp3"
+		},
+		{
+		  "trackNumber": 13,
+		  "title": "Upon the Mountain",
+		  "genre": "worship",
+		  "duration": "3:13",
+		  "image": "UpontheMountain.jpg",
+		  "file": "UpontheMountain.mp3"
+		},
+		{
+		  "trackNumber": 14,
+		  "title": "Breath of Heaven",
+		  "genre": "worship",
+		  "duration": "3:13",
+		  "image": "BreathofHeaven.jpg",
+		  "file": "BreathofHeaven.mp3"
+		},
+		{
+		  "trackNumber": 15,
+		  "title": "New Every Morning",
+		  "genre": "worship",
+		  "duration": "4:00",
+		  "image": "NewEveryMorning.jpg",
+		  "file": "NewEveryMorning.mp3"
+		},
+		{
+		  "trackNumber": 16,
+		  "title": "Shelter in the Storm",
+		  "genre": "worship",
+		  "duration": "3:19",
+		  "image": "ShelterintheStorm.jpg",
+		  "file": "ShelterintheStorm.mp3"
+		},
+		{
+		  "trackNumber": 17,
+		  "title": "Draw Me Near",
+		  "genre": "worship",
+		  "duration": "3:11",
+		  "image": "DrawMeNear.jpg",
+		  "file": "DrawMeNear.mp3"
+		},
+		{
+		  "trackNumber": 18,
+		  "title": "Shining in the Darkness",
+		  "genre": "worship",
+		  "duration": "3:23",
+		  "image": "ShiningintheDarkness.jpg",
+		  "file": "ShiningintheDarkness.mp3"
+		}
+	  ]
 	}	
   ]
 }
