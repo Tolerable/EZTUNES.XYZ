@@ -1715,8 +1715,8 @@
 		{
 		  "trackNumber": 5,
 		  "title": "Play It Again (Please Don't)",
-		  "file": "Play It Again (Please Don't).mp3",
-		  "image": "Play It Again (Please Don't).jpg",
+		  "file": "Play It Again (Please Dont).mp3",
+		  "image": "Play It Again (Please Dont).jpg",
 		  "genre": "funk",
 		  "duration": "3:12"
 		},
@@ -1755,8 +1755,8 @@
 		{
 		  "trackNumber": 10,
 		  "title": "Don't Make Me Clap",
-		  "file": "Don't Make Me Clap.mp3",
-		  "image": "Don't Make Me Clap.jpg",
+		  "file": "Dont Make Me Clap.mp3",
+		  "image": "Dont Make Me Clap.jpg",
 		  "genre": "rock",
 		  "duration": "3:31"
 		},
