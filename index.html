@@ -370,11 +370,12 @@
     <div class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section">
-                    <h4>Contact</h4>
-                    <a href="mailto:contact@eztunes.xyz">contact@eztunes.xyz</a>
-                    <a href="tel:+1234567890">+1 (234) 567-890</a>
-                </div>
+				<div class="footer-section">
+					<h4>Contact & Support</h4>
+					<a href="mailto:contact@eztunes.xyz">contact@eztunes.xyz</a>
+					<a href="/about.html" target="_blank">About EzTunes</a>
+					<a href="#" onclick="showDonation(); return false;" style="color: #4ecdc4;">💖 Support the Project</a>
+				</div>
                 <div class="footer-section">
                     <h4>Legal</h4>
                     <a href="/privacy.html" target="_blank">Privacy Policy</a>
@@ -816,6 +817,15 @@
 				cancelAnimationFrame(animationId);
 				animationId = null;
 			}
+		}
+
+		// Donation link handler
+		function showDonation() {
+			const baseUrl = 'https://www.pay';
+			const middle = 'pal.com/paypalme/';
+			const end = 'ReverendDrTolerant?country.x=US&locale.x=en_US';
+			const fullUrl = baseUrl + middle + end;
+			window.open(fullUrl, '_blank');
 		}
 
 		function toggleFullscreenViz() {

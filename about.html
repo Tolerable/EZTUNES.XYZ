@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About EzTunes.XYZ - Free AI-Generated Music</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .about-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .about-container h1 {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+        }
+        .about-container h2 {
+            color: #4ecdc4;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .about-container p, .about-container li {
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+        .about-container ul {
+            margin-left: 2rem;
+        }
+        .quote {
+            font-size: 1.2rem;
+            font-style: italic;
+            text-align: center;
+            margin: 2rem 0;
+            color: #4ecdc4;
+        }
+        .support-section {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: rgba(78, 205, 196, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(78, 205, 196, 0.3);
+        }
+        .donate-btn {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            border-radius: 30px;
+            padding: 1rem 2rem;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+        .donate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="logo">
+                <h1><a href="/" style="text-decoration: none; color: inherit;">
+                    <img src="/img/Banner-0001.png" alt="EzTunes.XYZ" style="max-width: 100%; height: auto;" />
+                </a></h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="about-container">
+            <h1>What is EZ Tunes.XYZ?</h1>
+            
+            <p>EZ Tunes.XYZ is a tribute to the real spirit of the web and the joy of music sharing—free, open, and unburdened by paywalls, ads, or hidden agendas.</p>
+            
+            <p>Born from a love of the early, generous days of the internet, EZ Tunes is dedicated to providing a truly welcoming, frictionless space where anyone can listen, discover, and enjoy original AI-powered music and lyrics for free. No account required. No fees. No tracking. No strings attached.</p>
+            
+            <h2>Why?</h2>
+            <p>Because we believe the pleasures of music—curiosity, creativity, and emotional connection—should be available to everyone, not just those with a credit card, a login, or a willingness to wade through endless ads.</p>
+            
+            <p>Our music may be AI-crafted and our vocals digitally generated, but our human motivation is honest: to share creative work, inspire discovery, and revive that genuine sense of discovery, play, and community the web once promised.</p>
+            
+            <p>Each one of our albums and tracks is made possible through creative code, accessible AI tools, and personal investment. The site is built and evolving in real time—open-sourced on GitHub, easy for anyone to remix, and designed to be easy for anyone to use, save playlists, and share joy.</p>
+            
+            <h2>Our Goals:</h2>
+            <ul>
+                <li>Keep music and creative discovery truly free—now and always.</li>
+                <li>Give listeners a calm, creative playground without ads, paywalls, or distractions.</li>
+                <li>Show that passion projects, DIY websites, and open music can matter again.</li>
+                <li>Encourage learning, tinkering, and open collaboration.</li>
+                <li>Bring back the idea that "the internet is for everyone"—and make sure it still means something.</li>
+                <li>Prove that personal projects and new tech (like AI music!) can touch, inspire, and welcome real people.</li>
+            </ul>
+            
+            <p>EZ Tunes.XYZ is powered by love: for open music, for a freer web, and for anyone who just wants to listen, play, explore, or dream—no questions asked.</p>
+            
+            <div class="quote">"No ads, no bull. Just free."</div>
+            
+            <p>If you value that too, you're already one of us.</p>
+            
+            <div class="support-section">
+                <h2>Support the Vision</h2>
+                <p>While EzTunes will always be free, maintaining and expanding this project takes resources. If you'd like to help keep the music playing and support our mission of a free, open web, consider making a donation.</p>
+                <p>Every contribution helps us add more music, improve the site, and keep everything ad-free for everyone.</p>
+                <button class="donate-btn" onclick="showDonation()">💖 Support EzTunes</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Navigation</h4>
+                    <a href="/">← Back to Music</a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 EzTunes.XYZ. All rights reserved. AI-generated music provided free for personal use.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showDonation() {
+            const baseUrl = 'https://www.pay';
+            const middle = 'pal.com/paypalme/';
+            const end = 'ReverendDrTolerant?country.x=US&locale.x=en_US';
+            const fullUrl = baseUrl + middle + end;
+            window.open(fullUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
