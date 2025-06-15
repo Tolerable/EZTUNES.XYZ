@@ -2803,13 +2803,15 @@
 				showNotification('Error loading audio file', 'error');
 			});
 			
-			// Load lyrics if auto-show is enabled
-			if (autoShowLyrics) {
+			// Load lyrics if auto-show is enabled OR if lyrics display is currently showing
+			if (autoShowLyrics || showLyrics) {
 				getCurrentTrackLyrics().then(lyrics => {
 					if (lyrics) {
 						showLyricsDisplay(lyrics);
-					} else {
-						hideLyricsDisplay();
+					} else if (showLyrics) {
+						// If lyrics display is open but no lyrics available, show empty message
+						const lyricsText = document.getElementById('lyricsText');
+						lyricsText.textContent = 'No lyrics available for this track';
 					}
 				});
 			}			
