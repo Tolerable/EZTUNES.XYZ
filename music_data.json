@@ -1670,6 +1670,121 @@
 		  "file": "ShiningintheDarkness.mp3"
 		}
 	  ]
+	},
+	{
+	  "id": "I Hate Music",
+	  "title": "I Hate Music",
+	  "artist": "AI Collective",
+	  "year": 2025,
+	  "genre": "Rock",
+	  "albumArt": "I Hate Music - Album.jpg",
+	  "description": "Ever wanted to turn down the volume on the world? \"I Hate Music\" is the ultimate anti-anthem for everyone who's ever left the dance floor early or found beauty in silence. Packed with tongue-in-cheek hooks, ironic singalongs, and stubborn declarations of independence, this album takes all the things that make music irresistible... and dares to look away.",
+	  "tracks": [
+		{
+		  "trackNumber": 1,
+		  "title": "I Hate Music",
+		  "file": "I Hate Music.mp3",
+		  "image": "I Hate Music.jpg",
+		  "genre": "rock",
+		  "duration": "2:28"
+		},
+		{
+		  "trackNumber": 2,
+		  "title": "Out of Tune Together",
+		  "file": "Out of Tune Together.mp3",
+		  "image": "Out of Tune Together.jpg",
+		  "genre": "rock",
+		  "duration": "3:04"
+		},
+		{
+		  "trackNumber": 3,
+		  "title": "The Chorus Is Overrated",
+		  "file": "The Chorus Is Overrated.mp3",
+		  "image": "The Chorus Is Overrated.jpg",
+		  "genre": "pop",
+		  "duration": "2:59"
+		},
+		{
+		  "trackNumber": 4,
+		  "title": "Dance Floor Exit",
+		  "file": "Dance Floor Exit.mp3",
+		  "image": "Dance Floor Exit.jpg",
+		  "genre": "funk",
+		  "duration": "3:19"
+		},
+		{
+		  "trackNumber": 5,
+		  "title": "Play It Again (Please Don't)",
+		  "file": "Play It Again (Please Don't).mp3",
+		  "image": "Play It Again (Please Don't).jpg",
+		  "genre": "funk",
+		  "duration": "3:12"
+		},
+		{
+		  "trackNumber": 6,
+		  "title": "Chart Topper (But Not for Me)",
+		  "file": "Chart Topper (But Not for Me).mp3",
+		  "image": "Chart Topper (But Not for Me).jpg",
+		  "genre": "rock",
+		  "duration": "3:08"
+		},
+		{
+		  "trackNumber": 7,
+		  "title": "Radio Silence",
+		  "file": "Radio Silence.mp3",
+		  "image": "Radio Silence.jpg",
+		  "genre": "pop",
+		  "duration": "3:07"
+		},
+		{
+		  "trackNumber": 8,
+		  "title": "Headphones Off",
+		  "file": "Headphones Off.mp3",
+		  "image": "Headphones Off.jpg",
+		  "genre": "pop",
+		  "duration": "2:52"
+		},
+		{
+		  "trackNumber": 9,
+		  "title": "Happy for You (Not for Me)",
+		  "file": "Happy for You (Not for Me).mp3",
+		  "image": "Happy for You (Not for Me).jpg",
+		  "genre": "pop",
+		  "duration": "3:08"
+		},
+		{
+		  "trackNumber": 10,
+		  "title": "Don't Make Me Clap",
+		  "file": "Don't Make Me Clap.mp3",
+		  "image": "Don't Make Me Clap.jpg",
+		  "genre": "rock",
+		  "duration": "3:31"
+		},
+		{
+		  "trackNumber": 11,
+		  "title": "Verse, Verse, Done",
+		  "file": "Verse, Verse, Done.mp3",
+		  "image": "Verse, Verse, Done.jpg",
+		  "genre": "folk",
+		  "duration": "2:09"
+		},
+		{
+		  "trackNumber": 12,
+		  "title": "Mute Button Lullaby",
+		  "file": "Mute Button Lullaby.mp3",
+		  "image": "Mute Button Lullaby.jpg",
+		  "genre": "pop",
+		  "duration": "2:44"
+		},
+		{
+		  "trackNumber": 13,
+		  "title": "Skip This Song",
+		  "file": "Skip This Song.mp3",
+		  "image": "Skip This Song.jpg",
+		  "genre": "rock",
+		  "duration": "2:48"
+		}
+	  ]
 	}	
   ]
 }
