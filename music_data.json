@@ -1792,15 +1792,15 @@
       "artist": "AI Collective",
       "year": 2025,
       "genre": "Polka Fusion",
-      "albumArt": "Polka Please - Album.jpg",
+      "albumArt": "Polka, Please - Album.jpg",
       "description": "A wild invitation to the dancefloor, 'Polka, Please' brings together old-world oomph, hip-hop flair, and unpredictable joy. This one-track wonder throws tradition a colorful party hat, boasting madcap energy and irresistible rhythm.",
       "tracks": [
         {
           "trackNumber": 1,
           "title": "Polka, Please",
-          "file": "Polka Please.mp3",
-          "image": "Polka Please.jpg",
-          "genre": "polka fusion",
+          "file": "Polka, Please.mp3",
+          "image": "Polka, Please.jpg",
+          "genre": "polka",
           "duration": "2:27"
         }
       ]
