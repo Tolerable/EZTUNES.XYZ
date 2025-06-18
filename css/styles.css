@@ -1559,10 +1559,10 @@ body {
 }
 
 .album-detail .track-item {
-   display: grid;
-   grid-template-columns: 30px 35px 1fr auto auto auto auto;
-   gap: 1rem;
-   align-items: center;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem;
 }
 
 .track-number {
@@ -2246,10 +2246,42 @@ body {
     }
     
     /* Playlist items mobile fix */
+    /* Playlist mobile - complete redesign */
     .playlist-item {
-        padding: 8px;
+        display: grid;
+        grid-template-columns: 30px 40px 1fr auto;
         gap: 8px;
-        flex-wrap: nowrap;
+        padding: 8px;
+        align-items: center;
+    }
+    
+    /* Always show controls on mobile (no hover) */
+    .playlist-controls-mini {
+        opacity: 1 !important;
+        display: flex !important;
+        order: 4;
+        margin-right: 0;
+    }
+    
+    /* Compact control buttons */
+    .playlist-control-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 0.9rem;
+    }
+    
+    /* Hide duration and star rating to save space */
+    .playlist-duration,
+    .playlist-item .star-rating {
+        display: none;
+    }
+    
+    /* Share button as compact button */
+    .playlist-share {
+        order: 3;
+        margin-right: 8px;
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
     }
     
     .playlist-info {
@@ -2273,11 +2305,6 @@ body {
     }
 
     /* Hide share button text on mobile, show only icon */
-    .playlist-share {
-        font-size: 0;
-        padding: 0.4rem;
-        min-width: auto;
-    }
     
     .playlist-share::before {
         content: "🔗";
@@ -2355,6 +2382,60 @@ body {
     .track-btn {
         font-size: 0.7rem;
         padding: 0.2rem 0.4rem;
+    }
+	
+    /* Album tracks mobile - compact layout */
+    .album-detail .track-item {
+        display: grid;
+        grid-template-columns: 25px 1fr auto auto;
+        gap: 8px;
+        padding: 10px 8px;
+        margin: 4px 0;
+    }
+    
+    /* Track info takes full width */
+    .track-info {
+        grid-column: 2 / -1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    /* Track title inline with duration */
+    .track-title-text {
+        flex: 1;
+        margin-right: 8px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    /* Duration inline, not vertical */
+    .track-duration {
+        flex-shrink: 0;
+        margin: 0;
+        font-size: 0.8rem;
+    }
+    
+    /* Buttons on second row */
+    .track-btn {
+        grid-column: 2;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+    
+    .album-detail .share-btn {
+        grid-column: 3;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+    
+    /* Hide these on mobile */
+    .track-thumbnail,
+    .track-genre,
+    .album-detail .star-rating,
+    .track-actions {
+        display: none !important;
     }	
 }
 
@@ -2559,11 +2640,11 @@ textarea:focus {
 @media (max-width: 480px) {
     .playlist-item {
         padding: 6px;
-        gap: 6px;
+        margin-bottom: 6px;
+        grid-template-columns: 25px 35px 1fr auto;
     }
     
     .playlist-number {
-        min-width: 25px;
         font-size: 0.8rem;
     }
     
@@ -2584,7 +2665,10 @@ textarea:focus {
     
     /* Simplified album tracks */
     .album-detail .track-item {
-        grid-template-columns: 20px 1fr auto;
+        padding: 8px 6px;
+        margin: 2px 0;
+        grid-template-columns: 20px 1fr auto auto;
+        gap: 6px;
     }
     
     .track-thumbnail {
@@ -2593,6 +2677,12 @@ textarea:focus {
     
     .track-actions {
         display: none;
+    }
+
+    .track-btn,
+    .album-detail .share-btn {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.75rem;
     }
     
     .playlist-control-btn {
