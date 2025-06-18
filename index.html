@@ -2754,7 +2754,7 @@
 			
 			// Update the display info to match the actual song
 			document.getElementById('currentTitle').textContent = song.title;
-			document.getElementById('currentGenre').textContent = song.genre.charAt(0).toUpperCase() + song.genre.slice(1);
+			document.getElementById('currentGenre').textContent = `Track ${song.trackNumber} • ${song.genre.charAt(0).toUpperCase() + song.genre.slice(1)}`;
 			document.getElementById('currentDuration').textContent = song.duration;
 			
 			// Update spinning track artwork
