@@ -16,6 +16,11 @@ body {
     line-height: 1.6;
 }
 
+/* Global overflow fix */
+* {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
 /* ===========================
    2. HEADER & NAVIGATION
    =========================== */
@@ -1343,23 +1348,27 @@ body {
 }
 
 .albums-grid {
-   display: grid;
-   grid-template-columns: repeat(4, 280px);
-   justify-content: center;
-   gap: 2rem;
-   margin: 2rem 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    max-width: 1200px;
 }
 
 .album-card {
-   background: rgba(0, 0, 0, 0.4);
-   border-radius: 15px;
-   overflow: hidden;
-   transition: all 0.3s ease;
-   border: 1px solid rgba(255, 255, 255, 0.1);
-   backdrop-filter: blur(10px);
-   cursor: pointer;
-   width: 280px;
-   position: relative;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+    position: relative;
 }
 
 .album-card:hover {
@@ -2113,95 +2122,147 @@ body {
   13. MEDIA QUERIES
   =========================== */
 @media (max-width: 768px) {
-   /* Header & Logo */
-   .logo h1 {
-       font-size: 2rem;
-   }
-   
-   /* Current Song Display */
-   .current-song {
-       flex-direction: column;
-       text-align: center;
-   }
-   
-   .album-artwork-container {
-       flex-direction: column;
-       gap: 1rem;
-   }
-   
-   .album-cover-section {
-       flex-direction: column;
-       text-align: center;
-   }
-   
-   .album-info-display {
-       max-width: none;
-       text-align: center;
-   }
-   
-   .album-cover, 
-   .placeholder-artwork, 
-   .current-artwork {
-       width: 150px;
-       height: 150px;
-   }
-   
-   .album-container {
-       width: 150px;
-       height: 150px;
-   }
-   
-   /* Radio Controls */
-   .radio-controls {
-       flex-wrap: wrap;
-   }
-   
-   /* Song Grid */
-   .song-grid {
-       grid-template-columns: 1fr;
-   }
-   
-   /* Albums */
-   .albums-grid {
-       grid-template-columns: 1fr;
-   }
-   
-   .album-header {
-       flex-direction: column;
-       text-align: center;
-   }
-   
-   .album-header-art {
-       width: 150px;
-       height: 150px;
-       margin: 0 auto;
-   }
-   
-   /* Sidebar */
-   .sidebar {
-       width: 280px;
-       left: -280px;
-   }
-   
-   .content-shifted {
-       margin-left: 0;
-   }
-   
-   .sidebar.open ~ .sidebar-overlay {
-       display: block;
-   }
-   
-   /* Visualizer */
-   .visualizer-container {
-       width: 95%;
-       height: 150px;
-       bottom: 80px;
-   }
-   
-   .visualizer-container.fullscreen {
-width: 100%;
-       height: 100%;
-   }
+    /* Header & Logo */
+    .logo h1 {
+        font-size: 2rem;
+    }
+    
+    /* Container fix */
+    .container {
+        padding: 0 10px;
+    }
+    
+    /* Current Song Display */
+    .current-song {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .album-artwork-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .album-cover-section {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .album-info-display {
+        max-width: none;
+        text-align: center;
+    }
+    
+    .album-cover, 
+    .placeholder-artwork, 
+    .current-artwork {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .album-container {
+        width: 150px;
+        height: 150px;
+    }
+    
+    /* Radio Controls */
+    .radio-controls {
+        flex-wrap: wrap;
+    }
+    
+    /* Control buttons */
+    .control-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Song Grid */
+    .song-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Albums - already responsive now */
+    .albums-grid {
+        grid-template-columns: 1fr;
+        padding: 0 0.5rem;
+    }
+    
+    .album-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .album-header-art {
+        width: 150px;
+        height: 150px;
+        margin: 0 auto;
+    }
+    
+    /* Playlist fixes */
+    .playlist-item {
+        padding: 10px;
+        gap: 10px;
+    }
+    
+    .playlist-info {
+        min-width: 0;
+        flex: 1;
+    }
+    
+    .playlist-title {
+        font-size: 0.9rem;
+    }
+    
+    .playlist-meta {
+        font-size: 0.8rem;
+        min-width: 0;
+    }
+    
+    /* Share buttons */
+    .share-btn {
+        font-size: 0.7rem;
+        padding: 0.4rem 0.6rem;
+    }
+    
+    /* Current song info */
+    .current-info h3 {
+        font-size: 1.3rem;
+    }
+    
+    .current-info p {
+        font-size: 0.9rem;
+    }
+    
+    /* Sidebar */
+    .sidebar {
+        width: 85vw;
+        max-width: 320px;
+        left: -85vw;
+    }
+    
+    .sidebar.open {
+        left: 0;
+    }
+    
+    .content-shifted {
+        margin-left: 0;
+    }
+    
+    .sidebar.open ~ .sidebar-overlay {
+        display: block;
+    }
+    
+    /* Visualizer */
+    .visualizer-container {
+        width: 95%;
+        height: 150px;
+        bottom: 80px;
+    }
+    
+    .visualizer-container.fullscreen {
+        width: 100%;
+        height: 100%;
+    }
 }
 
 /* ===========================
@@ -2399,5 +2460,75 @@ textarea:focus {
            /* Safari specific styles */
        }
    }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+    .playlist-item {
+        gap: 5px;
+        padding: 8px;
+    }
+    
+    .playlist-number {
+        min-width: 25px;
+        font-size: 0.8rem;
+    }
+    
+    .playlist-thumbnail {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .playlist-controls-mini {
+        gap: 0.2rem;
+    }
+    
+    .playlist-control-btn {
+        width: 20px;
+        height: 20px;
+        font-size: 0.7rem;
+    }
+    
+    .playlist-duration {
+        display: none;
+    }
+    
+    .star-rating {
+        display: none;
+    }
+}
+
+/* FireTV and large screens */
+@media (min-width: 1400px) and (max-width: 1920px) {
+    .albums-grid {
+        grid-template-columns: repeat(4, minmax(240px, 1fr));
+        gap: 1.5rem;
+        padding: 0 2rem;
+    }
+    
+    .container {
+        max-width: 1400px;
+        padding: 0 3rem;
+    }
+}
+
+/* TV viewing distance optimization */
+@media (min-width: 1280px) and (min-height: 720px) and (orientation: landscape) {
+    body {
+        font-size: 18px;
+    }
+    
+    .control-btn {
+        padding: 1rem 2rem;
+        font-size: 1.3rem;
+    }
+    
+    .playlist-item {
+        padding: 1rem 1.5rem;
+    }
+    
+    .song-title, .playlist-title {
+        font-size: 1.3rem;
+    }
 }
 </style>   
