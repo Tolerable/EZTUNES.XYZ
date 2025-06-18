@@ -1900,6 +1900,121 @@
 		  "duration": "2:39"
 		}
 	  ]
+	},
+	{
+	  "id": "Steel On Asphalt",
+	  "title": "Steel On Asphalt",
+	  "artist": "AI Collective",
+	  "year": 2025,
+	  "genre": "Americana Trucker",
+	  "albumArt": "Steel On Asphalt - Album.jpg",
+	  "description": "An unfiltered tribute to the long-haul life: grit, pride, fatigue, and the wild poetry of the open road. These tracks pull no punches and salute every mile earned.",
+	  "tracks": [
+		{
+		  "trackNumber": 1,
+		  "title": "Steel On Asphalt",
+		  "file": "Steel On Asphalt.mp3",
+		  "image": "Steel On Asphalt.jpg",
+		  "genre": "americana",
+		  "duration": "3:54"
+		},
+		{
+		  "trackNumber": 2,
+		  "title": "Coffee and Chrome",
+		  "file": "Coffee and Chrome.mp3",
+		  "image": "Coffee and Chrome.jpg",
+		  "genre": "americana",
+		  "duration": "4:04"
+		},
+		{
+		  "trackNumber": 3,
+		  "title": "Smokey's Around the Bend",
+		  "file": "Smokey's Around the Bend.mp3",
+		  "image": "Smokey's Around the Bend.jpg",
+		  "genre": "americana",
+		  "duration": "3:23"
+		},
+		{
+		  "trackNumber": 4,
+		  "title": "Rustbelt Reflections",
+		  "file": "Rustbelt Reflections.mp3",
+		  "image": "Rustbelt Reflections.jpg",
+		  "genre": "americana",
+		  "duration": "3:44"
+		},
+		{
+		  "trackNumber": 5,
+		  "title": "Truck Stop Surfer",
+		  "file": "Truck Stop Surfer.mp3",
+		  "image": "Truck Stop Surfer.jpg",
+		  "genre": "americana",
+		  "duration": "3:13"
+		},
+		{
+		  "trackNumber": 6,
+		  "title": "10-4, Over and Out",
+		  "file": "10-4, Over and Out.mp3",
+		  "image": "10-4, Over and Out.jpg",
+		  "genre": "americana",
+		  "duration": "3:54"
+		},
+		{
+		  "trackNumber": 7,
+		  "title": "Load to Bear",
+		  "file": "Load to Bear.mp3",
+		  "image": "Load to Bear.jpg",
+		  "genre": "americana",
+		  "duration": "3:19"
+		},
+		{
+		  "trackNumber": 8,
+		  "title": "Dispatch Blues",
+		  "file": "Dispatch Blues.mp3",
+		  "image": "Dispatch Blues.jpg",
+		  "genre": "americana",
+		  "duration": "3:29"
+		},
+		{
+		  "trackNumber": 9,
+		  "title": "Broken Sleep",
+		  "file": "Broken Sleep.mp3",
+		  "image": "Broken Sleep.jpg",
+		  "genre": "americana",
+		  "duration": "3:39"
+		},
+		{
+		  "trackNumber": 10,
+		  "title": "Backroad Blessing",
+		  "file": "Backroad Blessing.mp3",
+		  "image": "Backroad Blessing.jpg",
+		  "genre": "americana",
+		  "duration": "3:58"
+		},
+		{
+		  "trackNumber": 11,
+		  "title": "Breaker Breakdown",
+		  "file": "Breaker Breakdown.mp3",
+		  "image": "Breaker Breakdown.jpg",
+		  "genre": "americana",
+		  "duration": "3:22"
+		},
+		{
+		  "trackNumber": 12,
+		  "title": "Black Ice and Blind Curves",
+		  "file": "Black Ice and Blind Curves.mp3",
+		  "image": "Black Ice and Blind Curves.jpg",
+		  "genre": "americana",
+		  "duration": "3:41"
+		},
+		{
+		  "trackNumber": 13,
+		  "title": "End of the Route",
+		  "file": "End of the Route.mp3",
+		  "image": "End of the Route.jpg",
+		  "genre": "americana",
+		  "duration": "4:12"
+		}
+	  ]
 	}	
   ]
 }
