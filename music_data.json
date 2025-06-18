@@ -1786,40 +1786,120 @@
 		}
 	  ]
 	},
-    {
-      "id": "Polka, Please",
-      "title": "Polka, Please",
-      "artist": "AI Collective",
-      "year": 2025,
-      "genre": "Polka Fusion",
-      "albumArt": "Polka, Please - Album.jpg",
-      "description": "A wild invitation to the dancefloor, 'Polka, Please' brings together old-world oomph, hip-hop flair, and unpredictable joy. This one-track wonder throws tradition a colorful party hat, boasting madcap energy and irresistible rhythm.",
-      "tracks": [
-        {
-          "trackNumber": 1,
-          "title": "Polka, Please",
-          "file": "Polka, Please.mp3",
-          "image": "Polka, Please.jpg",
-          "genre": "polka",
-          "duration": "2:27"
-        },
-        {
-          "trackNumber": 2,
-          "title": "Polka Drop",
-          "file": "Polka Drop.mp3",
-          "image": "Polka Drop.jpg",
-          "genre": "polka",
-          "duration": "3:17"
+	{
+	  "id": "Polka, Please",
+	  "title": "Polka, Please",
+	  "artist": "AI Collective",
+	  "year": 2025,
+	  "genre": "Polka Fusion",
+	  "albumArt": "Polka, Please - Album.jpg",
+	  "description": "A wild invitation to the dancefloor, 'Polka, Please' brings together old-world oomph, hip-hop flair, and unpredictable joy. This one-track wonder throws tradition a colorful party hat, boasting madcap energy and irresistible rhythm.",
+	  "tracks": [
+		{
+		  "trackNumber": 1,
+		  "title": "Polka, Please",
+		  "file": "Polka, Please.mp3",
+		  "image": "Polka, Please.jpg",
+		  "genre": "polka",
+		  "duration": "2:27"
 		},
-        {
-          "trackNumber": 3,
-          "title": "Polka Like It's Hot",
-          "file": "Polka Like Its Hot.mp3",
-          "image": "Polka Like Its Hot.jpg",
-          "genre": "polka",
-          "duration": "2:38"
-        }
-      ]
-    }	
+		{
+		  "trackNumber": 2,
+		  "title": "Polka Drop",
+		  "file": "Polka Drop.mp3",
+		  "image": "Polka Drop.jpg",
+		  "genre": "polka",
+		  "duration": "3:17"
+		},
+		{
+		  "trackNumber": 3,
+		  "title": "Polka Like It's Hot",
+		  "file": "Polka Like Its Hot.mp3",
+		  "image": "Polka Like Its Hot.jpg",
+		  "genre": "polka",
+		  "duration": "2:38"
+		},
+		{
+		  "trackNumber": 4,
+		  "title": "Polka Poker Face",
+		  "file": "Polka Poker Face.mp3",
+		  "image": "Polka Poker Face.jpg",
+		  "genre": "polka",
+		  "duration": "2:54"
+		},
+		{
+		  "trackNumber": 5,
+		  "title": "Polka Line Blues",
+		  "file": "Polka Line Blues.mp3",
+		  "image": "Polka Line Blues.jpg",
+		  "genre": "polka",
+		  "duration": "2:58"
+		},
+		{
+		  "trackNumber": 6,
+		  "title": "Polka Shock",
+		  "file": "Polka Shock.mp3",
+		  "image": "Polka Shock.jpg",
+		  "genre": "polka",
+		  "duration": "2:58"
+		},
+		{
+		  "trackNumber": 7,
+		  "title": "Polka Vibration",
+		  "file": "Polka Vibration.mp3",
+		  "image": "Polka Vibration.jpg",
+		  "genre": "polka",
+		  "duration": "2:54"
+		},
+		{
+		  "trackNumber": 8,
+		  "title": "Polka Iron Sabbath",
+		  "file": "Polka Iron Sabbath.mp3",
+		  "image": "Polka Iron Sabbath.jpg",
+		  "genre": "polka",
+		  "duration": "3:57"
+		},
+		{
+		  "trackNumber": 9,
+		  "title": "Polka Over the Rainbow",
+		  "file": "Polka Over the Rainbow.mp3",
+		  "image": "Polka Over the Rainbow.jpg",
+		  "genre": "polka",
+		  "duration": "3:02"
+		},
+		{
+		  "trackNumber": 10,
+		  "title": "Papa's Got a Brand New Polka",
+		  "file": "Papas Got a Brand New Polka.mp3",
+		  "image": "Papas Got a Brand New Polka.jpg",
+		  "genre": "polka",
+		  "duration": "3:13"
+		},
+		{
+		  "trackNumber": 11,
+		  "title": "Born to Polka",
+		  "file": "Born to Polka.mp3",
+		  "image": "Born to Polka.jpg",
+		  "genre": "polka",
+		  "duration": "3:03"
+		},
+		{
+		  "trackNumber": 12,
+		  "title": "Polka In My Boots",
+		  "file": "Polka In My Boots.mp3",
+		  "image": "Polka In My Boots.jpg",
+		  "genre": "polka",
+		  "duration": "2:44"
+		},
+		{
+		  "trackNumber": 13,
+		  "title": "Polka Stardust",
+		  "file": "Polka Stardust.mp3",
+		  "image": "Polka Stardust.jpg",
+		  "genre": "polka",
+		  "duration": "2:39"
+		}
+	  ]
+	}	
   ]
 }
