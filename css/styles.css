@@ -2062,7 +2062,7 @@ body {
 
 .footer-content {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
     margin-bottom: 2rem;
 }
@@ -2132,7 +2132,7 @@ body {
     .logo img {
         width: 100%;
         height: auto;
-        max-height: 120px;
+        max-height: 100%;
     }
     
     /* Fix song cards */
@@ -2143,13 +2143,14 @@ body {
     
     .song-info {
         padding: 1rem;
-        width: 100%;
+        overflow: hidden;
     }
     
     .song-title {
         font-size: 1rem;
-        line-height: 1.2;
-        word-break: break-word;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     
     .song-meta {
@@ -2540,10 +2541,30 @@ textarea:focus {
     .star-rating {
         display: none;
     }
-    /* Footer columns on small screens */
+
+    /* Logo on very small screens */
+    .logo {
+        margin-bottom: 1rem;
+    }
+    
+    .logo img {
+        max-height: 80px;
+    }
+    
+    /* Song cards on very small screens */
+    .song-card {
+        font-size: 0.9rem;
+    }
+    
+    .song-meta {
+        font-size: 0.75rem;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    /* Footer - single column on very small screens */
     .footer-content {
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
+        grid-template-columns: 1fr;
     }
     
     .footer-section h4 {
