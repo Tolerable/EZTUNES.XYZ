@@ -1047,28 +1047,121 @@
 			}
 		}
 
-		function openSidebar() {
-			document.getElementById('sidebar').classList.add('open');
-			document.querySelector('.container').classList.add('content-shifted');
-			renderSavedPlaylists();
+		// Create a TV-friendly playlists modal
+		function showPlaylistsModalForTV() {
+			const modal = document.createElement('div');
+			modal.innerHTML = `
+				<div class="tv-playlists-modal" id="tvPlaylistsModal" style="
+					position: fixed;
+					top: 10%;
+					left: 10%;
+					right: 10%;
+					bottom: 10%;
+					background: rgba(0, 0, 0, 0.95);
+					border: 2px solid rgba(255, 255, 255, 0.3);
+					border-radius: 15px;
+					padding: 2rem;
+					z-index: 10000;
+					overflow-y: auto;
+				">
+					<h2 style="color: #4ecdc4; margin-bottom: 1rem;">Saved Playlists</h2>
+					<button onclick="this.closest('.tv-playlists-modal').remove()" style="
+						position: absolute;
+						top: 1rem;
+						right: 1rem;
+						background: red;
+						border: none;
+						color: white;
+						padding: 0.5rem 1rem;
+						border-radius: 5px;
+						cursor: pointer;
+					">Close</button>
+					<div id="tvPlaylistsList"></div>
+				</div>
+			`;
+			document.body.appendChild(modal);
 			
-			// Only lock body scrolling on mobile devices, NOT on TV
-			if (window.innerWidth < 1280) {
-				document.body.style.overflow = 'hidden';
+			// Copy the playlists content
+			const playlists = Object.values(savedPlaylists);
+			const container = document.getElementById('tvPlaylistsList');
+			
+			if (playlists.length === 0) {
+				container.innerHTML = '<p>No saved playlists yet</p>';
+				return;
 			}
 			
-			// Focus the sidebar for TV navigation
-			setTimeout(() => {
-				document.getElementById('sidebar').focus();
-			}, 100);
+			container.innerHTML = playlists.map(playlist => {
+				return `
+					<div style="
+						background: rgba(255, 255, 255, 0.1);
+						padding: 1rem;
+						margin: 0.5rem 0;
+						border-radius: 10px;
+						cursor: pointer;
+					" onclick="
+						loadPlaylist('${playlist.name}');
+						this.closest('.tv-playlists-modal').remove();
+					">
+						<h3>${playlist.name}</h3>
+						<p>${playlist.trackCount} songs • ${playlist.duration}</p>
+					</div>
+				`;
+			}).join('');
+		}
+
+		function openSidebar() {
+			const isTV = window.innerWidth >= 1280 && window.innerHeight >= 720;
+			
+			if (isTV) {
+				// On TV, check what section was clicked
+				const clickedElement = event?.target;
+				const section = clickedElement?.closest('.sidebar-nav-item')?.textContent || '';
+				
+				if (section.includes('Saved Playlists')) {
+					// Show playlists modal for TV
+					closeSidebar();
+					showPlaylistsModalForTV();
+				} else {
+					// For other sections (Browse, Filters), show regular sidebar
+					document.getElementById('sidebar').classList.add('open');
+					document.querySelector('.container').classList.add('content-shifted');
+					
+					// Hide the saved playlists section on TV since it's broken
+					const playlistSection = document.querySelector('.sidebar-section:last-child');
+					if (playlistSection) {
+						playlistSection.style.display = 'none';
+					}
+				}
+			} else {
+				// Original behavior for non-TV devices
+				document.getElementById('sidebar').classList.add('open');
+				document.querySelector('.container').classList.add('content-shifted');
+				renderSavedPlaylists();
+				
+				// Only lock scrolling on mobile
+				if (window.innerWidth < 768) {
+					document.body.style.overflow = 'hidden';
+				}
+				
+				// Focus sidebar for navigation
+				setTimeout(() => {
+					document.getElementById('sidebar').focus();
+				}, 100);
+			}
 		}
 
 		function closeSidebar() {
 			document.getElementById('sidebar').classList.remove('open');
 			document.querySelector('.container').classList.remove('content-shifted');
 			
-			// ADD THIS: Restore body scrolling
+			// Restore body scrolling
 			document.body.style.overflow = '';
+			
+			// Show the playlists section again if it was hidden
+			const playlistSection = document.querySelector('.sidebar-section:last-child');
+			if (playlistSection) {
+				playlistSection.style.display = '';
+			}
 		}
 
 		// Navigation functions
@@ -1276,7 +1369,7 @@
 			return `${totalMins}:${remainingSecs.toString().padStart(2, '0')}`;
 		}
 
-		// Render saved playlists in sidebar
+		// Render saved playlists in sidebar (only used on non-TV devices now)
 		function renderSavedPlaylists() {
 			const container = document.getElementById('savedPlaylistsList');
 			const playlists = Object.values(savedPlaylists);
@@ -1312,25 +1405,6 @@
 					</div>
 				`;
 			}).join('');
-			
-			// FORCE FIRETV TO RECOGNIZE THE CONTENT
-			const sidebar = document.getElementById('sidebar');
-			const parentSection = container.parentElement;
-			
-			// Force reflow
-			container.style.display = 'none';
-			container.offsetHeight; // Force reflow
-			container.style.display = 'block';
-			
-			// Set explicit height on parent
-			parentSection.style.height = 'auto';
-			parentSection.style.minHeight = '500px';
-			
-			// Force sidebar to recalculate
-			sidebar.style.overflowY = 'hidden';
-			setTimeout(() => {
-				sidebar.style.overflowY = 'scroll';
-			}, 100);
 		}
 
 		function loadPlaylistFromElement(element) {
