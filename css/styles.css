@@ -2653,122 +2653,39 @@ textarea:focus {
    }
 }
 
-/* Small mobile devices */
-@media (max-width: 480px) {
-    .playlist-item {
-        padding: 6px;
-        margin-bottom: 6px;
-        grid-template-columns: 25px 35px 1fr auto;
+/* ===========================
+  22. TV/FIRETV SIDEBAR FIX
+  =========================== */
+@media (min-width: 1280px) and (min-height: 720px) {
+    /* Kill flexbox for saved playlists on TV */
+    .sidebar-section:last-child {
+        position: relative !important;
+        height: 400px !important;
+        display: block !important;
+        flex: none !important;
     }
     
-    .playlist-number {
-        font-size: 0.8rem;
+    #savedPlaylistsList {
+        position: absolute !important;
+        top: 60px !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        height: 340px !important;
+        overflow-y: scroll !important;
+        overflow-x: hidden !important;
+        display: block !important;
+        -webkit-overflow-scrolling: touch !important;
     }
     
-    .playlist-thumbnail {
-        width: 25px;
-        height: 25px;
-        flex-shrink: 0;
+    /* Extra space at bottom for scrolling */
+    #savedPlaylistsList::after {
+        content: '';
+        display: block;
+        height: 100px;
     }
     
-    .playlist-controls-mini {
-        display: none; /* Hide up/down arrows on very small screens */
-    }
-
-    /* Only show play icon and X for remove */
-    .playlist-item:hover .playlist-controls-mini {
-        display: none;
-    }
-    
-    /* Simplified album tracks */
-    .album-detail .track-item {
-        padding: 8px 6px;
-        margin: 2px 0;
-        grid-template-columns: 20px 1fr auto auto;
-        gap: 6px;
-    }
-    
-    .track-thumbnail {
-        display: none;
-    }
-    
-    .track-actions {
-        display: none;
-    }
-
-    .track-btn,
-    .album-detail .share-btn {
-        padding: 0.3rem 0.6rem;
-        font-size: 0.75rem;
-    }
-    
-    .playlist-control-btn {
-        width: 20px;
-        height: 20px;
-        font-size: 0.7rem;
-    }
-    
-    .playlist-duration {
-        display: none;
-    }
-    
-    .star-rating {
-        display: none;
-    }
-
-    /* Logo on very small screens */
-    .logo {
-        margin-bottom: 1rem;
-    }
-    
-    .logo img {
-        max-height: 80px;
-    }
-    
-    /* Song cards on very small screens */
-    .song-card {
-        font-size: 0.9rem;
-    }
-    
-    .song-meta {
-        font-size: 0.75rem;
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    /* Footer - single column on very small screens */
-    .footer-content {
-        grid-template-columns: 1fr;
-    }
-    
-    .footer-section h4 {
-        font-size: 0.9rem;
-    }
-    
-    .footer-section a {
-        font-size: 0.8rem;
-    }	
-}
-
-/* FireTV and large screens */
-@media (min-width: 1400px) and (max-width: 1920px) {
-    .albums-grid {
-        grid-template-columns: repeat(4, minmax(240px, 1fr));
-        gap: 1.5rem;
-        padding: 0 2rem;
-    }
-    
-    .container {
-        max-width: 1400px;
-        padding: 0 3rem;
-    }
-    .footer-content {
-        grid-template-columns: repeat(4, 1fr);
-    }	
-}
-
-/* TV viewing distance optimization */
-@media (min-width: 1280px) and (min-height: 720px) and (orientation: landscape) {
+    /* TV optimizations */
     body {
         font-size: 18px;
     }
@@ -2787,43 +2704,108 @@ textarea:focus {
     }
 }
 
-/* FireTV sidebar fix - force scrollability */
-#savedPlaylistsList {
-    min-height: 200px;
-    padding-bottom: 100px;
-}
-
-/* Override any FireTV-specific rendering issues */
-@media (min-width: 1280px) {
-    .sidebar {
-        overflow-y: scroll !important;
-        -webkit-overflow-scrolling: auto !important;
+/* ===========================
+  23. LARGE SCREENS
+  =========================== */
+@media (min-width: 1400px) and (max-width: 1920px) {
+    .albums-grid {
+        grid-template-columns: repeat(4, minmax(240px, 1fr));
+        gap: 1.5rem;
+        padding: 0 2rem;
     }
     
-    .sidebar-section:last-child {
-        padding-bottom: 200px !important;
+    .container {
+        max-width: 1400px;
+        padding: 0 3rem;
     }
+    
+    .footer-content {
+        grid-template-columns: repeat(4, 1fr);
+    }	
 }
 
-/* FireTV/Firefox flexbox overflow fix */
-#savedPlaylistsList {
-    min-height: 0 !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    flex-shrink: 1;
-}
-
-.sidebar-section {
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.sidebar-section:last-child {
-    flex: 1 1 auto;
-    min-height: 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+/* ===========================
+  24. SMALL MOBILE
+  =========================== */
+@media (max-width: 480px) {
+    .playlist-item {
+        padding: 6px;
+        margin-bottom: 6px;
+        grid-template-columns: 25px 35px 1fr auto;
+    }
+    
+    .playlist-number {
+        font-size: 0.8rem;
+    }
+    
+    .playlist-thumbnail {
+        width: 25px;
+        height: 25px;
+        flex-shrink: 0;
+    }
+    
+    .playlist-controls-mini {
+        display: none;
+    }
+    
+    .playlist-item:hover .playlist-controls-mini {
+        display: none;
+    }
+    
+    .album-detail .track-item {
+        padding: 8px 6px;
+        margin: 2px 0;
+        grid-template-columns: 20px 1fr auto auto;
+        gap: 6px;
+    }
+    
+    .track-thumbnail,
+    .track-actions,
+    .playlist-duration,
+    .star-rating {
+        display: none;
+    }
+    
+    .track-btn,
+    .album-detail .share-btn {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.75rem;
+    }
+    
+    .playlist-control-btn {
+        width: 20px;
+        height: 20px;
+        font-size: 0.7rem;
+    }
+    
+    .logo {
+        margin-bottom: 1rem;
+    }
+    
+    .logo img {
+        max-height: 80px;
+    }
+    
+    .song-card {
+        font-size: 0.9rem;
+    }
+    
+    .song-meta {
+        font-size: 0.75rem;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-section h4 {
+        font-size: 0.9rem;
+    }
+    
+    .footer-section a {
+        font-size: 0.8rem;
+    }	
 }
 </style>   
