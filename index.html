@@ -1051,11 +1051,22 @@
 			document.getElementById('sidebar').classList.add('open');
 			document.querySelector('.container').classList.add('content-shifted');
 			renderSavedPlaylists();
+			
+			// ADD THIS: Lock body scrolling when sidebar is open
+			document.body.style.overflow = 'hidden';
+			
+			// ADD THIS: Focus the sidebar for TV navigation
+			setTimeout(() => {
+				document.getElementById('sidebar').focus();
+			}, 100);
 		}
 
 		function closeSidebar() {
 			document.getElementById('sidebar').classList.remove('open');
 			document.querySelector('.container').classList.remove('content-shifted');
+			
+			// ADD THIS: Restore body scrolling
+			document.body.style.overflow = '';
 		}
 
 		// Navigation functions
