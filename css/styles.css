@@ -112,6 +112,23 @@ body {
     z-index: 999;
     overflow-y: auto;
     box-shadow: 5px 0 20px rgba(0, 0, 0, 0.5);
+    /* ADD THESE NEW PROPERTIES: */
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2rem;
+}
+
+/* Prevent body scroll when sidebar is open */
+body.sidebar-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+}
+
+/* Make sidebar focusable for TV navigation */
+.sidebar:focus {
+    outline: 2px solid #4ecdc4;
+    outline-offset: -2px;
 }
 
 .sidebar.open {
