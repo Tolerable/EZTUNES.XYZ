@@ -148,7 +148,7 @@
 	<button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">☰</button>
 
 	<!-- Sidebar -->
-	<div class="sidebar" id="sidebar">
+	<div class="sidebar" id="sidebar" tabindex="-1">
 		<div class="sidebar-header">
 			<div class="sidebar-title">Navigation</div>
 			<button class="sidebar-close" onclick="closeSidebar()">×</button>
@@ -1310,6 +1310,17 @@
 					</div>
 				`;
 			}).join('');
+			
+			// Force FireTV to recognize scrollable content
+			setTimeout(() => {
+				const sidebar = document.getElementById('sidebar');
+				const savedList = document.getElementById('savedPlaylistsList');
+				
+				// Force a reflow
+				savedList.style.minHeight = '300px';
+				sidebar.scrollTop = 1;
+				sidebar.scrollTop = 0;
+			}, 100);
 		}
 
 		function loadPlaylistFromElement(element) {
