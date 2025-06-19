@@ -112,23 +112,6 @@ body {
     z-index: 999;
     overflow-y: auto;
     box-shadow: 5px 0 20px rgba(0, 0, 0, 0.5);
-    /* ADD THESE NEW PROPERTIES: */
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 2rem;
-}
-
-/* Prevent body scroll when sidebar is open */
-body.sidebar-open {
-    overflow: hidden;
-    position: fixed;
-    width: 100%;
-}
-
-/* Make sidebar focusable for TV navigation */
-.sidebar:focus {
-    outline: 2px solid #4ecdc4;
-    outline-offset: -2px;
 }
 
 .sidebar.open {
@@ -964,27 +947,6 @@ body.sidebar-open {
 
 .playlist-btn:hover {
     background: rgba(255, 255, 255, 0.2);
-}
-
-/* TV-only saved playlists button */
-.tv-playlists-btn {
-    display: none !important;
-}
-
-@media (min-width: 1280px) and (min-height: 720px) {
-    .tv-playlists-btn {
-        display: inline-block !important;
-    }
-    
-    /* Hide sidebar completely on TV */
-    .sidebar-toggle {
-        display: none !important;
-    }
-    
-    .sidebar,
-    .sidebar-overlay {
-        display: none !important;
-    }
 }
 
 /* Playlist Items */
@@ -2674,80 +2636,7 @@ textarea:focus {
    }
 }
 
-/* ===========================
-  22. TV/FIRETV SIDEBAR FIX
-  =========================== */
-@media (min-width: 1280px) and (min-height: 720px) {
-    /* Kill flexbox for saved playlists on TV */
-    .sidebar-section:last-child {
-        position: relative !important;
-        height: 400px !important;
-        display: block !important;
-        flex: none !important;
-    }
-    
-    #savedPlaylistsList {
-        position: absolute !important;
-        top: 60px !important;
-        left: 0 !important;
-        right: 0 !important;
-        bottom: 0 !important;
-        height: 340px !important;
-        overflow-y: scroll !important;
-        overflow-x: hidden !important;
-        display: block !important;
-        -webkit-overflow-scrolling: touch !important;
-    }
-    
-    /* Extra space at bottom for scrolling */
-    #savedPlaylistsList::after {
-        content: '';
-        display: block;
-        height: 100px;
-    }
-    
-    /* TV optimizations */
-    body {
-        font-size: 18px;
-    }
-    
-    .control-btn {
-        padding: 1rem 2rem;
-        font-size: 1.3rem;
-    }
-    
-    .playlist-item {
-        padding: 1rem 1.5rem;
-    }
-    
-    .song-title, .playlist-title {
-        font-size: 1.3rem;
-    }
-}
-
-/* ===========================
-  23. LARGE SCREENS
-  =========================== */
-@media (min-width: 1400px) and (max-width: 1920px) {
-    .albums-grid {
-        grid-template-columns: repeat(4, minmax(240px, 1fr));
-        gap: 1.5rem;
-        padding: 0 2rem;
-    }
-    
-    .container {
-        max-width: 1400px;
-        padding: 0 3rem;
-    }
-    
-    .footer-content {
-        grid-template-columns: repeat(4, 1fr);
-    }	
-}
-
-/* ===========================
-  24. SMALL MOBILE
-  =========================== */
+/* Small mobile devices */
 @media (max-width: 480px) {
     .playlist-item {
         padding: 6px;
@@ -2766,13 +2655,15 @@ textarea:focus {
     }
     
     .playlist-controls-mini {
-        display: none;
+        display: none; /* Hide up/down arrows on very small screens */
     }
-    
+
+    /* Only show play icon and X for remove */
     .playlist-item:hover .playlist-controls-mini {
         display: none;
     }
     
+    /* Simplified album tracks */
     .album-detail .track-item {
         padding: 8px 6px;
         margin: 2px 0;
@@ -2780,13 +2671,14 @@ textarea:focus {
         gap: 6px;
     }
     
-    .track-thumbnail,
-    .track-actions,
-    .playlist-duration,
-    .star-rating {
+    .track-thumbnail {
         display: none;
     }
     
+    .track-actions {
+        display: none;
+    }
+
     .track-btn,
     .album-detail .share-btn {
         padding: 0.3rem 0.6rem;
@@ -2799,6 +2691,15 @@ textarea:focus {
         font-size: 0.7rem;
     }
     
+    .playlist-duration {
+        display: none;
+    }
+    
+    .star-rating {
+        display: none;
+    }
+
+    /* Logo on very small screens */
     .logo {
         margin-bottom: 1rem;
     }
@@ -2807,6 +2708,7 @@ textarea:focus {
         max-height: 80px;
     }
     
+    /* Song cards on very small screens */
     .song-card {
         font-size: 0.9rem;
     }
@@ -2817,6 +2719,7 @@ textarea:focus {
         align-items: flex-start;
     }
     
+    /* Footer - single column on very small screens */
     .footer-content {
         grid-template-columns: 1fr;
     }
@@ -2828,5 +2731,42 @@ textarea:focus {
     .footer-section a {
         font-size: 0.8rem;
     }	
+}
+
+/* FireTV and large screens */
+@media (min-width: 1400px) and (max-width: 1920px) {
+    .albums-grid {
+        grid-template-columns: repeat(4, minmax(240px, 1fr));
+        gap: 1.5rem;
+        padding: 0 2rem;
+    }
+    
+    .container {
+        max-width: 1400px;
+        padding: 0 3rem;
+    }
+    .footer-content {
+        grid-template-columns: repeat(4, 1fr);
+    }	
+}
+
+/* TV viewing distance optimization */
+@media (min-width: 1280px) and (min-height: 720px) and (orientation: landscape) {
+    body {
+        font-size: 18px;
+    }
+    
+    .control-btn {
+        padding: 1rem 2rem;
+        font-size: 1.3rem;
+    }
+    
+    .playlist-item {
+        padding: 1rem 1.5rem;
+    }
+    
+    .song-title, .playlist-title {
+        font-size: 1.3rem;
+    }
 }
 </style>   
