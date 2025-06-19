@@ -1052,10 +1052,12 @@
 			document.querySelector('.container').classList.add('content-shifted');
 			renderSavedPlaylists();
 			
-			// ADD THIS: Lock body scrolling when sidebar is open
-			document.body.style.overflow = 'hidden';
+			// Only lock body scrolling on mobile devices, NOT on TV
+			if (window.innerWidth < 1280) {
+				document.body.style.overflow = 'hidden';
+			}
 			
-			// ADD THIS: Focus the sidebar for TV navigation
+			// Focus the sidebar for TV navigation
 			setTimeout(() => {
 				document.getElementById('sidebar').focus();
 			}, 100);
