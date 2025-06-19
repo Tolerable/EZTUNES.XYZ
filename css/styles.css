@@ -2804,4 +2804,26 @@ textarea:focus {
         padding-bottom: 200px !important;
     }
 }
+
+/* FireTV/Firefox flexbox overflow fix */
+#savedPlaylistsList {
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    flex-shrink: 1;
+}
+
+.sidebar-section {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-section:last-child {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
 </style>   
