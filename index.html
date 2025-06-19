@@ -1279,12 +1279,6 @@
 			const container = document.getElementById('savedPlaylistsList');
 			const playlists = Object.values(savedPlaylists);
 			
-			// Detect if we're on a TV/FireTV device
-			const isTV = window.innerWidth >= 1280 && window.innerHeight >= 720 && 
-						 (navigator.userAgent.includes('Silk') || 
-						  navigator.userAgent.includes('TV') || 
-						  window.matchMedia('(hover: none)').matches);
-			
 			if (playlists.length === 0) {
 				container.innerHTML = `
 					<div style="text-align: center; padding: 1rem; opacity: 0.7; font-size: 0.9rem;">
@@ -1292,18 +1286,6 @@
 					</div>
 				`;
 				return;
-			}
-			
-			// FOR TV MODE - USE ABSOLUTE POSITIONING INSTEAD OF FLEXBOX
-			if (isTV) {
-				container.style.position = 'absolute';
-				container.style.top = '0';
-				container.style.left = '0';
-				container.style.right = '0';
-				container.style.bottom = '0';
-				container.style.overflowY = 'scroll';
-				container.style.overflowX = 'hidden';
-				container.style.WebkitOverflowScrolling = 'touch';
 			}
 			
 			container.innerHTML = playlists.map(playlist => {
@@ -1329,10 +1311,24 @@
 				`;
 			}).join('');
 			
-			// FOR TV MODE - Add extra padding at bottom to ensure scrollability
-			if (isTV) {
-				container.innerHTML += '<div style="height: 200px;"></div>';
-			}
+			// FORCE FIRETV TO RECOGNIZE THE CONTENT
+			const sidebar = document.getElementById('sidebar');
+			const parentSection = container.parentElement;
+			
+			// Force reflow
+			container.style.display = 'none';
+			container.offsetHeight; // Force reflow
+			container.style.display = 'block';
+			
+			// Set explicit height on parent
+			parentSection.style.height = 'auto';
+			parentSection.style.minHeight = '500px';
+			
+			// Force sidebar to recalculate
+			sidebar.style.overflowY = 'hidden';
+			setTimeout(() => {
+				sidebar.style.overflowY = 'scroll';
+			}, 100);
 		}
 
 		function loadPlaylistFromElement(element) {
