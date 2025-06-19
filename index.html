@@ -1279,9 +1279,11 @@
 			const container = document.getElementById('savedPlaylistsList');
 			const playlists = Object.values(savedPlaylists);
 			
-			// Fix flexbox overflow issue for FireTV/Firefox
-			container.style.minHeight = '0';
-			container.style.overflow = 'auto';
+			// Detect if we're on a TV/FireTV device
+			const isTV = window.innerWidth >= 1280 && window.innerHeight >= 720 && 
+						 (navigator.userAgent.includes('Silk') || 
+						  navigator.userAgent.includes('TV') || 
+						  window.matchMedia('(hover: none)').matches);
 			
 			if (playlists.length === 0) {
 				container.innerHTML = `
@@ -1290,6 +1292,18 @@
 					</div>
 				`;
 				return;
+			}
+			
+			// FOR TV MODE - USE ABSOLUTE POSITIONING INSTEAD OF FLEXBOX
+			if (isTV) {
+				container.style.position = 'absolute';
+				container.style.top = '0';
+				container.style.left = '0';
+				container.style.right = '0';
+				container.style.bottom = '0';
+				container.style.overflowY = 'scroll';
+				container.style.overflowX = 'hidden';
+				container.style.WebkitOverflowScrolling = 'touch';
 			}
 			
 			container.innerHTML = playlists.map(playlist => {
@@ -1315,10 +1329,10 @@
 				`;
 			}).join('');
 			
-			// Force height calculation for browsers with flexbox issues
-			container.style.height = 'auto';
-			const containerHeight = container.scrollHeight;
-			container.style.maxHeight = 'calc(100vh - 400px)';
+			// FOR TV MODE - Add extra padding at bottom to ensure scrollability
+			if (isTV) {
+				container.innerHTML += '<div style="height: 200px;"></div>';
+			}
 		}
 
 		function loadPlaylistFromElement(element) {
