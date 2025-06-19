@@ -966,6 +966,27 @@ body.sidebar-open {
     background: rgba(255, 255, 255, 0.2);
 }
 
+/* TV-only saved playlists button */
+.tv-playlists-btn {
+    display: none !important;
+}
+
+@media (min-width: 1280px) and (min-height: 720px) {
+    .tv-playlists-btn {
+        display: inline-block !important;
+    }
+    
+    /* Hide sidebar completely on TV */
+    .sidebar-toggle {
+        display: none !important;
+    }
+    
+    .sidebar,
+    .sidebar-overlay {
+        display: none !important;
+    }
+}
+
 /* Playlist Items */
 .playlist-item {
     background: rgba(255, 255, 255, 0.05);
