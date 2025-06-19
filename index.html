@@ -2791,10 +2791,16 @@
 			});
 			
 			currentAudio.addEventListener('pause', () => {
-				isPlaying = false;
-				document.getElementById('playBtn').innerHTML = '▶️ Play';
-				document.getElementById('currentArtwork').classList.remove('spinning');
-				autoSavePlaylist(); // Save when paused
+			   isPlaying = false;
+			   document.getElementById('playBtn').innerHTML = '▶️ Play';
+			   document.getElementById('currentArtwork').classList.remove('spinning');
+			   autoSavePlaylist(); // Save when paused
+			   
+			   // CLEAR THE FUCKING FIRETV INTERVAL
+			   if (window.fireTVInterval) {
+				   clearInterval(window.fireTVInterval);
+				   window.fireTVInterval = null;
+			   }
 			});
 			
 			let lastSaveTime = 0;
@@ -2862,27 +2868,57 @@
 			}
 		}
 
-        // Play audio
+		// Play audio
 		function playAudio() {
-			if (!currentAudio) {
-				console.error('No audio element to play');
-				return;
-			}
-			
-			currentAudio.play().catch(e => {
-				// Only show error if it's NOT an autoplay policy issue
-				if (e.name !== 'NotAllowedError') {
-					console.error('Playback error:', e);
-					showNotification('Playback error: ' + e.message, 'error');
-				} else {
-					// Silently handle autoplay prevention
-					console.log('Autoplay prevented by browser');
-				}
-				
-				isPlaying = false;
-				document.getElementById('playBtn').innerHTML = '▶️ Play';
-				document.getElementById('currentArtwork').classList.remove('spinning');
-			});
+		   if (!currentAudio) {
+			   console.error('No audio element to play');
+			   return;
+		   }
+		   
+		   // Kill any existing screensaver prevention
+		   if (window.fireTVInterval) {
+			   clearInterval(window.fireTVInterval);
+		   }
+		   
+		   // Start aggressive screensaver prevention
+		   window.fireTVInterval = setInterval(() => {
+			   // Simulate mouse movement
+			   const event = new MouseEvent('mousemove', {
+				   view: window,
+				   bubbles: true,
+				   cancelable: true,
+				   clientX: Math.random() * 10,
+				   clientY: Math.random() * 10
+			   });
+			   document.dispatchEvent(event);
+			   
+			   // Also do a focus change
+			   document.body.focus();
+			   
+			   // And a tiny DOM mutation
+			   document.documentElement.style.opacity = document.documentElement.style.opacity === '1' ? '0.99999' : '1';
+		   }, 45000);
+		   
+		   currentAudio.play().catch(e => {
+			   // Only show error if it's NOT an autoplay policy issue
+			   if (e.name !== 'NotAllowedError') {
+				   console.error('Playback error:', e);
+				   showNotification('Playback error: ' + e.message, 'error');
+			   } else {
+				   // Silently handle autoplay prevention
+				   console.log('Autoplay prevented by browser');
+			   }
+			   
+			   isPlaying = false;
+			   document.getElementById('playBtn').innerHTML = '▶️ Play';
+			   document.getElementById('currentArtwork').classList.remove('spinning');
+			   
+			   // Clear the interval if play fails
+			   if (window.fireTVInterval) {
+				   clearInterval(window.fireTVInterval);
+				   window.fireTVInterval = null;
+			   }
+		   });
 		}
 
 		// Handle song end
