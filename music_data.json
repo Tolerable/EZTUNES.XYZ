@@ -499,7 +499,7 @@
 		  "file": "Glass Skin.mp3",
 		  "image": "Glass Skin.jpg",
 		  "genre": "electronic",
-		  "duration": "2:55"
+		  "duration": "2:35"
 		},
 		{
 		  "trackNumber": 5,
@@ -1906,7 +1906,7 @@
 	  "title": "Steel On Asphalt",
 	  "artist": "AI Collective",
 	  "year": 2025,
-	  "genre": "folk",
+	  "genre": "Folk",
 	  "albumArt": "Steel On Asphalt - Album.jpg",
 	  "description": "An unfiltered tribute to the long-haul life: grit, pride, fatigue, and the wild poetry of the open road. These tracks pull no punches and salute every mile earned.",
 	  "tracks": [
@@ -1915,7 +1915,7 @@
 		  "title": "Steel On Asphalt",
 		  "file": "Steel On Asphalt.mp3",
 		  "image": "Steel On Asphalt.jpg",
-		  "genre": "folk",
+		  "genre": "americana",
 		  "duration": "3:54"
 		},
 		{
@@ -1923,7 +1923,7 @@
 		  "title": "Coffee and Chrome",
 		  "file": "Coffee and Chrome.mp3",
 		  "image": "Coffee and Chrome.jpg",
-		  "genre": "folk",
+		  "genre": "americana",
 		  "duration": "4:04"
 		},
 		{
@@ -1931,7 +1931,7 @@
 		  "title": "Smokey's Around the Bend",
 		  "file": "Smokeys Around the Bend.mp3",
 		  "image": "Smokeys Around the Bend.jpg",
-		  "genre": "folk",
+		  "genre": "americana",
 		  "duration": "3:23"
 		},
 		{
@@ -1939,7 +1939,7 @@
 		  "title": "Rustbelt Reflections",
 		  "file": "Rustbelt Reflections.mp3",
 		  "image": "Rustbelt Reflections.jpg",
-		  "genre": "folk",
+		  "genre": "americana",
 		  "duration": "3:44"
 		},
 		{
@@ -1947,7 +1947,7 @@
 		  "title": "Truck Stop Surfer",
 		  "file": "Truck Stop Surfer.mp3",
 		  "image": "Truck Stop Surfer.jpg",
-		  "genre": "folk",
+		  "genre": "americana",
 		  "duration": "3:13"
 		},
 		{
@@ -1955,7 +1955,7 @@
 		  "title": "10-4, Over and Out",
 		  "file": "10-4, Over and Out.mp3",
 		  "image": "10-4, Over and Out.jpg",
-		  "genre": "folk",
+		  "genre": "americana",
 		  "duration": "3:54"
 		},
 		{
@@ -1963,7 +1963,7 @@
 		  "title": "Load to Bear",
 		  "file": "Load to Bear.mp3",
 		  "image": "Load to Bear.jpg",
-		  "genre": "folk",
+		  "genre": "americana",
 		  "duration": "3:19"
 		},
 		{
@@ -1971,7 +1971,7 @@
 		  "title": "Dispatch Blues",
 		  "file": "Dispatch Blues.mp3",
 		  "image": "Dispatch Blues.jpg",
-		  "genre": "folk",
+		  "genre": "americana",
 		  "duration": "3:29"
 		},
 		{
@@ -1979,7 +1979,7 @@
 		  "title": "Broken Sleep",
 		  "file": "Broken Sleep.mp3",
 		  "image": "Broken Sleep.jpg",
-		  "genre": "folk",
+		  "genre": "americana",
 		  "duration": "3:39"
 		},
 		{
@@ -1987,7 +1987,7 @@
 		  "title": "Backroad Blessing",
 		  "file": "Backroad Blessing.mp3",
 		  "image": "Backroad Blessing.jpg",
-		  "genre": "folk",
+		  "genre": "americana",
 		  "duration": "3:58"
 		},
 		{
@@ -1995,7 +1995,7 @@
 		  "title": "Breaker Breakdown",
 		  "file": "Breaker Breakdown.mp3",
 		  "image": "Breaker Breakdown.jpg",
-		  "genre": "folk",
+		  "genre": "americana",
 		  "duration": "3:22"
 		},
 		{
@@ -2003,7 +2003,7 @@
 		  "title": "Black Ice and Blind Curves",
 		  "file": "Black Ice and Blind Curves.mp3",
 		  "image": "Black Ice and Blind Curves.jpg",
-		  "genre": "folk",
+		  "genre": "americana",
 		  "duration": "3:41"
 		},
 		{
@@ -2011,7 +2011,7 @@
 		  "title": "End of the Route",
 		  "file": "End of the Route.mp3",
 		  "image": "End of the Route.jpg",
-		  "genre": "folk",
+		  "genre": "americana",
 		  "duration": "4:12"
 		}
 	  ]
