@@ -35,7 +35,7 @@ body {
     transition: none !important;
 }
 
-.content-shifted .header .container {
+.header .container {
     margin-left: auto !important;
     margin-right: auto !important;
     transform: none !important;
@@ -47,9 +47,15 @@ body {
     padding: 0 20px;
 }
 
-.content-shifted .container:not(.header .container) {
+.sidebar.open ~ .container:not(.header .container) {
     margin-left: 320px;
     transition: margin-left 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .sidebar.open ~ .container:not(.header .container) {
+        margin-left: 0;
+    }
 }
 
 /* Logo & Branding */
