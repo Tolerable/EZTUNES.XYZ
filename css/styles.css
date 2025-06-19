@@ -2786,4 +2786,22 @@ textarea:focus {
         font-size: 1.3rem;
     }
 }
+
+/* FireTV sidebar fix - force scrollability */
+#savedPlaylistsList {
+    min-height: 200px;
+    padding-bottom: 100px;
+}
+
+/* Override any FireTV-specific rendering issues */
+@media (min-width: 1280px) {
+    .sidebar {
+        overflow-y: scroll !important;
+        -webkit-overflow-scrolling: auto !important;
+    }
+    
+    .sidebar-section:last-child {
+        padding-bottom: 200px !important;
+    }
+}
 </style>   
